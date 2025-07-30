@@ -22,7 +22,7 @@ nav{
 }
 
 nav .logo h2 span{
-    color: orangered;
+    color: #8cc7d6;
 }
 
 nav .link ul{
@@ -47,7 +47,7 @@ nav .link ul li a::before{
     bottom: -4px;
     height: 3.5px;
     border-radius: 20px;
-    background-color: orangered;
+    background-color: #8cc7d6;
     width: 100%;
     scale: 0;
     transition: 0.2s ease-in-out;
@@ -87,8 +87,8 @@ nav .link ul li a:hover::before{
 
 .main .main-detail h1{
     font-size: clamp(40px, 5px + 5vw, 70px);
-    color: orangered;
-    text-shadow: 0 0 2px orangered;
+    color: #8cc7d6;
+    text-shadow: 0 0 2px #8cc7d6;
 }
 
 .main .main-detail h4{
@@ -143,7 +143,7 @@ nav .link ul li a:hover::before{
 .social i:hover{
     color: white;
     background-color: black;
-    box-shadow: 0 0 10px 5px orangered;
+    box-shadow: 0 0 10px 5px #8cc7d6;
 }
 
 

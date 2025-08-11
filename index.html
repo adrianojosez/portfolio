@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Adriano José — Desenvolvedor Front End</title>
-  <meta name="description" content="Portfólio de Adriano José — Desenvolvedor Front End. React, TypeScript e SEO com foco em performance e acessibilidade." />
+  <title>Adriano José | Desenvolvedor Front End</title>
+  <meta name="description" content="Portfólio de Adriano José | Desenvolvedor Front End. React, TypeScript e SEO com foco em performance e acessibilidade." />
   <meta name="theme-color" content="#0b1116" />
   <link rel="canonical" href="https://seu-dominio.com/" />
 
   <!-- Open Graph / Twitter -->
-  <meta property="og:title" content="Adriano José — Desenvolvedor Front End">
+  <meta property="og:title" content="Adriano José | Desenvolvedor Front End">
   <meta property="og:description" content="Interfaces rápidas, acessíveis e com foco em resultados.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://seu-dominio.com/">
@@ -34,8 +34,8 @@
     "jobTitle":"Desenvolvedor Front End",
     "url":"https://seu-dominio.com/",
     "sameAs":[
-      "https://github.com/",
-      "https://www.linkedin.com/in/"
+      "https://github.com/SEU_USUARIO",
+      "https://www.linkedin.com/in/SEU_USUARIO"
     ]
   }
   </script>
@@ -49,15 +49,26 @@
         <a href="#inicio" class="brand" aria-label="Voltar ao início" data-aos="zoom-in" data-aos-duration="1000">
           <span>Adriano</span> José
         </a>
-        <button class="menu-toggle" aria-controls="menu" aria-expanded="false" aria-label="Abrir menu">
-          <i class='bx bx-menu'></i>
-        </button>
+
+        <div class="nav-actions">
+          <button id="theme-toggle" class="icon-btn" aria-label="Alternar tema">
+            <i class='bx bx-moon'></i>
+          </button>
+          <button class="menu-toggle" aria-controls="menu" aria-expanded="false" aria-label="Abrir menu">
+            <i class='bx bx-menu'></i>
+          </button>
+        </div>
+
         <div id="menu" class="menu" role="navigation">
           <a href="#inicio">Início</a>
           <a href="#sobre">Sobre</a>
           <a href="#projetos">Projetos</a>
+          <a href="#servicos">Serviços</a>
           <a href="#experiencia">Experiência</a>
-          <a href="#contato" class="menu-cta btn ghost"><i class='bx bx-paper-plane'></i> Contato</a>
+          <a href="#depoimentos">Depoimentos</a>
+          <a href="#contato" class="menu-cta btn ghost">
+            <i class='bx bx-paper-plane'></i> Contato
+          </a>
         </div>
       </nav>
     </div>
@@ -68,12 +79,21 @@
     <section id="inicio" class="hero">
       <div class="container hero-grid">
         <div>
-          <span class="eyebrow" data-aos="fade-right" data-aos-duration="900"><i class='bx bx-code-alt'></i> Olá, eu sou</span>
+          <span class="eyebrow" data-aos="fade-right" data-aos-duration="900">
+            <i class='bx bx-code-alt'></i> Olá, eu sou
+          </span>
           <h1 class="gradient" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">Adriano José</h1>
           <p class="subtitle" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
             Desenvolvedor Front End com foco em interfaces rápidas, acessíveis e com código organizado.
             Transformo ideias em experiências digitais claras e performáticas.
           </p>
+
+          <ul class="metrics" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="250" aria-label="Métricas">
+            <li><span data-count-to="5" data-duration="1000">0</span> anos de experiência</li>
+            <li><span data-count-to="30" data-duration="1200">0</span> projetos entregues</li>
+            <li><span data-count-to="12" data-duration="1100">0</span> clientes atendidos</li>
+          </ul>
+
           <div class="btn-row" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="300">
             <a class="btn primary" href="assets/CV-Adriano-Jose.pdf" download>
               <i class='bx bx-download'></i> Download CV
@@ -81,16 +101,24 @@
             <a class="btn ghost" href="#contato">
               <i class='bx bx-briefcase'></i> Contrate-me
             </a>
+            <a class="btn ghost" href="https://calendly.com/SEU_USUARIO/30min" target="_blank" rel="noopener">
+              <i class='bx bx-calendar'></i> Agendar conversa
+            </a>
           </div>
+
           <div class="social" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="400">
-            <a href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <a href="https://github.com/SEU_USUARIO" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
               <i class='bx bxl-github'></i>
             </a>
-            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <a href="https://www.instagram.com/SEU_USUARIO" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
               <i class='bx bxl-instagram'></i>
+            </a>
+            <a href="https://www.linkedin.com/in/SEU_USUARIO" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <i class='bx bxl-linkedin'></i>
             </a>
           </div>
         </div>
+
         <aside>
           <div class="hero-card" data-aos="zoom-in-left" data-aos-duration="1000" data-aos-delay="150">
             <div class="avatar" aria-hidden="true">AJ</div>
@@ -99,7 +127,7 @@
               <small>React, TypeScript, SEO, UI</small>
             </div>
           </div>
-          <div style="height: .8rem"></div>
+          <div class="spacer"></div>
           <div class="hero-card" data-aos="zoom-in-left" data-aos-duration="1000" data-aos-delay="250">
             <div class="avatar" aria-hidden="true"><i class='bx bx-bolt'></i></div>
             <div>
@@ -146,8 +174,16 @@
           <h2 data-aos="fade-right">Projetos</h2>
           <p data-aos="fade-left">Projetos em destaque</p>
         </div>
+
+        <div class="filters" role="toolbar" aria-label="Filtrar projetos" data-aos="fade-up">
+          <button class="chip active" type="button" data-filter="all" aria-pressed="true">Todos</button>
+          <button class="chip" type="button" data-filter="react" aria-pressed="false">React</button>
+          <button class="chip" type="button" data-filter="nextjs" aria-pressed="false">Next.js</button>
+          <button class="chip" type="button" data-filter="typescript" aria-pressed="false">TypeScript</button>
+        </div>
+
         <div class="grid" data-aos="fade-up" data-aos-duration="900">
-          <article class="project">
+          <article class="project" data-tags="react spa api">
             <small class="tag">React</small>
             <h3>Dashboard de Métricas</h3>
             <p>SPA com gráficos, autenticação e API. Foco em performance e UX.</p>
@@ -161,7 +197,7 @@
             </div>
           </article>
 
-          <article class="project">
+          <article class="project" data-tags="nextjs seo ssg">
             <small class="tag">Next.js</small>
             <h3>Site Institucional</h3>
             <p>Páginas otimizadas para SEO com geração estática e design limpo.</p>
@@ -175,7 +211,7 @@
             </div>
           </article>
 
-          <article class="project">
+          <article class="project" data-tags="typescript lib ui">
             <small class="tag">TypeScript</small>
             <h3>Component Library</h3>
             <p>Biblioteca de componentes reutilizáveis com documentação.</p>
@@ -187,6 +223,45 @@
                 <i class='bx bxl-github'></i> Código
               </a>
             </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Serviços -->
+    <section id="servicos">
+      <div class="container">
+        <div class="section-title">
+          <h2 data-aos="fade-right">Serviços</h2>
+          <p data-aos="fade-left">Como posso ajudar</p>
+        </div>
+        <div class="grid grid-3" data-aos="fade-up">
+          <article class="service">
+            <i class="bx bx-layout"></i>
+            <h3>Desenvolvimento Front End</h3>
+            <ul>
+              <li>React, Next.js, TypeScript</li>
+              <li>Componentização e design system</li>
+              <li>Integração com APIs</li>
+            </ul>
+          </article>
+          <article class="service">
+            <i class="bx bx-rocket"></i>
+            <h3>Performance</h3>
+            <ul>
+              <li>Core Web Vitals</li>
+              <li>Bundle e imagens otimizadas</li>
+              <li>Estratégias de cache</li>
+            </ul>
+          </article>
+          <article class="service">
+            <i class="bx bx-search-alt-2"></i>
+            <h3>SEO Técnico</h3>
+            <ul>
+              <li>Semântica e metadados</li>
+              <li>Estrutura de links</li>
+              <li>Schema.org</li>
+            </ul>
           </article>
         </div>
       </div>
@@ -209,11 +284,35 @@
           </div>
           <div class="item">
             <div>
-              <strong>Nagata & Gasparini</strong><br>
+              <strong>Nagata &amp; Gasparini</strong><br>
               Projetos web B2B e otimização
             </div>
-            <small>2023 • atual</small>
+            <small>2025 • atual</small>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Depoimentos -->
+    <section id="depoimentos">
+      <div class="container">
+        <div class="section-title">
+          <h2 data-aos="fade-right">Depoimentos</h2>
+          <p data-aos="fade-left">O que dizem</p>
+        </div>
+        <div class="grid grid-3 testimonials" data-aos="fade-up">
+          <blockquote class="testimonial">
+            <p>“Entrega rápida e qualidade acima do esperado. Melhorou nossos indicadores de conversão.”</p>
+            <footer>— Gerente de Marketing, Setor Saúde</footer>
+          </blockquote>
+          <blockquote class="testimonial">
+            <p>“Código limpo e documentação clara. Time ganhou velocidade em novas features.”</p>
+            <footer>— Tech Lead, SaaS</footer>
+          </blockquote>
+          <blockquote class="testimonial">
+            <p>“SEO e performance notáveis. Tráfego orgânico cresceu mês a mês.”</p>
+            <footer>— CEO, Clínica</footer>
+          </blockquote>
         </div>
       </div>
     </section>
@@ -232,6 +331,9 @@
                href="https://wa.me/5513981242306?text=Olá%2C%20Adriano!%20Vim%20pelo%20seu%20portfólio%20e%20gostaria%20de%20falar%20sobre%20um%20projeto.">
               <i class='bx bxl-whatsapp'></i> Falar no WhatsApp
             </a>
+            <a class="btn ghost" href="https://calendly.com/SEU_USUARIO/30min" target="_blank" rel="noopener">
+              <i class='bx bx-calendar'></i> Agendar conversa
+            </a>
           </div>
         </div>
       </div>
@@ -246,9 +348,7 @@
 
   <!-- Scripts -->
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<!--   <script src="script.js" defer></script> -->
+  <script src="main.js" defer></script>
   <noscript>Habilite o JavaScript para melhor experiência.</noscript>
 </body>
 </html>
-
-

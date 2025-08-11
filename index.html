@@ -25,6 +25,11 @@
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
   <link rel="stylesheet" href="style.css">
 
+  <!-- Fallback AOS: se JS não carregar, mantém tudo visível -->
+  <style>
+    html:not(.aos-enabled) [data-aos] { opacity: 1 !important; transform: none !important; }
+  </style>
+
   <!-- Schema.org -->
   <script type="application/ld+json">
   {
@@ -348,8 +353,21 @@
 
   <!-- Scripts -->
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<!--   <script src="main.js" defer></script> -->
+
+  <!-- Fallback init AOS (garante conteúdo visível mesmo sem main.js) -->
+  <script>
+    (function(){
+      try {
+        var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (window.AOS && typeof AOS.init === 'function') {
+          AOS.init({ offset: 0, once: true, disable: prefersReduced });
+          document.documentElement.classList.add('aos-enabled');
+        }
+      } catch(e) { /* noop */ }
+    })();
+  </script>
+
+  <script src="main.js" defer></script>
   <noscript>Habilite o JavaScript para melhor experiência.</noscript>
 </body>
 </html>
-

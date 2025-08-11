@@ -234,3 +234,9 @@ footer { padding: 36px 0 48px; color: var(--muted); text-align: center; }
   body { background: #fff; color: #000; }
   .card, .project, .service, .testimonial { border-color: #ccc; }
 }
+
+/* ... seu CSS anterior v3 ... */
+
+/* AOS fallback também no CSS (redundância segura) */
+html:not(.aos-enabled) [data-aos] { opacity: 1 !important; transform: none !important; }
+

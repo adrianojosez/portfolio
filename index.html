@@ -3,142 +3,42 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Adriano José | Desenvolvedor Front End</title>
-  <meta name="description" content="Portfólio de Adriano José, Desenvolvedor Front End. Projetos, experiência e contato." />
+
+  <title>Adriano José — Desenvolvedor Front End</title>
+  <meta name="description" content="Portfólio de Adriano José — Desenvolvedor Front End. React, TypeScript e SEO com foco em performance e acessibilidade." />
+  <meta name="theme-color" content="#0b1116" />
+  <link rel="canonical" href="https://seu-dominio.com/" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Adriano José — Desenvolvedor Front End">
+  <meta property="og:description" content="Interfaces rápidas, acessíveis e com foco em resultados.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://seu-dominio.com/">
+  <meta property="og:image" content="https://seu-dominio.com/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Fonts / Icons / Styles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-  <style>
-    :root {
-      /* Paleta do usuário */
-      --primary: #8cc7d6;
-      --secondary: #bda368;
-      --tertiary: #68bdd1;
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
+  <link rel="stylesheet" href="style.css">
 
-      /* Neutros e UI */
-      --bg: #0b1116;
-      --card: #0f1720;
-      --surface: #0c141b;
-      --text: #e8eef2;
-      --muted: #a9b7bf;
-      --border: rgba(255,255,255,.08);
-      --shadow: 0 10px 30px rgba(0,0,0,.3);
-
-      --radius: 18px;
-      --container: 1120px;
-    }
-
-    /* Reset básico e acessibilidade */
-    *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--text);
-      background: radial-gradient(1200px 800px at 80% -10%, rgba(140,199,214,.18), transparent),
-                  radial-gradient(1000px 600px at -10% 10%, rgba(104,189,209,.18), transparent),
-                  var(--bg);
-      line-height: 1.6;
-    }
-    img { max-width: 100%; display: block; }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(100%, var(--container)); margin: 0 auto; padding: 0 1rem; }
-    .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-    .skip-link { position: absolute; left: -9999px; }
-    .skip-link:focus { left: 1rem; top: 1rem; background: var(--primary); color: #001015; padding: .6rem .9rem; border-radius: .5rem; z-index: 9999; }
-
-    /* Header / Navegação */
-    .site-header { position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(140%) blur(10px); background: linear-gradient(180deg, rgba(11,17,22,.75), rgba(11,17,22,.45)); border-bottom: 1px solid var(--border); }
-    nav.nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-    .brand { display: flex; align-items: center; gap: .6rem; font-weight: 800; letter-spacing: .2px; }
-    .brand span { color: var(--primary); }
-
-    .menu { display: flex; align-items: center; gap: .8rem; }
-    .menu a { padding: .55rem .8rem; border-radius: .7rem; font-weight: 500; color: var(--muted); }
-    .menu a:hover, .menu a:focus { color: var(--text); background: rgba(140,199,214,.12); }
-
-    .menu-cta { display: none; }
-    .menu-toggle { display: none; background: transparent; color: var(--text); border: 1px solid var(--border); width: 40px; height: 40px; border-radius: 10px; align-items: center; justify-content: center; }
-
-    /* Hero */
-    .hero { padding: 96px 0 48px; }
-    .hero-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 2rem; align-items: center; }
-
-    .eyebrow { display: inline-flex; align-items: center; gap: .5rem; padding: .35rem .6rem; border: 1px solid var(--border); border-radius: 999px; color: var(--muted); font-size: .9rem; }
-    .eyebrow i { color: var(--primary); font-size: 1.1rem; }
-
-    h1 { margin: .6rem 0 0; font-size: clamp(2.2rem, 6vw, 3.25rem); line-height: 1.1; letter-spacing: .2px; }
-    .gradient { background: linear-gradient(90deg, var(--text) 10%, var(--primary) 50%, var(--tertiary) 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .subtitle { margin: .75rem 0 1.25rem; color: var(--muted); font-size: 1.05rem; max-width: 60ch; }
-
-    .btn-row { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 1rem; }
-    .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .85rem 1rem; border-radius: .9rem; border: 1px solid var(--border); font-weight: 600; }
-    .btn.primary { background: linear-gradient(180deg, var(--primary), var(--tertiary)); color: #062129; border-color: transparent; box-shadow: var(--shadow); }
-    .btn.primary:hover { transform: translateY(-1px); }
-    .btn.ghost { color: var(--text); background: rgba(255,255,255,.04); }
-    .btn i { font-size: 1.2rem; }
-
-    .social { display: flex; gap: .6rem; margin-top: 1rem; }
-    .social a { width: 42px; height: 42px; display: inline-flex; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid var(--border); color: var(--muted); }
-    .social a:hover { color: var(--text); background: rgba(255,255,255,.06); }
-
-    .hero-card { background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; display: grid; grid-template-columns: 56px 1fr; gap: .9rem; align-items: center; }
-    .avatar { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, var(--primary), var(--tertiary)); display: grid; place-items: center; color: #062129; font-weight: 800; }
-    .hero-card small { color: var(--muted); }
-
-    /* Seções */
-    section { padding: 72px 0; }
-    .section-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.6rem; }
-    .section-title h2 { margin: 0; font-size: clamp(1.4rem, 3.5vw, 2rem); }
-    .section-title p { margin: 0; color: var(--muted); }
-
-    /* Sobre */
-    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02)); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem; }
-    .about .card { background: var(--card); border: 1px solid var(--border); padding: 1rem; border-radius: 16px; }
-    .about ul { padding-left: 1.1rem; }
-
-    /* Projetos */
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-    .project { position: relative; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1rem; overflow: hidden; }
-    .project h3 { margin: .4rem 0 .4rem; font-size: 1.1rem; }
-    .project p { color: var(--muted); font-size: .95rem; }
-    .tags { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .6rem; }
-    .tag { font-size: .85rem; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: .25rem .55rem; }
-    .project .actions { margin-top: .8rem; display: flex; gap: .6rem; }
-
-    /* Experiência */
-    .timeline { display: grid; gap: .9rem; }
-    .item { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1rem; display: grid; grid-template-columns: 1fr auto; gap: .6rem; align-items: center; }
-    .item small { color: var(--muted); }
-
-    /* Contato */
-    .contact { background: linear-gradient(180deg, rgba(140,199,214,.12), rgba(104,189,209,.08)); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.4rem; text-align: center; }
-    .contact .btn-row { justify-content: center; }
-
-    /* Rodapé */
-    footer { padding: 36px 0 48px; color: var(--muted); text-align: center; }
-
-    /* Responsivo */
-    @media (max-width: 960px) {
-      .hero-grid { grid-template-columns: 1fr; }
-      .about { grid-template-columns: 1fr; }
-      .grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 720px) {
-      .menu { position: fixed; inset: 64px 1rem auto 1rem; flex-direction: column; padding: .8rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); transform-origin: top right; transform: scale(.96); opacity: 0; pointer-events: none; transition: .18s ease; }
-      .menu.open { transform: scale(1); opacity: 1; pointer-events: auto; }
-      .menu-cta { display: inline-flex; }
-      .menu-toggle { display: inline-flex; }
-      .grid { grid-template-columns: 1fr; }
-    }
-
-    /* Reduzir movimento se preferido pelo usuário */
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-    }
-  </style>
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":"Adriano José",
+    "jobTitle":"Desenvolvedor Front End",
+    "url":"https://seu-dominio.com/",
+    "sameAs":[
+      "https://github.com/",
+      "https://www.linkedin.com/in/"
+    ]
+  }
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -155,7 +55,7 @@
         <div id="menu" class="menu" role="navigation">
           <a href="#inicio">Início</a>
           <a href="#sobre">Sobre</a>
-          <a href="#projetos">Trabalho</a>
+          <a href="#projetos">Projetos</a>
           <a href="#experiencia">Experiência</a>
           <a href="#contato" class="menu-cta btn ghost"><i class='bx bx-paper-plane'></i> Contato</a>
         </div>
@@ -170,14 +70,25 @@
         <div>
           <span class="eyebrow" data-aos="fade-right" data-aos-duration="900"><i class='bx bx-code-alt'></i> Olá, eu sou</span>
           <h1 class="gradient" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">Adriano José</h1>
-          <p class="subtitle" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Desenvolvedor Front End com foco em interfaces rápidas, acessíveis e com código organizado. Transformo ideias em experiências digitais claras e performáticas.</p>
+          <p class="subtitle" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+            Desenvolvedor Front End com foco em interfaces rápidas, acessíveis e com código organizado.
+            Transformo ideias em experiências digitais claras e performáticas.
+          </p>
           <div class="btn-row" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="300">
-            <a class="btn primary" href="assets/CV-Adriano-Jose.pdf" download><i class='bx bx-download'></i> Download CV</a>
-            <a class="btn ghost" href="#contato"><i class='bx bx-briefcase'></i> Contrate-me</a>
+            <a class="btn primary" href="assets/CV-Adriano-Jose.pdf" download>
+              <i class='bx bx-download'></i> Download CV
+            </a>
+            <a class="btn ghost" href="#contato">
+              <i class='bx bx-briefcase'></i> Contrate-me
+            </a>
           </div>
           <div class="social" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="400">
-            <a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub"><i class='bx bxl-github'></i></a>
-            <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><i class='bx bxl-instagram'></i></a>
+            <a href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <i class='bx bxl-github'></i>
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <i class='bx bxl-instagram'></i>
+            </a>
           </div>
         </div>
         <aside>
@@ -209,7 +120,11 @@
         </div>
         <div class="about" data-aos="fade-up" data-aos-duration="900">
           <div class="card">
-            <p>Atuo desde 2020 criando interfaces modernas e acessíveis. Gosto de estruturar projetos com componentes reutilizáveis, semântica forte e atenção aos detalhes visuais. Tenho perfil analítico e visão estratégica para SEO e conversão.</p>
+            <p>
+              Atuo desde 2020 criando interfaces modernas e acessíveis. Gosto de estruturar projetos com componentes
+              reutilizáveis, semântica forte e atenção aos detalhes visuais. Tenho perfil analítico e visão estratégica
+              para SEO e conversão.
+            </p>
           </div>
           <div class="card">
             <strong>Habilidades</strong>
@@ -228,7 +143,7 @@
     <section id="projetos">
       <div class="container">
         <div class="section-title">
-          <h2 data-aos="fade-right">Trabalho</h2>
+          <h2 data-aos="fade-right">Projetos</h2>
           <p data-aos="fade-left">Projetos em destaque</p>
         </div>
         <div class="grid" data-aos="fade-up" data-aos-duration="900">
@@ -237,26 +152,40 @@
             <h3>Dashboard de Métricas</h3>
             <p>SPA com gráficos, autenticação e API. Foco em performance e UX.</p>
             <div class="actions">
-              <a class="btn ghost" href="#" aria-label="Ver projeto 1"><i class='bx bx-link-external'></i> Live</a>
-              <a class="btn ghost" href="#" aria-label="Código do projeto 1"><i class='bx bxl-github'></i> Código</a>
+              <a class="btn ghost" href="#" aria-label="Abrir a versão ao vivo de Dashboard de Métricas">
+                <i class='bx bx-link-external'></i> Live
+              </a>
+              <a class="btn ghost" href="#" aria-label="Abrir o código no GitHub do projeto Dashboard de Métricas">
+                <i class='bx bxl-github'></i> Código
+              </a>
             </div>
           </article>
+
           <article class="project">
             <small class="tag">Next.js</small>
             <h3>Site Institucional</h3>
             <p>Páginas otimizadas para SEO com geração estática e design limpo.</p>
             <div class="actions">
-              <a class="btn ghost" href="#"><i class='bx bx-link-external'></i> Live</a>
-              <a class="btn ghost" href="#"><i class='bx bxl-github'></i> Código</a>
+              <a class="btn ghost" href="#" aria-label="Abrir a versão ao vivo de Site Institucional">
+                <i class='bx bx-link-external'></i> Live
+              </a>
+              <a class="btn ghost" href="#" aria-label="Abrir o código no GitHub do projeto Site Institucional">
+                <i class='bx bxl-github'></i> Código
+              </a>
             </div>
           </article>
+
           <article class="project">
             <small class="tag">TypeScript</small>
             <h3>Component Library</h3>
             <p>Biblioteca de componentes reutilizáveis com documentação.</p>
             <div class="actions">
-              <a class="btn ghost" href="#"><i class='bx bx-link-external'></i> Live</a>
-              <a class="btn ghost" href="#"><i class='bx bxl-github'></i> Código</a>
+              <a class="btn ghost" href="#" aria-label="Abrir a versão ao vivo de Component Library">
+                <i class='bx bx-link-external'></i> Live
+              </a>
+              <a class="btn ghost" href="#" aria-label="Abrir o código no GitHub do projeto Component Library">
+                <i class='bx bxl-github'></i> Código
+              </a>
             </div>
           </article>
         </div>
@@ -296,8 +225,13 @@
           <h2>Vamos conversar</h2>
           <p class="subtitle">Tem um projeto em mente ou precisa de reforço no seu time? Envie uma mensagem.</p>
           <div class="btn-row">
-            <a class="btn primary" href="mailto:seuemail@exemplo.com?subject=Projeto%20Front%20End"><i class='bx bx-envelope'></i> Enviar e-mail</a>
-            <a class="btn ghost" href="https://wa.me/5500000000000" target="_blank" rel="noopener"><i class='bx bxl-whatsapp'></i> Falar no WhatsApp</a>
+            <a class="btn primary" href="mailto:seuemail@exemplo.com?subject=Projeto%20Front%20End">
+              <i class='bx bx-envelope'></i> Enviar e-mail
+            </a>
+            <a class="btn ghost" target="_blank" rel="noopener noreferrer"
+               href="https://wa.me/5513981242306?text=Olá%2C%20Adriano!%20Vim%20pelo%20seu%20portfólio%20e%20gostaria%20de%20falar%20sobre%20um%20projeto.">
+              <i class='bx bxl-whatsapp'></i> Falar no WhatsApp
+            </a>
           </div>
         </div>
       </div>
@@ -310,28 +244,9 @@
     </div>
   </footer>
 
+  <!-- Scripts -->
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script>
-    // AOS (respeita preferências de movimento)
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    AOS.init({ offset: 0, once: true, disable: prefersReduced });
-
-    // Menu mobile acessível
-    const toggle = document.querySelector('.menu-toggle');
-    const menu = document.getElementById('menu');
-    toggle?.addEventListener('click', () => {
-      const expanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!expanded));
-      menu.classList.toggle('open');
-    });
-    // Fechar menu ao clicar em um link
-    menu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      menu.classList.remove('open');
-      toggle?.setAttribute('aria-expanded', 'false');
-    }));
-
-    // Ano atual
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script src="main.js" defer></script>
+  <noscript>Habilite o JavaScript para melhor experiência.</noscript>
 </body>
 </html>

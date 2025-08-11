@@ -1,12 +1,14 @@
-/* main.js — Portfólio Adriano v2
+/* main.js — Portfólio Adriano v3
  * Funcionalidades:
- * - AOS com respeito a prefers-reduced-motion
+ * - AOS (respeita prefers-reduced-motion)
+ * - Tema claro/escuro com persistência + atualização do theme-color
  * - Menu mobile acessível (Esc, clique fora, focus trap)
- * - Smooth scroll com compensação do header
- * - Scrollspy (destaca link ativo do menu)
- * - Botão “voltar ao topo” (injetado via JS)
- * - CountUp simples para [data-count-to]
- * - Efeito tilt suave nos .project (opcional, respeita reduced motion)
+ * - Smooth scroll com offset do header + foco no destino
+ * - Scrollspy (link ativo + aria-current)
+ * - Botão “voltar ao topo”
+ * - CountUp para [data-count-to]
+ * - Filtro de projetos por tags (data-tags)
+ * - Tilt suave nos .project (não em touch/reduced motion)
  */
 
 (() => {
@@ -34,6 +36,32 @@
   }
 
   /* =============================
+     Tema claro/escuro
+  ============================== */
+  const themeKey = 'theme';
+  const root = document.documentElement;
+  const themeBtn = $('#theme-toggle');
+  const themeMeta = $('meta[name="theme-color"]');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const savedTheme = localStorage.getItem(themeKey);
+  const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+
+  function applyTheme(t) {
+    root.setAttribute('data-theme', t);
+    themeBtn?.querySelector('i')?.classList.toggle('bx-moon', t !== 'dark');
+    themeBtn?.querySelector('i')?.classList.toggle('bx-sun', t === 'dark');
+    // Ajusta cor da barra do navegador
+    if (themeMeta) themeMeta.setAttribute('content', t === 'dark' ? '#0b1116' : '#f6f8fb');
+    localStorage.setItem(themeKey, t);
+  }
+  applyTheme(initialTheme);
+
+  themeBtn?.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+  });
+
+  /* =============================
      Menu mobile acessível
   ============================== */
   const toggle = $('.menu-toggle');
@@ -48,7 +76,6 @@
     lastFocusedBeforeOpen = document.activeElement;
     toggle.setAttribute('aria-expanded', 'true');
     menu.classList.add('open');
-    // Focus trap
     const focusables = $$(focusableSelector, menu);
     focusables[0]?.focus({ preventScroll: true });
     document.addEventListener('keydown', onKeydown);
@@ -67,7 +94,6 @@
   function onKeydown(e) {
     if (e.key === 'Escape') return closeMenu();
     if (e.key !== 'Tab') return;
-    // loop de foco dentro do menu
     const focusables = $$(focusableSelector, menu).filter(el => !el.hasAttribute('disabled'));
     if (focusables.length === 0) return;
     const first = focusables[0];
@@ -90,8 +116,6 @@
     const expanded = toggle.getAttribute('aria-expanded') === 'true';
     expanded ? closeMenu() : openMenu();
   });
-
-  // Fecha ao clicar num link
   $$('#menu a').forEach(a => a.addEventListener('click', () => closeMenu()));
 
   /* =============================
@@ -106,7 +130,6 @@
     } else {
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
-    // Acessibilidade: foco no destino
     target.setAttribute('tabindex', '-1');
     target.focus({ preventScroll: true });
   }
@@ -128,13 +151,11 @@
   /* =============================
      Scrollspy
   ============================== */
-  const sections = ['#inicio', '#sobre', '#projetos', '#experiencia', '#contato']
+  const sections = ['#inicio', '#sobre', '#projetos', '#servicos', '#experiencia', '#depoimentos', '#contato']
     .map(id => ({ id, el: $(id) }))
     .filter(s => s.el);
 
-  const navLinks = new Map(
-    $$('#menu a').map(a => [a.getAttribute('href'), a])
-  );
+  const navLinks = new Map($$('#menu a').map(a => [a.getAttribute('href'), a]));
 
   if ('IntersectionObserver' in window && sections.length) {
     const spy = new IntersectionObserver(entries => {
@@ -142,16 +163,16 @@
         const href = `#${entry.target.id}`;
         const link = navLinks.get(href);
         if (!link) return;
-        if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-          $$('#menu a').forEach(a => a.classList.remove('active'));
+        if (entry.isIntersecting && entry.intersectionRatio > 0.55) {
+          $$('#menu a').forEach(a => { a.classList.remove('active'); a.removeAttribute('aria-current'); });
           link.classList.add('active');
+          link.setAttribute('aria-current', 'page');
         }
       });
-    }, { rootMargin: `-${headerHeight() + 16}px 0px -45% 0px`, threshold: [0.5, 0.75, 1] });
+    }, { rootMargin: `-${headerHeight() + 16}px 0px -45% 0px`, threshold: [0.55, 0.75, 1] });
 
     sections.forEach(s => spy.observe(s.el));
 
-    // Estilo mínimo para o estado ativo (injeta se não existir no CSS)
     if (!$('#__activeStyle')) {
       const st = document.createElement('style');
       st.id = '__activeStyle';
@@ -186,7 +207,7 @@
   });
 
   /* =============================
-     CountUp: use <span data-count-to="1500" data-duration="1200"></span>
+     CountUp: <span data-count-to="1500" data-duration="1200"></span>
   ============================== */
   const counters = $$('[data-count-to]');
   if (counters.length) {
@@ -213,11 +234,37 @@
   }
 
   /* =============================
+     Filtro de projetos (data-tags)
+  ============================== */
+  const chips = $$('.filters .chip');
+  const cards = $$('.project');
+
+  function setFilter(tag) {
+    cards.forEach(card => {
+      const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+      const show = tag === 'all' || tags.includes(tag);
+      card.classList.toggle('hidden', !show);
+    });
+  }
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => { c.classList.remove('active'); c.setAttribute('aria-pressed', 'false'); });
+      chip.classList.add('active');
+      chip.setAttribute('aria-pressed', 'true');
+      setFilter(chip.getAttribute('data-filter'));
+    });
+  });
+
+  /* Inicializa com “Todos” */
+  setFilter('all');
+
+  /* =============================
      Tilt nos cards de projeto
   ============================== */
   if (!prefersReduced && !isTouch()) {
     $$('.project').forEach(card => {
-      const strength = 8; // graus
+      const strength = 8;
       card.style.willChange = 'transform';
       card.addEventListener('mousemove', (e) => {
         const r = card.getBoundingClientRect();
@@ -229,9 +276,7 @@
         const ry = (dx * strength).toFixed(2);
         card.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg)`;
       });
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-      });
+      card.addEventListener('mouseleave', () => { card.style.transform = ''; });
     });
   }
 })();

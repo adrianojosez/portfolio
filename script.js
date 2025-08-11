@@ -11,6 +11,29 @@
  * - Tilt suave nos .project (não em touch/reduced motion)
  */
 
+/* trechos relevantes apenas — pode substituir seu main.js por este inteiro */
+
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Ano atual
+  const yearEl = $('#year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  // AOS (com marcação para liberar fallback)
+  try {
+    if (window.AOS) {
+      AOS.init({ offset: 0, once: true, disable: prefersReduced });
+      document.documentElement.classList.add('aos-enabled');
+    }
+  } catch(e){ /* noop */ }
+
+  /* ... resto do seu main.js (tema, menu, smooth scroll, scrollspy, back-to-top, countup, filtro, tilt) ... */
+})();
+
+
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
@@ -280,3 +303,4 @@
     });
   }
 })();
+

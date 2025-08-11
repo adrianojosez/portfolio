@@ -1,7 +1,5 @@
 /*
-  style.css — Portfólio Adriano v2
-  Autor: Adriano José
-  Objetivo: estilos modernos, acessíveis e responsivos para o HTML fornecido
+  style.css — Portfólio Adriano v3
   Paleta: primary #8cc7d6, secondary #bda368, tertiary #68bdd1
 */
 
@@ -13,20 +11,32 @@
   --secondary: #bda368;
   --tertiary: #68bdd1;
 
-  --bg: #0b1116;        /* fundo geral */
-  --card: #0f1720;      /* blocos/cartões */
-  --surface: #0c141b;   /* camadas elevadas */
-  --text: #e8eef2;      /* texto principal */
-  --muted: #a9b7bf;     /* texto secundário */
+  --bg: #0b1116;
+  --card: #0f1720;
+  --surface: #0c141b;
+  --text: #e8eef2;
+  --muted: #a9b7bf;
   --border: rgba(255,255,255,.08);
   --shadow: 0 10px 30px rgba(0,0,0,.3);
 
   --radius: 18px;
   --container: 1120px;
 }
-
-/* Ajuda o navegador a usar temas escuros por padrão */
 :root { color-scheme: dark; }
+
+/* Tema claro */
+[data-theme="light"] {
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --surface: #ffffff;
+  --text: #0c1116;
+  --muted: #44515a;
+  --border: rgba(0,0,0,.08);
+  --shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+[data-theme="light"] .gradient {
+  filter: none;
+}
 
 /* Reset/normalização leve */
 *, *::before, *::after { box-sizing: border-box; }
@@ -42,8 +52,8 @@ body {
   min-height: 100dvh;
 }
 img { max-width: 100%; display: block; }
-svg { display: block; }
 a { color: inherit; text-decoration: none; }
+svg { display: block; }
 
 /* Seleção de texto personalizada */
 ::selection { background: rgba(140,199,214,.25); color: var(--text); }
@@ -53,11 +63,10 @@ a { color: inherit; text-decoration: none; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .skip-link { position: absolute; left: -9999px; }
 .skip-link:focus { left: 1rem; top: 1rem; background: var(--primary); color: #001015; padding: .6rem .9rem; border-radius: .5rem; z-index: 9999; }
+.hidden { display: none !important; }
 
 /* Foco visível acessível */
-:where(a, button, [role="button"]) {
-  outline: none;
-}
+:where(a, button, [role="button"]) { outline: none; }
 :where(a, button, [role="button"]):focus-visible {
   box-shadow: 0 0 0 3px rgba(140,199,214,.35), 0 0 0 6px rgba(140,199,214,.18);
   border-radius: 12px;
@@ -69,32 +78,40 @@ a { color: inherit; text-decoration: none; }
 .site-header {
   position: sticky; top: 0; z-index: 50;
   backdrop-filter: saturate(140%) blur(10px);
-  background: linear-gradient(180deg, rgba(11,17,22,.75), rgba(11,17,22,.45));
+  background: linear-gradient(180deg, color-mix(in oklab, var(--bg) 80%, transparent), color-mix(in oklab, var(--bg) 55%, transparent));
   border-bottom: 1px solid var(--border);
 }
-.nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.nav { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: .8rem; }
 .brand { display: flex; align-items: center; gap: .6rem; font-weight: 800; letter-spacing: .2px; }
 .brand span { color: var(--primary); }
+
+.nav-actions { display: flex; align-items: center; gap: .5rem; }
+.icon-btn {
+  width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text);
+}
 
 .menu { display: flex; align-items: center; gap: .8rem; }
 .menu a { padding: .55rem .8rem; border-radius: .7rem; font-weight: 500; color: var(--muted); transition: background .18s ease, color .18s ease; }
 .menu a:hover, .menu a:focus { color: var(--text); background: rgba(140,199,214,.12); }
 
 .menu-cta { display: none; }
-.menu-toggle { display: none; background: transparent; color: var(--text); border: 1px solid var(--border); width: 40px; height: 40px; border-radius: 10px; align-items: center; justify-content: center; }
+.menu-toggle { display: none; }
 
 /* =============================
    Hero
 ================================ */
 .hero { padding: 96px 0 48px; }
 .hero-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 2rem; align-items: center; }
-
 .eyebrow { display: inline-flex; align-items: center; gap: .5rem; padding: .35rem .6rem; border: 1px solid var(--border); border-radius: 999px; color: var(--muted); font-size: .9rem; }
 .eyebrow i { color: var(--primary); font-size: 1.1rem; }
-
 h1 { margin: .6rem 0 0; font-size: clamp(2.2rem, 6vw, 3.25rem); line-height: 1.1; letter-spacing: .2px; }
 .gradient { background: linear-gradient(90deg, var(--text) 10%, var(--primary) 50%, var(--tertiary) 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .subtitle { margin: .75rem 0 1.25rem; color: var(--muted); font-size: 1.05rem; max-width: 60ch; }
+
+.metrics { display: flex; gap: 1rem; padding: 0; margin: 0 0 1rem; list-style: none; flex-wrap: wrap; }
+.metrics li { border: 1px solid var(--border); border-radius: 12px; padding: .6rem .8rem; background: color-mix(in oklab, var(--card) 85%, transparent); }
+.metrics span { font-weight: 800; margin-right: .3rem; }
 
 .btn-row { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 1rem; }
 .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .85rem 1rem; border-radius: .9rem; border: 1px solid var(--border); font-weight: 600; transition: transform .12s ease, background .18s ease, color .18s ease; }
@@ -110,6 +127,7 @@ h1 { margin: .6rem 0 0; font-size: clamp(2.2rem, 6vw, 3.25rem); line-height: 1.1
 .hero-card { background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; display: grid; grid-template-columns: 56px 1fr; gap: .9rem; align-items: center; }
 .avatar { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, var(--primary), var(--tertiary)); display: grid; place-items: center; color: #062129; font-weight: 800; }
 .hero-card small { color: var(--muted); }
+.spacer { height: .8rem; }
 
 /* =============================
    Seções comuns
@@ -129,7 +147,13 @@ section { padding: 72px 0; }
 /* =============================
    Projetos
 ================================ */
+.filters { display: flex; gap: .5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.chip { border: 1px solid var(--border); background: rgba(255,255,255,.03); color: var(--text); padding: .45rem .75rem; border-radius: 999px; cursor: pointer; }
+.chip:hover { background: rgba(255,255,255,.06); }
+.chip.active { background: linear-gradient(180deg, var(--primary), var(--tertiary)); color: #062129; border-color: transparent; }
+
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
 .project { position: relative; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1rem; overflow: hidden; transition: transform .12s ease, box-shadow .18s ease; }
 .project:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
 .project h3 { margin: .4rem 0 .4rem; font-size: 1.1rem; }
@@ -139,11 +163,27 @@ section { padding: 72px 0; }
 .project .actions { margin-top: .8rem; display: flex; gap: .6rem; }
 
 /* =============================
+   Serviços
+================================ */
+.service { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1rem; }
+.service i { font-size: 1.6rem; color: var(--primary); }
+.service h3 { margin: .6rem 0; }
+.service ul { padding-left: 1.1rem; margin: 0; color: var(--muted); }
+
+/* =============================
    Experiência
 ================================ */
 .timeline { display: grid; gap: .9rem; }
 .item { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1rem; display: grid; grid-template-columns: 1fr auto; gap: .6rem; align-items: center; }
 .item small { color: var(--muted); }
+
+/* =============================
+   Depoimentos
+================================ */
+.testimonials .testimonial {
+  background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1rem; font-style: italic;
+}
+.testimonials footer { margin-top: .6rem; color: var(--muted); font-style: normal; }
 
 /* =============================
    Contato
@@ -162,9 +202,8 @@ footer { padding: 36px 0 48px; color: var(--muted); text-align: center; }
 @media (max-width: 960px) {
   .hero-grid { grid-template-columns: 1fr; }
   .about { grid-template-columns: 1fr; }
-  .grid { grid-template-columns: repeat(2, 1fr); }
+  .grid, .grid-3 { grid-template-columns: repeat(2, 1fr); }
 }
-
 @media (max-width: 720px) {
   .menu {
     position: fixed; inset: 64px 1rem auto 1rem;
@@ -175,8 +214,8 @@ footer { padding: 36px 0 48px; color: var(--muted); text-align: center; }
   }
   .menu.open { transform: scale(1); opacity: 1; pointer-events: auto; }
   .menu-cta { display: inline-flex; }
-  .menu-toggle { display: inline-flex; }
-  .grid { grid-template-columns: 1fr; }
+  .menu-toggle { display: inline-flex; background: transparent; color: var(--text); border: 1px solid var(--border); width: 40px; height: 40px; border-radius: 10px; align-items: center; justify-content: center; }
+  .grid, .grid-3 { grid-template-columns: 1fr; }
 }
 
 /* =============================
@@ -185,4 +224,13 @@ footer { padding: 36px 0 48px; color: var(--muted); text-align: center; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .btn, .project, .social a { transition: none; }
+}
+
+/* =============================
+   Impressão
+================================ */
+@media print {
+  .site-header, .social, .filters, .btn-row, .nav-actions { display: none !important; }
+  body { background: #fff; color: #000; }
+  .card, .project, .service, .testimonial { border-color: #ccc; }
 }

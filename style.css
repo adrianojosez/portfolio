@@ -333,13 +333,14 @@ html{
 /* seus valores */
 .metrics [data-count-to="5"]  { --target: 5;  --dur: 1000ms; --steps: 5;  }
 .metrics [data-count-to="30"] { --target: 30; --dur: 1200ms; --steps: 30; }
-.metrics [data-count-to="10"] { --target: 10; --dur: 1100ms; --steps: 10; }
+.metrics [data-count-to="12"] { --target: 12; --dur: 1100ms; --steps: 12; }
 
 /* acessibilidade */
 @media (prefers-reduced-motion: reduce){
   .metrics [data-count-to]{ animation: none; color: inherit; }
   .metrics [data-count-to]::after{ content: "+" attr(data-count-to); color: var(--text); }
 }
+
 
 
 

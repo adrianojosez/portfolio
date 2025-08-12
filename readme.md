@@ -74,14 +74,14 @@ Escuta ativa, escrita clara, autonomia, colaboração, foco em métricas
 
 * Site: https://seu-dominio.com  
 * Projetos em destaque: dashboards, sites institucionais e bibliotecas de componentes
-* Repositórios: https://github.com/SEU_USUARIO
+* Repositórios: https://github.com/adrianojosez
 
 ## Contato
 
 * E-mail: adrianojose.dev@gmail.com  
-* LinkedIn: https://www.linkedin.com/in/SEU_USUARIO  
+* LinkedIn: https://www.linkedin.com/in/adrianojosez  
 * WhatsApp: https://wa.me/5513981242306  
-* Calendly: https://calendly.com/SEU_USUARIO/30min
+* Calendly: https://calendly.com/adrianojose-dev/30min
 
 ## Disponibilidade
 

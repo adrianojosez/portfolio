@@ -1,9 +1,48 @@
-// main.js — Portfólio Adriano v3 (ajustado: IIFE única, ícone do tema fixo, contador JS)
+/* main.js — Portfólio Adriano v3
+ * Funcionalidades:
+ * - AOS (respeita prefers-reduced-motion)
+ * - Tema claro/escuro com persistência + atualização do theme-color
+ * - Menu mobile acessível (Esc, clique fora, focus trap)
+ * - Smooth scroll com offset do header + foco no destino
+ * - Scrollspy (link ativo + aria-current)
+ * - Botão “voltar ao topo”
+ * - CountUp para [data-count-to]
+ * - Filtro de projetos por tags (data-tags)
+ * - Tilt suave nos .project (não em touch/reduced motion)
+ */
+
+/* trechos relevantes apenas — pode substituir seu main.js por este inteiro */
 
 (() => {
-  const $  = (s, r = document) => r.querySelector(s);
+  const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Ano atual
+  const yearEl = $('#year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  // AOS (com marcação para liberar fallback)
+  try {
+    if (window.AOS) {
+      AOS.init({ offset: 0, once: true, disable: prefersReduced });
+      document.documentElement.classList.add('aos-enabled');
+    }
+  } catch(e){ /* noop */ }
+
+  /* ... resto do seu main.js (tema, menu, smooth scroll, scrollspy, back-to-top, countup, filtro, tilt) ... */
+})();
+
+
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+  /* =============================
+     Utilidades
+  ============================== */
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isTouch = () => matchMedia('(hover: none), (pointer: coarse)').matches;
   const header = $('.site-header');
 
   /* =============================
@@ -13,45 +52,32 @@
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   /* =============================
-     AOS (e marca aos-enabled para fallback de CSS)
+     AOS
   ============================== */
-  try {
-    if (window.AOS) {
-      AOS.init({ offset: 0, once: true, disable: prefersReduced });
-      document.documentElement.classList.add('aos-enabled');
-    }
-  } catch(e){ /* noop */ }
+  if (window.AOS) {
+    AOS.init({ offset: 0, once: true, disable: prefersReduced });
+  }
 
   /* =============================
-     Tema claro/escuro (persistência + icon fix)
+     Tema claro/escuro
   ============================== */
-  const themeKey  = 'theme';
-  const root      = document.documentElement;
-  const themeBtn  = $('#theme-toggle');
+  const themeKey = 'theme';
+  const root = document.documentElement;
+  const themeBtn = $('#theme-toggle');
   const themeMeta = $('meta[name="theme-color"]');
-  const mqDark    = window.matchMedia('(prefers-color-scheme: dark)');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const savedTheme = localStorage.getItem(themeKey);
-  const initialTheme = savedTheme || (mqDark.matches ? 'dark' : 'light');
-
-  function setThemeIcon(theme) {
-    const i = themeBtn?.querySelector('i');
-    if (!i) return;
-    i.classList.remove('bx-moon', 'bx-sun');
-    i.classList.add(theme === 'dark' ? 'bx-sun' : 'bx-moon');
-  }
+  const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
 
   function applyTheme(t) {
     root.setAttribute('data-theme', t);
-    setThemeIcon(t);
+    themeBtn?.querySelector('i')?.classList.toggle('bx-moon', t !== 'dark');
+    themeBtn?.querySelector('i')?.classList.toggle('bx-sun', t === 'dark');
+    // Ajusta cor da barra do navegador
     if (themeMeta) themeMeta.setAttribute('content', t === 'dark' ? '#0b1116' : '#f6f8fb');
     localStorage.setItem(themeKey, t);
   }
   applyTheme(initialTheme);
-
-  // Atualiza se o SO mudar e usuário não tiver escolhido manualmente
-  if (!savedTheme && mqDark?.addEventListener) {
-    mqDark.addEventListener('change', e => applyTheme(e.matches ? 'dark' : 'light'));
-  }
 
   themeBtn?.addEventListener('click', () => {
     const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
@@ -62,8 +88,8 @@
      Menu mobile acessível
   ============================== */
   const toggle = $('.menu-toggle');
-  const menu   = $('#menu');
-  const nav    = $('header .nav') || $('.nav');
+  const menu = $('#menu');
+  const nav = $('header .nav') || $('.nav');
 
   const focusableSelector = 'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])';
   let lastFocusedBeforeOpen = null;
@@ -73,7 +99,7 @@
     lastFocusedBeforeOpen = document.activeElement;
     toggle.setAttribute('aria-expanded', 'true');
     menu.classList.add('open');
-    const focusables = $$(focusableSelector, menu).filter(el => !el.hasAttribute('disabled'));
+    const focusables = $$(focusableSelector, menu);
     focusables[0]?.focus({ preventScroll: true });
     document.addEventListener('keydown', onKeydown);
     document.addEventListener('click', onDocClick);
@@ -92,9 +118,9 @@
     if (e.key === 'Escape') return closeMenu();
     if (e.key !== 'Tab') return;
     const focusables = $$(focusableSelector, menu).filter(el => !el.hasAttribute('disabled'));
-    if (!focusables.length) return;
+    if (focusables.length === 0) return;
     const first = focusables[0];
-    const last  = focusables[focusables.length - 1];
+    const last = focusables[focusables.length - 1];
     if (e.shiftKey && document.activeElement === first) {
       e.preventDefault(); last.focus();
     } else if (!e.shiftKey && document.activeElement === last) {
@@ -103,7 +129,7 @@
   }
 
   function onDocClick(e) {
-    if (!menu?.classList.contains('open')) return;
+    if (!menu.classList.contains('open')) return;
     if (!nav.contains(e.target) && e.target !== toggle) {
       closeMenu();
     }
@@ -116,14 +142,17 @@
   $$('#menu a').forEach(a => a.addEventListener('click', () => closeMenu()));
 
   /* =============================
-     Smooth scroll com offset + foco
+     Smooth scroll com offset
   ============================== */
   const headerHeight = () => header?.offsetHeight ?? 64;
 
   function smoothScrollTo(target) {
     const y = target.getBoundingClientRect().top + window.pageYOffset - (headerHeight() + 8);
-    if (prefersReduced) window.scrollTo(0, y);
-    else window.scrollTo({ top: y, behavior: 'smooth' });
+    if (prefersReduced) {
+      window.scrollTo(0, y);
+    } else {
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
     target.setAttribute('tabindex', '-1');
     target.focus({ preventScroll: true });
   }
@@ -201,7 +230,7 @@
   });
 
   /* =============================
-     CountUp (prefixo +, IO + rAF)
+     CountUp: <span data-count-to="1500" data-duration="1200"></span>
   ============================== */
   const counters = $$('[data-count-to]');
   if (counters.length) {
@@ -210,7 +239,7 @@
         if (!entry.isIntersecting) return;
         const el = entry.target;
         io.unobserve(el);
-        const to  = parseFloat(el.getAttribute('data-count-to')) || 0;
+        const to = parseFloat(el.getAttribute('data-count-to')) || 0;
         const dur = parseInt(el.getAttribute('data-duration'), 10) || 1000;
         const start = performance.now();
         const from = 0;
@@ -218,7 +247,7 @@
         function tick(t) {
           const p = Math.min(1, (t - start) / dur);
           const val = Math.floor(from + (to - from) * p);
-          el.textContent = `+${fmt.format(val)}`;
+          el.textContent = fmt.format(val);
           if (p < 1) requestAnimationFrame(tick);
         }
         requestAnimationFrame(tick);
@@ -250,12 +279,12 @@
     });
   });
 
+  /* Inicializa com “Todos” */
   setFilter('all');
 
   /* =============================
-     Tilt nos cards (desktop / not reduced)
+     Tilt nos cards de projeto
   ============================== */
-  const isTouch = () => matchMedia('(hover: none), (pointer: coarse)').matches;
   if (!prefersReduced && !isTouch()) {
     $$('.project').forEach(card => {
       const strength = 8;
@@ -274,3 +303,5 @@
     });
   }
 })();
+
+

@@ -142,6 +142,79 @@
   $$('#menu a').forEach(a => a.addEventListener('click', () => closeMenu()));
 
   /* =============================
+   Menu mobile acessível (FIX)
+============================= */
+{
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+  const toggle = $('.menu-toggle');
+  const menu   = $('#menu');
+  const nav    = $('header .nav') || $('.nav');
+
+  const focusableSelector = 'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])';
+  let lastFocus = null;
+
+  const isOpen = () => menu?.classList.contains('open');
+
+  function openMenu() {
+    if (!toggle || !menu) return;
+    lastFocus = document.activeElement;
+    toggle.setAttribute('aria-expanded', 'true');
+    menu.classList.add('open');
+
+    // foco inicial dentro do menu
+    const focusables = $$(focusableSelector, menu).filter(el => !el.hasAttribute('disabled'));
+    focusables[0]?.focus({ preventScroll: true });
+
+    document.addEventListener('click', onDocClick);
+    document.addEventListener('keydown', onKeydown);
+  }
+
+  function closeMenu() {
+    if (!toggle || !menu) return;
+    toggle.setAttribute('aria-expanded', 'false');
+    menu.classList.remove('open');
+
+    document.removeEventListener('click', onDocClick);
+    document.removeEventListener('keydown', onKeydown);
+
+    // volta o foco para o botão
+    lastFocus?.focus?.({ preventScroll: true });
+  }
+
+  function onDocClick(e) {
+    // fecha ao clicar fora da NAV (botão + menu)
+    if (nav && !nav.contains(e.target)) closeMenu();
+  }
+
+  function onKeydown(e) {
+    if (e.key === 'Escape') { closeMenu(); return; }
+    if (e.key !== 'Tab' || !isOpen()) return;
+
+    // focus trap simples
+    const focusables = $$(focusableSelector, menu).filter(el => !el.hasAttribute('disabled'));
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last  = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  }
+
+  // abre/fecha pelo botão (e garante que o clique no ícone não “perca” o evento)
+  toggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    isOpen() ? closeMenu() : openMenu();
+  });
+
+  // fecha ao clicar em qualquer link do menu
+  $$('#menu a').forEach(a => a.addEventListener('click', () => closeMenu()));
+}
+
+  /* =============================
      Smooth scroll com offset
   ============================== */
   const headerHeight = () => header?.offsetHeight ?? 64;
@@ -303,4 +376,5 @@
     });
   }
 })();
+
 

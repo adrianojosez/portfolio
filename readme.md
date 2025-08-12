@@ -72,7 +72,7 @@ Escuta ativa, escrita clara, autonomia, colaboração, foco em métricas
 
 ## Portfólio
 
-* Site: https://seu-dominio.com  
+* Site: https://adrianojosedev.netlify.app/
 * Projetos em destaque: dashboards, sites institucionais e bibliotecas de componentes
 * Repositórios: https://github.com/adrianojosez
 

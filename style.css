@@ -249,3 +249,54 @@ footer { padding: 36px 0 48px; color: var(--muted); text-align: center; }
 
 /* AOS fallback também no CSS (redundância segura) */
 html:not(.aos-enabled) [data-aos] { opacity: 1 !important; transform: none !important; }
+
+/* =============================
+   Scrollbar estilizado (global)
+   Chrome/Edge/Safari + Firefox
+================================ */
+
+/* vars do scrollbar (podem ficar aqui mesmo) */
+:root{
+  --scroll-thumb: rgba(140,199,214,.65);  /* primary com leve transparência */
+  --scroll-thumb-hover: rgba(140,199,214,.9);
+  --scroll-track: rgba(255,255,255,.08);  /* combina com var(--border)/surface */
+}
+[data-theme="light"]{
+  --scroll-thumb: #8cc7d6cc;
+  --scroll-thumb-hover: #8cc7d6;
+  --scroll-track: rgba(0,0,0,.08);
+}
+
+/* Firefox */
+html{
+  scrollbar-width: thin;                             /* thin | auto */
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+  scrollbar-gutter: stable both-edges;               /* evita “salto” de layout */
+}
+
+/* Chrome, Edge e Safari */
+*::-webkit-scrollbar{
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track{
+  background: var(--scroll-track);
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-thumb{
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--primary), var(--tertiary));
+  border: 2px solid transparent;                     /* cria “respiro” visual */
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover{
+  background: linear-gradient(180deg, var(--primary), var(--tertiary));
+  box-shadow: inset 0 0 0 999px var(--scroll-thumb-hover);
+}
+
+/* mais fino em telas pequenas */
+@media (max-width: 720px){
+  *::-webkit-scrollbar{ width: 8px; height: 8px; }
+}
+
+

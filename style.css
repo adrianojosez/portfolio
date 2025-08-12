@@ -300,8 +300,8 @@ html{
 }
 
 /* =============================
-   Contador animado só com CSS
-   (Chrome/Edge/Safari) — Firefox mostra o valor final sem animação
+   Contador animado só com CSS (Houdini)
+   Chrome/Edge/Safari animam; Firefox mostra o valor final
 ================================ */
 @property --num {
   syntax: "<integer>";
@@ -311,16 +311,16 @@ html{
 
 .metrics [data-count-to]{
   position: relative;
-  color: transparent;                 /* esconde o texto original (+5, +30...) */
+  color: transparent;                 /* esconde o texto do span (+5 etc.) */
   --num: 0;
   counter-reset: n var(--num);
   animation: countUp var(--dur, 1s) steps(var(--steps, 10)) forwards;
 }
 
-/* desenha o número animado (com + na frente) */
+/* AGORA visível: não herda o transparente */
 .metrics [data-count-to]::after{
   content: "+" counter(n);
-  color: inherit;
+  color: var(--text);                 /* <- correção */
   font-weight: 800;
 }
 
@@ -330,16 +330,17 @@ html{
   to   { --num: var(--target); }
 }
 
-/* Seus três valores atuais */
+/* seus valores */
 .metrics [data-count-to="5"]  { --target: 5;  --dur: 1000ms; --steps: 5;  }
 .metrics [data-count-to="30"] { --target: 30; --dur: 1200ms; --steps: 30; }
 .metrics [data-count-to="10"] { --target: 10; --dur: 1100ms; --steps: 10; }
 
-/* Respeita quem prefere menos movimento */
+/* acessibilidade */
 @media (prefers-reduced-motion: reduce){
   .metrics [data-count-to]{ animation: none; color: inherit; }
-  .metrics [data-count-to]::after{ content: attr(data-count-to); }
+  .metrics [data-count-to]::after{ content: "+" attr(data-count-to); color: var(--text); }
 }
+
 
 
 

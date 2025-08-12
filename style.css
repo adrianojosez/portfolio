@@ -299,6 +299,49 @@ html{
   *::-webkit-scrollbar{ width: 8px; height: 8px; }
 }
 
+/* =============================
+   Contador animado só com CSS (Houdini)
+   Chrome/Edge/Safari animam; Firefox mostra o valor final
+================================ */
+@property --num {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+
+.metrics [data-count-to]{
+  position: relative;
+  color: transparent;                 /* esconde o texto do span (+5 etc.) */
+  --num: 0;
+  counter-reset: n var(--num);
+  animation: countUp var(--dur, 1s) steps(var(--steps, 10)) forwards;
+}
+
+/* AGORA visível: não herda o transparente */
+.metrics [data-count-to]::after{
+  content: "+" counter(n);
+  color: var(--text);                 /* <- correção */
+  font-weight: 800;
+}
+
+/* anima a variável até o alvo */
+@keyframes countUp {
+  from { --num: 0; }
+  to   { --num: var(--target); }
+}
+
+/* seus valores */
+.metrics [data-count-to="5"]  { --target: 5;  --dur: 1000ms; --steps: 5;  }
+.metrics [data-count-to="30"] { --target: 30; --dur: 1200ms; --steps: 30; }
+.metrics [data-count-to="10"] { --target: 10; --dur: 1100ms; --steps: 10; }
+
+/* acessibilidade */
+@media (prefers-reduced-motion: reduce){
+  .metrics [data-count-to]{ animation: none; color: inherit; }
+  .metrics [data-count-to]::after{ content: "+" attr(data-count-to); color: var(--text); }
+}
+
+
 
 
 

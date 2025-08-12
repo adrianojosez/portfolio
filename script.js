@@ -308,7 +308,6 @@
      Bloquear Acesso ao código fonte da página
   ============================== */
 
-  <script>
 // Desabilitar clique direito
 document.addEventListener('contextmenu', event => event.preventDefault());
 
@@ -335,7 +334,7 @@ document.addEventListener('keydown', event => {
     event.preventDefault();
   }
 });
-</script>
+
 
 
 

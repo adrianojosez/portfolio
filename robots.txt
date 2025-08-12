@@ -1,0 +1,10 @@
+# robots.txt — Adriano José
+# Produção: permitir rastreamento do site inteiro
+
+User-agent: *
+Allow: /
+Disallow: /404.html
+Disallow: /assets/temp/
+Disallow: /private/
+
+Sitemap: https://adrianojosedev.netlify.app/sitemap.xml

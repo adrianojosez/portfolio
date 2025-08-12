@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!doctype html>
 <html lang="pt-BR" data-theme="dark">
 <head>
@@ -11,30 +10,31 @@
   <link rel="canonical" href="https://adrianojosedev.netlify.app/" />
   <link rel="icon" type="image/svg+xml" href="https://api.iconify.design/tabler:bolt.svg?color=%238cc7d6&v=1">
 
-  <!-- Robots: versão mais completa -->
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="robots" content="index, follow, max-image-preview:large">
 
-  <!-- Open Graph -->
+  <!-- Open Graph / Twitter -->
   <meta property="og:title" content="Adriano José | Desenvolvedor Front End">
   <meta property="og:description" content="Interfaces rápidas, acessíveis e com foco em resultados.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://adrianojosedev.netlify.app/">
   <meta property="og:image" content="https://adrianojosedev.netlify.app/og-image.jpg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Adriano José — Desenvolvedor Front End">
   <meta property="og:site_name" content="Adriano José">
-
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Adriano José | Desenvolvedor Front End">
   <meta name="twitter:description" content="Interfaces rápidas, acessíveis e com foco em resultados.">
   <meta name="twitter:image" content="https://adrianojosedev.netlify.app/og-image.jpg">
 
-  <!-- Preconnects extras -->
-  <link rel="preconnect" href="https://unpkg.com">
-  <link rel="dns-prefetch" href="//unpkg.com">
-  <link rel="preconnect" href="https://api.iconify.design">
+  <!-- Imagem principal de compartilhamento -->
+  <meta property="og:image" content="https://adrianojosedev.netlify.app/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Adriano José — Desenvolvedor Front End">
+  
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Adriano José | Desenvolvedor Front End">
+  <meta name="twitter:description" content="Interfaces rápidas, acessíveis e com foco em resultados.">
+  <meta name="twitter:image" content="https://adrianojosedev.netlify.app/og-image.jpg">
 
   <!-- Fonts / Icons / Styles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -72,26 +72,27 @@
   }
   </script>
 
-  <!-- Schema.org: WebSite -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
+<!-- Schema.org: WebSite -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Adriano José",
+  "url": "https://adrianojosedev.netlify.app/",
+  "inLanguage": "pt-BR",
+  "description": "Portfólio de Adriano José. Interfaces rápidas, acessíveis e focadas em resultados.",
+  "publisher": {
+    "@type": "Person",
     "name": "Adriano José",
     "url": "https://adrianojosedev.netlify.app/",
-    "inLanguage": "pt-BR",
-    "description": "Portfólio de Adriano José. Interfaces rápidas, acessíveis e focadas em resultados.",
-    "publisher": {
-      "@type": "Person",
-      "name": "Adriano José",
-      "url": "https://adrianojosedev.netlify.app/",
-      "sameAs": [
-        "https://github.com/adrianojosez",
-        "https://www.linkedin.com/in/adrianojosez"
-      ]
-    }
+    "sameAs": [
+      "https://github.com/adrianojosez",
+      "https://www.linkedin.com/in/adrianojosez"
+    ]
   }
-  </script>
+}
+</script>
+
 </head>
 
 <body>
@@ -113,8 +114,7 @@
           </button>
         </div>
 
-        <!-- Removido role redundante -->
-        <div id="menu" class="menu">
+        <div id="menu" class="menu" role="navigation">
           <a href="#inicio">Início</a>
           <a href="#sobre">Sobre</a>
           <a href="#projetos">Projetos</a>
@@ -144,10 +144,9 @@
           </p>
 
           <ul class="metrics" aria-label="Métricas">
-            <li><span data-count-to="5"  data-duration="1200">+5</span> anos de experiência</li>
-            <li><span data-count-to="30" data-duration="1200">+30</span> projetos entregues</li>
-            <!-- corrigido para 12 -->
-            <li><span data-count-to="12" data-duration="1200">+12</span> clientes atendidos</li>
+            <li><span data-count-to="5"  data-duration="1200" style="--target:5;  --steps:5;  --dur:1000ms">+5</span> anos de experiência</li>
+            <li><span data-count-to="30" data-duration="1200" style="--target:30; --steps:30; --dur:1200ms">+30</span> projetos entregues</li>
+            <li><span data-count-to="10" data-duration="1200" style="--target:10; --steps:10; --dur:1200ms">+12</span> clientes atendidos</li>
           </ul>
 
           <div class="btn-row" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="300">
@@ -157,7 +156,7 @@
             <a class="btn ghost" href="#contato">
               <i class='bx bx-briefcase'></i> Contrate-me
             </a>
-            <a class="btn ghost" href="https://calendly.com/adrianojose-dev/30min" target="_blank" rel="noopener noreferrer">
+            <a class="btn ghost" href="https://calendly.com/adrianojose-dev/30min" target="_blank" rel="noopener">
               <i class='bx bx-calendar'></i> Agendar conversa
             </a>
           </div>
@@ -231,17 +230,17 @@
           <p data-aos="fade-left">Projetos em destaque</p>
         </div>
 
-        <div class="filters" role="toolbar" aria-label="Filtrar projetos" aria-controls="projetos-grid" data-aos="fade-up">
+        <div class="filters" role="toolbar" aria-label="Filtrar projetos" data-aos="fade-up">
           <button class="chip active" type="button" data-filter="all" aria-pressed="true">Todos</button>
           <button class="chip" type="button" data-filter="react" aria-pressed="false">React</button>
           <button class="chip" type="button" data-filter="nextjs" aria-pressed="false">Next.js</button>
           <button class="chip" type="button" data-filter="typescript" aria-pressed="false">TypeScript</button>
         </div>
 
-        <div id="projetos-grid" class="grid" data-aos="fade-up" data-aos-duration="900">
-          <article class="project" aria-labelledby="proj-dashboard" data-tags="react spa api">
+        <div class="grid" data-aos="fade-up" data-aos-duration="900">
+          <article class="project" data-tags="react spa api">
             <small class="tag">React</small>
-            <h3 id="proj-dashboard">Dashboard de Métricas</h3>
+            <h3>Dashboard de Métricas</h3>
             <p>SPA com gráficos, autenticação e API. Foco em performance e UX.</p>
             <div class="actions">
               <a class="btn ghost" href="#" aria-label="Abrir a versão ao vivo de Dashboard de Métricas">
@@ -253,9 +252,9 @@
             </div>
           </article>
 
-          <article class="project" aria-labelledby="proj-site" data-tags="nextjs seo ssg">
+          <article class="project" data-tags="nextjs seo ssg">
             <small class="tag">Next.js</small>
-            <h3 id="proj-site">Site Institucional</h3>
+            <h3>Site Institucional</h3>
             <p>Páginas otimizadas para SEO com geração estática e design limpo.</p>
             <div class="actions">
               <a class="btn ghost" href="#" aria-label="Abrir a versão ao vivo de Site Institucional">
@@ -267,9 +266,9 @@
             </div>
           </article>
 
-          <article class="project" aria-labelledby="proj-lib" data-tags="typescript lib ui">
+          <article class="project" data-tags="typescript lib ui">
             <small class="tag">TypeScript</small>
-            <h3 id="proj-lib">Component Library</h3>
+            <h3>Component Library</h3>
             <p>Biblioteca de componentes reutilizáveis com documentação.</p>
             <div class="actions">
               <a class="btn ghost" href="#" aria-label="Abrir a versão ao vivo de Component Library">
@@ -356,34 +355,35 @@
           <h2 data-aos="fade-right">Depoimentos</h2>
           <p data-aos="fade-left">O que dizem</p>
         </div>
-        <div class="grid grid-3 testimonials" data-aos="fade-up">
-          <a href="https://www.linkedin.com/in/adrianojosez/details/recommendations/?detailScreenTabIndex=0"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Ver recomendações no LinkedIn de Adriano José">
-            <blockquote class="testimonial">
-              <p>“Tive a oportunidade de acompanhar o Adriano de perto durante alguns meses, e vi uma evolução gigantesca em várias áreas, mas principalmente nas suas softskills, principalmente nas suas habilidades de comunicação e de escuta ativa. Dada essa evolução em tao pouco tempo, tenho certeza que ele tem o potencial de se tornar um profissional fora da curva! Recomendo demais para todos esse profissional incrível.”</p>
-              <footer>— Ian, Líder Técnico</footer>
-            </blockquote>
-          </a>
+<div class="grid grid-3 testimonials" data-aos="fade-up">
+  <a href="https://www.linkedin.com/in/adrianojosez/details/recommendations/?detailScreenTabIndex=0"
+     target="_blank" rel="noopener noreferrer"
+     aria-label="Ver recomendações no LinkedIn de Adriano José">
+    <blockquote class="testimonial">
+      <p>“Tive a oportunidade de acompanhar o Adriano de perto durante alguns meses, e vi uma evolução gigantesca em várias áreas, mas principalmente nas suas softskills, principalmente nas suas habilidades de comunicação e de escuta ativa. Dada essa evolução em tao pouco tempo, tenho certeza que ele tem o potencial de se tornar um profissional fora da curva! Recomendo demais para todos esse profissional incrível.”</p>
+      <footer>— Ian, Líder Técnico</footer>
+    </blockquote>
+  </a>
 
-          <a href="https://www.linkedin.com/in/adrianojosez/details/recommendations/?detailScreenTabIndex=0"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Ver recomendações no LinkedIn de Adriano José">
-            <blockquote class="testimonial">
-              <p>“É com grande satisfação que recomendo o Adriano José como um desenvolvedor Full-Stack Júnior excelente. Durante o período em que foi meu orientando, pude testemunhar sua dedicação e habilidades pelo desenvolvimento de software. Sua proficiência em Angular é notável, e sua capacidade de enfrentar desafios com entusiasmo é admirável. Adriano demonstrou um comprometimento excepcional com o trabalho em equipe e entregou soluções eficazes.”</p>
-              <footer>— Leonardo, Software Engineer</footer>
-            </blockquote>
-          </a>
+  <a href="https://www.linkedin.com/in/adrianojosez/details/recommendations/?detailScreenTabIndex=0"
+     target="_blank" rel="noopener noreferrer"
+     aria-label="Ver recomendações no LinkedIn de Adriano José">
+    <blockquote class="testimonial">
+      <p>“É com grande satisfação que recomendo o Adriano José como um desenvolvedor Full-Stack Júnior excelente. Durante o período em que foi meu orientando, pude testemunhar sua dedicação e habilidades pelo desenvolvimento de software. Sua proficiência em Angular é notável, e sua capacidade de enfrentar desafios com entusiasmo é admirável. Adriano demonstrou um comprometimento excepcional com o trabalho em equipe e entregou soluções eficazes.”</p>
+      <footer>— Leonardo, Software Engineer</footer>
+    </blockquote>
+  </a>
 
-          <a href="https://www.linkedin.com/in/adrianojosez/details/recommendations/?detailScreenTabIndex=0"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Ver recomendações no LinkedIn de Adriano José">
-            <blockquote class="testimonial">
-              <p>“Adriano como um desenvolvedor de sistemas é altamente esforçado na ModalGR. Durante o tempo em que trabalhamos juntos, pude testemunhar suas habilidades técnicas notáveis e seu comprometimento excepcional com a excelência. Ele demonstrou uma habilidade impressionante em desenvolver soluções eficientes para desafios que recebeu, assimilou rapidamente novos conceitos e aplicou de forma prática todo conteúdo que assimilou ao longo de sua jornada.”</p>
-              <footer>— Leon, Desenvolvedor</footer>
-            </blockquote>
-          </a>
-        </div>
+  <a href="https://www.linkedin.com/in/adrianojosez/details/recommendations/?detailScreenTabIndex=0"
+     target="_blank" rel="noopener noreferrer"
+     aria-label="Ver recomendações no LinkedIn de Adriano José">
+    <blockquote class="testimonial">
+      <p>“Adriano como um desenvolvedor de sistemas é altamente esforçado na ModalGR. Durante o tempo em que trabalhamos juntos, pude testemunhar suas habilidades técnicas notáveis e seu comprometimento excepcional com a excelência. Ele demonstrou uma habilidade impressionante em desenvolver soluções eficientes para desafios que recebeu, assimilou rapidamente novos conceitos e aplicou de forma prática todo conteúdo que assimilou ao longo de sua jornada.”</p>
+      <footer>— Leon, Desenvolvedor</footer>
+    </blockquote>
+  </a>
+</div>
+
       </div>
     </section>
 
@@ -401,7 +401,7 @@
                href="https://wa.me/5513981242306?text=Olá%2C%20Adriano!%20Vim%20pelo%20seu%20portfólio%20e%20gostaria%20de%20falar%20sobre%20um%20projeto.">
               <i class='bx bxl-whatsapp'></i> Falar no WhatsApp
             </a>
-            <a class="btn ghost" href="https://calendly.com/adrianojose-dev/30min" target="_blank" rel="noopener noreferrer">
+            <a class="btn ghost" href="https://calendly.com/adrianojose-dev/30min" target="_blank" rel="noopener">
               <i class='bx bx-calendar'></i> Agendar conversa
             </a>
           </div>
@@ -419,7 +419,7 @@
   <!-- Scripts -->
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
-  <!-- Fallback init AOS (mantido) -->
+  <!-- Fallback init AOS (garante conteúdo visível mesmo sem main.js) -->
   <script>
     (function(){
       try {
@@ -436,3 +436,15 @@
   <noscript>Habilite o JavaScript para melhor experiência.</noscript>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+

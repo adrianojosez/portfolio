@@ -308,28 +308,34 @@
      Bloquear Acesso ao código fonte da página
   ============================== */
 
-<script>
-  (function () {
-    document.addEventListener(
-      "keydown",
-      function (e) {
-        const k = (e.key || "").toLowerCase();
+  <script>
+// Desabilitar clique direito
+document.addEventListener('contextmenu', event => event.preventDefault());
 
-        // Ctrl+U (Win/Linux) ou ⌘U (macOS – alguns navegadores)
-        const comboPadrao = (e.ctrlKey || e.metaKey) && k === "u";
-
-        // ⌥⌘U (Safari)
-        const comboSafari = e.metaKey && e.altKey && k === "u";
-
-        if (comboPadrao || comboSafari) {
-          e.preventDefault();
-          e.stopPropagation();
-          // opcional: alert("Ação bloqueada.");
-        }
-      },
-      { capture: true } // intercepta antes de outros handlers
-    );
-  })();
+// Desabilitar teclas específicas
+document.addEventListener('keydown', event => {
+  // F12
+  if (event.keyCode === 123) {
+    event.preventDefault();
+  }
+  // Ctrl+Shift+I (DevTools)
+  if (event.ctrlKey && event.shiftKey && event.keyCode === 73) {
+    event.preventDefault();
+  }
+  // Ctrl+Shift+C (Inspecionar Elemento)
+  if (event.ctrlKey && event.shiftKey && event.keyCode === 67) {
+    event.preventDefault();
+  }
+  // Ctrl+Shift+J (Console)
+  if (event.ctrlKey && event.shiftKey && event.keyCode === 74) {
+    event.preventDefault();
+  }
+  // Ctrl+U (Ver código-fonte)
+  if (event.ctrlKey && event.keyCode === 85) {
+    event.preventDefault();
+  }
+});
 </script>
+
 
 

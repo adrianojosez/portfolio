@@ -304,4 +304,32 @@
   }
 })();
 
+  /* =============================
+     Bloquear Acesso ao código fonte da página
+  ============================== */
+
+<script>
+  (function () {
+    document.addEventListener(
+      "keydown",
+      function (e) {
+        const k = (e.key || "").toLowerCase();
+
+        // Ctrl+U (Win/Linux) ou ⌘U (macOS – alguns navegadores)
+        const comboPadrao = (e.ctrlKey || e.metaKey) && k === "u";
+
+        // ⌥⌘U (Safari)
+        const comboSafari = e.metaKey && e.altKey && k === "u";
+
+        if (comboPadrao || comboSafari) {
+          e.preventDefault();
+          e.stopPropagation();
+          // opcional: alert("Ação bloqueada.");
+        }
+      },
+      { capture: true } // intercepta antes de outros handlers
+    );
+  })();
+</script>
+
 

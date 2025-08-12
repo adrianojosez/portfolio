@@ -1,6 +1,5 @@
-/*
-  style.css — Portfólio Adriano v3
-  Paleta: primary #8cc7d6, secondary #bda368, tertiary #68bdd1
+/* style.css — Portfólio Adriano v3 (ajustado)
+   Paleta: primary #8cc7d6, secondary #bda368, tertiary #68bdd1
 */
 
 /* =============================
@@ -22,7 +21,10 @@
   --radius: 18px;
   --container: 1120px;
 }
-:root { color-scheme: dark; }
+
+/* color-scheme por tema (corrigido) */
+html[data-theme="dark"]  { color-scheme: dark; }
+html[data-theme="light"] { color-scheme: light; }
 
 /* Tema claro */
 [data-theme="light"] {
@@ -152,8 +154,9 @@ section { padding: 72px 0; }
 .chip:hover { background: rgba(255,255,255,.06); }
 .chip.active { background: linear-gradient(180deg, var(--primary), var(--tertiary)); color: #062129; border-color: transparent; }
 
-.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-.grid-3 { grid-template-columns: repeat(3, 1fr); }
+/* grids com auto-fit (ajuste) */
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 .project { position: relative; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1rem; overflow: hidden; transition: transform .12s ease, box-shadow .18s ease; }
 .project:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
 .project h3 { margin: .4rem 0 .4rem; font-size: 1.1rem; }
@@ -212,7 +215,6 @@ footer { padding: 36px 0 48px; color: var(--muted); text-align: center; }
 @media (max-width: 960px) {
   .hero-grid { grid-template-columns: 1fr; }
   .about { grid-template-columns: 1fr; }
-  .grid, .grid-3 { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 720px) {
   .menu {
@@ -225,7 +227,6 @@ footer { padding: 36px 0 48px; color: var(--muted); text-align: center; }
   .menu.open { transform: scale(1); opacity: 1; pointer-events: auto; }
   .menu-cta { display: inline-flex; }
   .menu-toggle { display: inline-flex; background: transparent; color: var(--text); border: 1px solid var(--border); width: 40px; height: 40px; border-radius: 10px; align-items: center; justify-content: center; }
-  .grid, .grid-3 { grid-template-columns: 1fr; }
 }
 
 /* =============================
@@ -245,8 +246,6 @@ footer { padding: 36px 0 48px; color: var(--muted); text-align: center; }
   .card, .project, .service, .testimonial { border-color: #ccc; }
 }
 
-/* ... seu CSS anterior v3 ... */
-
 /* AOS fallback também no CSS (redundância segura) */
 html:not(.aos-enabled) [data-aos] { opacity: 1 !important; transform: none !important; }
 
@@ -254,12 +253,10 @@ html:not(.aos-enabled) [data-aos] { opacity: 1 !important; transform: none !impo
    Scrollbar estilizado (global)
    Chrome/Edge/Safari + Firefox
 ================================ */
-
-/* vars do scrollbar (podem ficar aqui mesmo) */
 :root{
-  --scroll-thumb: rgba(140,199,214,.65);  /* primary com leve transparência */
+  --scroll-thumb: rgba(140,199,214,.65);
   --scroll-thumb-hover: rgba(140,199,214,.9);
-  --scroll-track: rgba(255,255,255,.08);  /* combina com var(--border)/surface */
+  --scroll-track: rgba(255,255,255,.08);
 }
 [data-theme="light"]{
   --scroll-thumb: #8cc7d6cc;
@@ -269,24 +266,18 @@ html:not(.aos-enabled) [data-aos] { opacity: 1 !important; transform: none !impo
 
 /* Firefox */
 html{
-  scrollbar-width: thin;                             /* thin | auto */
+  scrollbar-width: thin;
   scrollbar-color: var(--scroll-thumb) var(--scroll-track);
-  scrollbar-gutter: stable both-edges;               /* evita “salto” de layout */
+  scrollbar-gutter: stable both-edges;
 }
 
 /* Chrome, Edge e Safari */
-*::-webkit-scrollbar{
-  width: 10px;
-  height: 10px;
-}
-*::-webkit-scrollbar-track{
-  background: var(--scroll-track);
-  border-radius: 999px;
-}
+*::-webkit-scrollbar{ width: 10px; height: 10px; }
+*::-webkit-scrollbar-track{ background: var(--scroll-track); border-radius: 999px; }
 *::-webkit-scrollbar-thumb{
   border-radius: 999px;
   background: linear-gradient(180deg, var(--primary), var(--tertiary));
-  border: 2px solid transparent;                     /* cria “respiro” visual */
+  border: 2px solid transparent;
   background-clip: padding-box;
 }
 *::-webkit-scrollbar-thumb:hover{
@@ -298,55 +289,3 @@ html{
 @media (max-width: 720px){
   *::-webkit-scrollbar{ width: 8px; height: 8px; }
 }
-
-/* =============================
-   Contador animado só com CSS (Houdini)
-   Chrome/Edge/Safari animam; Firefox mostra o valor final
-================================ */
-@property --num {
-  syntax: "<integer>";
-  initial-value: 0;
-  inherits: false;
-}
-
-.metrics [data-count-to]{
-  position: relative;
-  color: transparent;                 /* esconde o texto do span (+5 etc.) */
-  --num: 0;
-  counter-reset: n var(--num);
-  animation: countUp var(--dur, 1s) steps(var(--steps, 10)) forwards;
-}
-
-/* AGORA visível: não herda o transparente */
-.metrics [data-count-to]::after{
-  content: "+" counter(n);
-  color: var(--text);                 /* <- correção */
-  font-weight: 800;
-}
-
-/* anima a variável até o alvo */
-@keyframes countUp {
-  from { --num: 0; }
-  to   { --num: var(--target); }
-}
-
-/* seus valores */
-.metrics [data-count-to="5"]  { --target: 5;  --dur: 1000ms; --steps: 5;  }
-.metrics [data-count-to="30"] { --target: 30; --dur: 1200ms; --steps: 30; }
-.metrics [data-count-to="12"] { --target: 12; --dur: 1100ms; --steps: 12; }
-
-/* acessibilidade */
-@media (prefers-reduced-motion: reduce){
-  .metrics [data-count-to]{ animation: none; color: inherit; }
-  .metrics [data-count-to]::after{ content: "+" attr(data-count-to); color: var(--text); }
-}
-
-
-
-
-
-
-
-
-
-

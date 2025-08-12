@@ -1,0 +1,24 @@
+<!-- icons/app-icon.svg — monograma “AJ” otimizado p/ favicon e PWA -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#8cc7d6"></stop>
+      <stop offset="1" stop-color="#68bdd1"></stop>
+    </linearGradient>
+    <!-- vinheta suave p/ dar profundidade sem pesar -->
+    <radialGradient id="v" cx="50%" cy="50%" r="60%">
+      <stop offset="0" stop-color="rgba(255,255,255,.10)"></stop>
+      <stop offset="1" stop-color="rgba(0,0,0,.10)"></stop>
+    </radialGradient>
+  </defs>
+
+  <!-- fundo arredondado -->
+  <rect x="64" y="64" width="896" height="896" rx="200" fill="url(#g)"></rect>
+  <!-- brilho/ombreado discreto -->
+  <circle cx="512" cy="512" r="380" fill="url(#v)"></circle>
+
+  <!-- monograma (use curvas ao exportar PNG para não depender de fonte) -->
+  <g font-family="Inter, Arial, sans-serif" font-weight="800" font-size="380" letter-spacing="-10" text-anchor="middle" dominant-baseline="middle" fill="#ffffff">
+    <text x="512" y="540">AJ</text>
+  </g>
+</svg>

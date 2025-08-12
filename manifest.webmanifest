@@ -1,0 +1,41 @@
+{
+  "name": "Adriano José - Desenvolvedor Front End",
+  "short_name": "Adriano José",
+  "description": "Portfólio de Adriano José. Interfaces rápidas, acessíveis e focadas em resultados.",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0b1116",
+  "theme_color": "#0b1116",
+  "categories": ["portfolio", "business", "productivity"],
+  "icons": [
+    { "src": "/icons/icon-16.png",  "sizes": "16x16",   "type": "image/png" },
+    { "src": "/icons/icon-32.png",  "sizes": "32x32",   "type": "image/png" },
+    { "src": "/icons/icon-48.png",  "sizes": "48x48",   "type": "image/png" },
+    { "src": "/icons/icon-96.png",  "sizes": "96x96",   "type": "image/png" },
+    { "src": "/icons/icon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-256.png", "sizes": "256x256", "type": "image/png" },
+    { "src": "/icons/icon-384.png", "sizes": "384x384", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icons/icon-192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Projetos",
+      "short_name": "Projetos",
+      "url": "/#projetos",
+      "icons": [{ "src": "/icons/shortcut-projects.png", "sizes": "96x96", "type": "image/png" }]
+    },
+    {
+      "name": "Contato",
+      "short_name": "Contato",
+      "url": "/#contato",
+      "icons": [{ "src": "/icons/shortcut-contact.png", "sizes": "96x96", "type": "image/png" }]
+    }
+  ]
+}

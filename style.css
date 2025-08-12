@@ -299,4 +299,48 @@ html{
   *::-webkit-scrollbar{ width: 8px; height: 8px; }
 }
 
+/* =============================
+   Contador animado só com CSS
+   (Chrome/Edge/Safari) — Firefox mostra o valor final sem animação
+================================ */
+@property --num {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+
+.metrics [data-count-to]{
+  position: relative;
+  color: transparent;                 /* esconde o texto original (+5, +30...) */
+  --num: 0;
+  counter-reset: n var(--num);
+  animation: countUp var(--dur, 1s) steps(var(--steps, 10)) forwards;
+}
+
+/* desenha o número animado (com + na frente) */
+.metrics [data-count-to]::after{
+  content: "+" counter(n);
+  color: inherit;
+  font-weight: 800;
+}
+
+/* anima a variável até o alvo */
+@keyframes countUp {
+  from { --num: 0; }
+  to   { --num: var(--target); }
+}
+
+/* Seus três valores atuais */
+.metrics [data-count-to="5"]  { --target: 5;  --dur: 1000ms; --steps: 5;  }
+.metrics [data-count-to="30"] { --target: 30; --dur: 1200ms; --steps: 30; }
+.metrics [data-count-to="10"] { --target: 10; --dur: 1100ms; --steps: 10; }
+
+/* Respeita quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce){
+  .metrics [data-count-to]{ animation: none; color: inherit; }
+  .metrics [data-count-to]::after{ content: attr(data-count-to); }
+}
+
+
+
 

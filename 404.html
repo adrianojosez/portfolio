@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Página não encontrada | Adriano José</title>
+  <meta name="description" content="Ops! A página que você tentou acessar não existe ou foi movida." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0b1116" />
+
+  <!-- Fonts / Icons / Styles (mesmos do site) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+
+  <style>
+    /* Ajustes específicos do 404 usando sua paleta e componentes */
+    .error-hero { text-align: center; padding: 112px 0 80px; }
+    .error-badge { display: inline-flex; align-items: center; gap: .5rem; padding: .4rem .7rem; border: 1px solid var(--border); border-radius: 999px; color: var(--muted); }
+    .error-badge i { font-size: 1.2rem; color: var(--primary); }
+    .error-code { margin: .4rem 0 0; font-size: clamp(4rem, 14vw, 9rem); line-height: 1; letter-spacing: -2px; }
+    .error-msg { margin: .75rem auto 1.25rem; color: var(--muted); max-width: 70ch; }
+    .error-actions { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+    .hint { margin-top: 1rem; color: var(--muted); font-size: .95rem; }
+    .tiny { font-size: .85rem; color: var(--muted); margin-top: .6rem; }
+    .site-header .menu a { /* links do 404 mandam para a home com âncoras */ }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="site-header" role="banner">
+    <div class="container">
+      <nav class="nav" aria-label="Primária">
+        <a href="/#inicio" class="brand" aria-label="Ir para a Home">
+          <span>Adriano</span> José
+        </a>
+
+        <div class="nav-actions">
+          <button id="theme-toggle" class="icon-btn" aria-label="Alternar tema">
+            <i class='bx bx-moon'></i>
+          </button>
+          <button class="menu-toggle" aria-controls="menu" aria-expanded="false" aria-label="Abrir menu">
+            <i class='bx bx-menu'></i>
+          </button>
+        </div>
+
+        <div id="menu" class="menu" role="navigation">
+          <a href="/#inicio">Início</a>
+          <a href="/#sobre">Sobre</a>
+          <a href="/#projetos">Projetos</a>
+          <a href="/#servicos">Serviços</a>
+          <a href="/#experiencia">Experiência</a>
+          <a href="/#depoimentos">Depoimentos</a>
+          <a href="/#contato" class="menu-cta btn ghost">
+            <i class='bx bx-paper-plane'></i> Contato
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="error-hero">
+      <div class="container">
+        <div class="error-badge">
+          <i class="bx bx-error-circle"></i> Página não encontrada
+        </div>
+        <h1 class="gradient error-code">404</h1>
+        <p class="error-msg">
+          Parece que este link está quebrado ou a página foi movida. Você pode voltar para a Home ou entrar em contato comigo.
+        </p>
+
+        <div class="error-actions">
+          <a class="btn primary" href="/#inicio">
+            <i class='bx bx-home-alt-2'></i> Ir para a Home
+          </a>
+          <a class="btn ghost" href="/#projetos">
+            <i class='bx bx-briefcase'></i> Ver projetos
+          </a>
+          <a class="btn ghost" href="mailto:adrianojose.dev@gmail.com?subject=Contato%20pelo%20404">
+            <i class='bx bx-envelope'></i> Enviar e-mail
+          </a>
+          <a class="btn ghost" target="_blank" rel="noopener noreferrer"
+             href="https://wa.me/5513981242306?text=Oi%2C%20Adriano!%20Vim%20pelo%20404%20e%20preciso%20de%20ajuda.">
+            <i class='bx bxl-whatsapp'></i> WhatsApp
+          </a>
+        </div>
+
+        <p class="tiny">
+          URL solicitada: <code id="req-path"></code>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> Adriano José. Todos os direitos reservados.
+    </div>
+  </footer>
+
+  <!-- Scripts: usa o mesmo main.js do site para tema, acessibilidade e interações -->
+  <script src="/main.js" defer></script>
+  <noscript>Habilite o JavaScript para melhor experiência.</noscript>
+
+  <!-- Detalhes pequenos específicos do 404 -->
+  <script>
+    // Mostra a URL acessada
+    (function(){
+      var el = document.getElementById('req-path');
+      if (el) el.textContent = location.pathname + location.search;
+    })();
+  </script>
+</body>
+</html>

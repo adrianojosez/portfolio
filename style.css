@@ -188,8 +188,18 @@ section { padding: 72px 0; }
 /* =============================
    Contato
 ================================ */
-.contact { background: linear-gradient(180deg, rgba(140,199,214,.12), rgba(104,189,209,.08)); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.4rem; text-align: center; }
+.contact {
+  background: linear-gradient(180deg, rgba(140,199,214,.12), rgba(104,189,209,.08));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.4rem;
+  text-align: center;
+}
 .contact .btn-row { justify-content: center; }
+
+/* ajuste de alinhamento do título e subtítulo do contato */
+#contato .contact h2 { margin: 0; line-height: 1.15; }
+#contato .contact .subtitle { margin: .6rem auto 1.2rem; max-width: 65ch; }
 
 /* =============================
    Rodapé
@@ -239,4 +249,3 @@ footer { padding: 36px 0 48px; color: var(--muted); text-align: center; }
 
 /* AOS fallback também no CSS (redundância segura) */
 html:not(.aos-enabled) [data-aos] { opacity: 1 !important; transform: none !important; }
-

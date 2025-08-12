@@ -1,0 +1,67 @@
+/* blog.css - estilos específicos do blog, isolados para não afetar o site principal */
+
+.blog-hero { padding: 72px 0 24px; }
+.blog-controls {
+  margin-top: 1rem;
+  display: grid;
+  gap: .8rem;
+  grid-template-columns: 1fr;
+}
+.blog-controls input[type="search"] {
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  padding: .8rem 1rem;
+  border-radius: 12px;
+  font: inherit;
+}
+.blog-list .post-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1rem;
+  display: grid;
+  gap: .5rem;
+}
+.post-card h2 { margin: 0; font-size: 1.15rem; }
+.post-card p { margin: 0; color: var(--muted); }
+.post-card .meta { color: var(--muted); font-size: .9rem; }
+.post-card .tags { display:flex; flex-wrap:wrap; gap:.4rem; }
+.post-card .tag { font-size:.85rem; color:var(--muted); border:1px solid var(--border); border-radius:999px; padding:.2rem .5rem; }
+
+/* Página de post */
+.post-header { padding: 48px 0 8px; }
+.post-title { margin:.2rem 0 .6rem; font-size: clamp(1.8rem, 4.5vw, 2.4rem); }
+.post-meta { margin:.2rem 0 0; color: var(--muted); }
+.post-tags { display:flex; gap:.4rem; flex-wrap:wrap; margin:.8rem 0 0; padding:0; list-style:none; }
+.post-tags li { border:1px solid var(--border); border-radius:999px; padding:.2rem .55rem; font-size:.85rem; color:var(--muted); }
+
+.post-content {
+  margin: 1rem 0 2rem;
+  line-height: 1.75;
+}
+.post-content :where(h2,h3,h4){ margin: 1.5rem 0 .6rem; }
+.post-content p { margin: .8rem 0; }
+.post-content a { color: var(--primary); text-decoration: underline; text-underline-offset: 2px; }
+.post-content pre {
+  background: #0a0f14;
+  border: 1px solid var(--border);
+  padding: 1rem;
+  border-radius: 12px;
+  overflow: auto;
+}
+.post-content code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: .95em;
+}
+.post-content blockquote {
+  margin: 1rem 0;
+  padding: .6rem 1rem;
+  border-left: 3px solid var(--primary);
+  background: rgba(255,255,255,.03);
+}
+
+/* responsividade */
+@media (max-width: 720px){
+  .post-title { font-size: clamp(1.6rem, 6vw, 2rem); }
+}

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title id="doc-title">Post | Adriano José</title>
+  <meta name="description" content="Artigo do blog do Adriano José." />
+  <meta name="theme-color" content="#0b1116" />
+  <link rel="canonical" id="canonical" href="/blog/post.html" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+  <!-- OG/Twitter genéricos; serão atualizados via JS com front matter -->
+  <meta property="og:title" content="Post | Adriano José">
+  <meta property="og:description" content="Artigo do blog do Adriano José.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="/blog/post.html">
+  <meta property="og:image" content="/og-image.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Post | Adriano José">
+  <meta name="twitter:description" content="Artigo do blog do Adriano José.">
+  <meta name="twitter:image" content="/og-image.jpg">
+
+  <!-- Preconnects -->
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="dns-prefetch" href="//unpkg.com">
+  <link rel="preconnect" href="https://api.iconify.design">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Fonts / Icons / Styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="./blog.css">
+
+  <style>html:not(.aos-enabled) [data-aos]{opacity:1!important;transform:none!important}</style>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="site-header" role="banner">
+    <div class="container">
+      <nav class="nav" aria-label="Primária">
+        <a href="/" class="brand" aria-label="Voltar ao início" data-aos="zoom-in" data-aos-duration="1000">
+          <span>Adriano</span> José
+        </a>
+        <div class="nav-actions">
+          <button id="theme-toggle" class="icon-btn" aria-label="Alternar tema">
+            <i class='bx bx-moon'></i>
+          </button>
+          <button class="menu-toggle" aria-controls="menu" aria-expanded="false" aria-label="Abrir menu">
+            <i class='bx bx-menu'></i>
+          </button>
+        </div>
+        <div id="menu" class="menu">
+          <a href="/">Início</a>
+          <a href="/blog/">Blog</a>
+          <a href="/#contato">Contato</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <article class="post container" itemscope itemtype="https://schema.org/BlogPosting">
+      <header class="post-header">
+        <a class="back" href="/blog/"><i class="bx bx-left-arrow-alt"></i> Voltar ao Blog</a>
+        <h1 class="post-title gradient" itemprop="headline" id="post-title">Carregando…</h1>
+        <p class="post-meta">
+          <time id="post-date" itemprop="datePublished" datetime=""></time>
+          <span aria-hidden="true">•</span>
+          <span id="post-reading"></span>
+        </p>
+        <ul id="post-tags" class="post-tags" aria-label="Tags"></ul>
+      </header>
+      <div id="post-content" class="post-content" itemprop="articleBody">Carregando conteúdo…</div>
+    </article>
+  </main>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> Adriano José. Todos os direitos reservados.
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script src="../main.js" defer></script>
+  <script src="./blog.js" defer></script>
+</body>
+</html>

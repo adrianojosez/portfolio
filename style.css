@@ -341,6 +341,17 @@ html{
   .metrics [data-count-to]::after{ content: "+" attr(data-count-to); color: var(--text); }
 }
 
+/* Desliga animações e transições no mobile e para quem usa 'reduzir movimento' */
+@media (max-width: 768px), (prefers-reduced-motion: reduce) {
+  html, body { scroll-behavior: auto !important; } /* sem smooth scroll */
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+
+
 
 
 

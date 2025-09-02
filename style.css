@@ -11,6 +11,7 @@
   --secondary: #bda368;
   --tertiary: #68bdd1;
 
+/*   --bg: #0b1116; */
   --bg: #00101f; 
   --card: #0f1720;
   --surface: #0c141b;
@@ -349,6 +350,7 @@ html{
     transition: none !important;
   }
 }
+
 
 
 

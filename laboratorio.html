@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
   <title>Laboratório | Adriano José</title>
-  <meta name="description" content="Laboratório de experimentos de Front End do Adriano José: acessibilidade, performance, UI patterns e microprojetos."/>
+  <meta name="description" content="Galeria de componentes e experimentos de Front End do Adriano José. Demonstrações de UI reutilizáveis para projetos de clientes."/>
   <meta name="theme-color" content="#0b1116"/>
   <link rel="canonical" href="https://adrianojosedev.netlify.app/lab"/>
   <link rel="icon" type="image/svg+xml" href="https://api.iconify.design/tabler:bolt.svg?color=%238cc7d6&v=1">
 
   <!-- Open Graph / Twitter -->
   <meta property="og:title" content="Laboratório | Adriano José">
-  <meta property="og:description" content="Experimentos de Front End com foco em acessibilidade, performance e UX."/>
+  <meta property="og:description" content="Galeria de componentes com foco em acessibilidade, performance e UX."/>
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://adrianojosedev.netlify.app/lab">
   <meta property="og:image" content="https://adrianojosedev.netlify.app/og-image.jpg">
@@ -27,16 +27,69 @@
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
   <link rel="stylesheet" href="/style.css">
 
+  <!-- Estilos locais para a galeria -->
+  <style>
+    .gallery { display:grid; grid-template-columns: repeat(12, 1fr); gap: 1rem; }
+    .demo-card { grid-column: span 6; background: var(--card); border:1px solid var(--border); border-radius: 16px; padding: 1rem; box-shadow: var(--shadow); }
+    .demo-card header { display:flex; align-items:center; justify-content:space-between; margin-bottom:.6rem }
+    .demo-card header h3{ margin:0; font-size:1rem }
+    .demo-card .preview{ background: color-mix(in oklab, var(--surface) 90%, transparent); border:1px dashed var(--border); border-radius:12px; padding: .9rem; }
+    .demo-row{ display:flex; flex-wrap:wrap; gap:.6rem; align-items:center }
+    .toolbar{ display:flex; gap:.6rem; flex-wrap:wrap }
+    .btn.small{ padding:.55rem .8rem; font-weight:600 }
+    .badge{ display:inline-flex; align-items:center; gap:.35rem; font-size:.8rem; padding:.25rem .55rem; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,.04) }
+    .badge i{ font-size:1rem }
+    .chip.checkable[aria-pressed="true"]{ background: linear-gradient(180deg, var(--primary), var(--tertiary)); color:#062129; border-color:transparent }
+    .tabs{ display:flex; gap:.25rem; flex-wrap:wrap }
+    .tab{ padding:.55rem .9rem; border:1px solid var(--border); border-radius:10px; background:rgba(255,255,255,.04); cursor:pointer }
+    .tab[aria-selected="true"]{ background:linear-gradient(180deg, var(--primary), var(--tertiary)); color:#062129; border-color:transparent }
+    .tab-panel{ display:none }
+    .tab-panel.active{ display:block }
+    .card-media{ display:grid; grid-template-columns:120px 1fr; gap:.8rem; align-items:center }
+    .card-media img{ width:120px; height:80px; object-fit:cover; border-radius:12px; }
+    .avatar-round{ width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg, var(--primary), var(--tertiary)); display:grid; place-items:center; color:#062129; font-weight:800 }
+    .list{ display:grid; gap:.6rem; margin:0; padding:0; list-style:none }
+    .list li{ display:flex; justify-content:space-between; align-items:center; padding:.6rem .8rem; border:1px solid var(--border); border-radius:10px; background:rgba(255,255,255,.03) }
+    .progress{ width:100%; height:10px; border-radius:999px; background:rgba(255,255,255,.06); overflow:hidden }
+    .progress > span{ display:block; height:100%; background:linear-gradient(90deg, var(--primary), var(--tertiary)); width:40% }
+    .alert{ border:1px solid var(--border); border-left:4px solid var(--primary); background:rgba(140,199,214,.08); padding:.8rem; border-radius:12px }
+    .kbd{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.85rem; border:1px solid var(--border); background:rgba(255,255,255,.04); padding:.1rem .35rem; border-radius:6px }
+    .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:.8rem }
+    .table{ width:100%; border-collapse: collapse; font-size:.95rem }
+    .table th,.table td{ padding:.6rem .8rem; border-bottom:1px solid var(--border) }
+    .table th{ text-align:left; color:var(--muted) }
+    .pagination{ display:flex; gap:.4rem; align-items:center }
+    .pagination .page{ padding:.45rem .7rem; border:1px solid var(--border); border-radius:8px; background:rgba(255,255,255,.03) }
+    .pagination .page[aria-current="page"]{ background:linear-gradient(180deg, var(--primary), var(--tertiary)); color:#062129; border-color:transparent }
+    .breadcrumbs{ display:flex; gap:.4rem; align-items:center; color:var(--muted) }
+    .breadcrumbs a{ color:inherit }
+    .switch{ appearance:none; width:46px; height:26px; border-radius:999px; background:rgba(255,255,255,.18); position:relative; outline:none; border:1px solid var(--border); cursor:pointer }
+    .switch:checked{ background:linear-gradient(180deg, var(--primary), var(--tertiary)) }
+    .switch::after{ content:""; position:absolute; top:2px; left:2px; width:22px; height:22px; background:#fff; border-radius:50%; transition:.2s transform }
+    .switch:checked::after{ transform: translateX(20px) }
+    dialog{ border:1px solid var(--border); border-radius:16px; background:var(--card); color:var(--text); padding:1rem; box-shadow:var(--shadow); max-width:520px }
+    dialog::backdrop{ background: rgba(0,0,0,.55) }
+    .toast{ position:fixed; right:16px; bottom:16px; padding:.8rem 1rem; border:1px solid var(--border); background:var(--card); border-radius:12px; transform: translateY(12px); opacity:0; pointer-events:none; transition:.18s ease; box-shadow:var(--shadow) }
+    .toast.show{ transform:none; opacity:1; pointer-events:auto }
+    .navbar{ display:flex; gap:.5rem; align-items:center; justify-content:space-between; padding:.6rem .8rem; border:1px solid var(--border); border-radius:12px; background:rgba(255,255,255,.03) }
+    .navbar .navgroup{ display:flex; gap:.4rem; align-items:center }
+    .navbar a{ padding:.45rem .7rem; border-radius:8px }
+    .navbar a.active{ background:rgba(140,199,214,.12) }
+    .media-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:.8rem }
+    .media-card{ border:1px solid var(--border); border-radius:14px; overflow:hidden; background:var(--card) }
+    .media-card img{ width:100%; height:140px; object-fit:cover }
+    .media-card .body{ padding:.8rem }
+    .skeleton{ border-radius:8px; background: linear-gradient(90deg, rgba(255,255,255,.06), rgba(255,255,255,.12), rgba(255,255,255,.06)); background-size:200% 100%; animation:sheen 1.2s linear infinite }
+    @keyframes sheen{ to{ background-position: -200% 0 } }
+    @media (max-width: 960px){ .demo-card{ grid-column: span 12 } .media-grid{ grid-template-columns:1fr } }
+  </style>
+
   <!-- Breadcrumbs JSON-LD -->
   <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"BreadcrumbList",
-    "itemListElement":[
-      {"@type":"ListItem","position":1,"name":"Início","item":"https://adrianojosedev.netlify.app/"},
-      {"@type":"ListItem","position":2,"name":"Laboratório","item":"https://adrianojosedev.netlify.app/lab"}
-    ]
-  }
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Início","item":"https://adrianojosedev.netlify.app/"},
+    {"@type":"ListItem","position":2,"name":"Laboratório","item":"https://adrianojosedev.netlify.app/lab"}
+  ]}
   </script>
 </head>
 
@@ -46,20 +99,15 @@
   <header class="site-header" role="banner">
     <div class="container">
       <nav class="nav" aria-label="Primária">
-        <a href="/" class="brand" aria-label="Voltar ao início" data-aos="zoom-in" data-aos-duration="1000">
-          <span>Adriano</span> José
-        </a>
+        <a href="/" class="brand" aria-label="Voltar ao início" data-aos="zoom-in" data-aos-duration="1000"><span>Adriano</span> José</a>
         <div class="nav-actions">
           <button id="theme-toggle" class="icon-btn" aria-label="Alternar tema"><i class='bx bx-moon'></i></button>
           <button class="menu-toggle" aria-controls="menu" aria-expanded="false" aria-label="Abrir menu"><i class='bx bx-menu'></i></button>
         </div>
         <div id="menu" class="menu" role="navigation">
           <a href="/#inicio">Início</a>
-          <a href="/#sobre">Sobre</a>
           <a href="/#projetos">Projetos</a>
           <a href="/#servicos">Serviços</a>
-          <a href="/#experiencia">Experiência</a>
-          <a href="/#depoimentos">Depoimentos</a>
           <a href="/lab" aria-current="page">Laboratório</a>
           <a href="/#contato" class="menu-cta btn ghost"><i class='bx bx-paper-plane'></i> Contato</a>
         </div>
@@ -68,135 +116,311 @@
   </header>
 
   <main id="conteudo">
-    <!-- Hero / Intro -->
+    <!-- Hero -->
     <section class="hero" id="inicio">
       <div class="container hero-grid">
         <div>
-          <span class="eyebrow" data-aos="fade-right" data-aos-duration="900"><i class='bx bx-flask'></i> Experimentos</span>
-          <h1 class="gradient" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">Laboratório</h1>
-          <p class="subtitle" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-            Microprojetos e provas de conceito focados em acessibilidade, performance e UX. Código simples, componentes reutilizáveis e medições reais.
-          </p>
-          <div class="btn-row" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="300">
-            <a class="btn primary" href="https://github.com/adrianojosez" target="_blank" rel="noopener">
-              <i class='bx bxl-github'></i> Ver repositórios
-            </a>
-            <a class="btn ghost" href="/#contato"><i class='bx bx-rocket'></i> Precisa de algo assim?</a>
+          <span class="eyebrow" data-aos="fade-right"><i class='bx bx-flask'></i> Galeria de componentes</span>
+          <h1 class="gradient" data-aos="fade-up">Laboratório</h1>
+          <p class="subtitle" data-aos="fade-up" data-aos-delay="100">Elementos prontos para uso em sites e apps. Layout, navegação, formulários, feedback e mídia. Todos com foco em acessibilidade e performance.</p>
+          <div class="btn-row" data-aos="zoom-in" data-aos-delay="200">
+            <a class="btn primary" href="https://github.com/adrianojosez" target="_blank" rel="noopener"><i class='bx bxl-github'></i> Repositórios</a>
+            <button id="show-toast" class="btn ghost" type="button"><i class='bx bx-bell'></i> Mostrar Toast</button>
           </div>
         </div>
         <aside>
-          <div class="hero-card" data-aos="zoom-in-left" data-aos-duration="1000" data-aos-delay="150">
-            <div class="avatar" aria-hidden="true">!</div>
-            <div>
-              <strong>Metas do Lab</strong><br>
-              <small>A11y, Core Web Vitals e DX</small>
-            </div>
-          </div>
+          <div class="hero-card"><div class="avatar" aria-hidden="true">!</div><div><strong>Compatível</strong><br><small>Mobile, teclado e leitores de tela</small></div></div>
           <div class="spacer"></div>
-          <div class="hero-card" data-aos="zoom-in-left" data-aos-duration="1000" data-aos-delay="250">
-            <div class="avatar" aria-hidden="true">!</div>
-            <div>
-              <strong>Stack</strong><br>
-              <small>HTML, CSS, TS, React/Next</small>
-            </div>
-          </div>
+          <div class="hero-card"><div class="avatar" aria-hidden="true">!</div><div><strong>Reutilizável</strong><br><small>HTML, CSS e TS simples</small></div></div>
         </aside>
       </div>
     </section>
 
-    <!-- Filtros -->
+    <!-- Navbar e Breadcrumbs -->
     <section>
       <div class="container">
-        <div class="section-title">
-          <h2 data-aos="fade-right">Experimentos</h2>
-          <p data-aos="fade-left">Provas de conceito e miniapps</p>
+        <div class="section-title"><h2>Navegação</h2><p>Padrões de menus e caminhos</p></div>
+        <div class="grid-2">
+          <div class="demo-card">
+            <header><h3>Navbar</h3><span class="badge"><i class='bx bx-navigation'></i> topo</span></header>
+            <div class="preview">
+              <div class="navbar" role="navigation" aria-label="Demonstração de navegação">
+                <div class="navgroup">
+                  <span class="avatar-round" aria-hidden="true">A</span>
+                  <strong>Marca</strong>
+                </div>
+                <div class="navgroup">
+                  <a href="#" class="active">Início</a>
+                  <a href="#">Produtos</a>
+                  <a href="#">Preços</a>
+                  <a href="#">Contato</a>
+                </div>
+                <div class="navgroup">
+                  <input aria-label="Buscar" placeholder="Buscar" style="padding:.45rem .6rem;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--text)">
+                  <button class="btn small primary">Entrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-card">
+            <header><h3>Breadcrumbs</h3><span class="badge"><i class='bx bx-chevrons-right'></i> hierarquia</span></header>
+            <div class="preview">
+              <nav class="breadcrumbs" aria-label="Breadcrumb">
+                <a href="#">Início</a>
+                <span aria-hidden="true">/</span>
+                <a href="#">Serviços</a>
+                <span aria-hidden="true">/</span>
+                <span aria-current="page">SEO Técnico</span>
+              </nav>
+            </div>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <div class="filters" role="toolbar" aria-label="Filtrar experimentos" data-aos="fade-up">
-          <button class="chip active" type="button" data-filter="all" aria-pressed="true">Todos</button>
-          <button class="chip" type="button" data-filter="a11y" aria-pressed="false">Acessibilidade</button>
-          <button class="chip" type="button" data-filter="performance" aria-pressed="false">Performance</button>
-          <button class="chip" type="button" data-filter="ui" aria-pressed="false">UI</button>
-          <button class="chip" type="button" data-filter="react" aria-pressed="false">React</button>
-          <button class="chip" type="button" data-filter="typescript" aria-pressed="false">TypeScript</button>
+    <!-- Botões, Chips, Badges -->
+    <section>
+      <div class="container">
+        <div class="section-title"><h2>Ações</h2><p>Botões, estados e filtros</p></div>
+        <div class="gallery">
+          <div class="demo-card">
+            <header><h3>Botões</h3><span class="badge"><i class='bx bx-mouse'></i> primário, ghost e ícone</span></header>
+            <div class="preview demo-row">
+              <button class="btn primary"><i class='bx bx-rocket'></i> Primário</button>
+              <button class="btn ghost">Ghost</button>
+              <button class="icon-btn" aria-label="Somente ícone"><i class='bx bx-heart'></i></button>
+              <button class="btn primary" disabled>Desabilitado</button>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <header><h3>Grupo toggle</h3><span class="badge"><i class='bx bx-toggle-left'></i> múltipla seleção</span></header>
+            <div class="preview toolbar">
+              <button class="chip checkable" aria-pressed="true">Todos</button>
+              <button class="chip checkable" aria-pressed="false">React</button>
+              <button class="chip checkable" aria-pressed="false">Next.js</button>
+              <button class="chip checkable" aria-pressed="false">SEO</button>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <header><h3>Badges</h3><span class="badge"><i class='bx bx-purchase-tag'></i> status</span></header>
+            <div class="preview demo-row">
+              <span class="badge"><i class='bx bx-time'></i> Em andamento</span>
+              <span class="badge"><i class='bx bx-check-circle'></i> Concluído</span>
+              <span class="badge"><i class='bx bx-star'></i> Destaque</span>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <header><h3>Paginação</h3><span class="badge"><i class='bx bx-dots-horizontal-rounded'></i> navegação</span></header>
+            <div class="preview">
+              <nav class="pagination" aria-label="Paginação">
+                <button class="page" aria-label="Anterior">‹</button>
+                <button class="page" aria-current="page">1</button>
+                <button class="page">2</button>
+                <button class="page">3</button>
+                <button class="page" aria-label="Próximo">›</button>
+              </nav>
+            </div>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <!-- Grid: reusa estilos de .project para aproveitar o filtro do main.js -->
-        <div class="grid" data-aos="fade-up" data-aos-duration="900">
-          <!-- A11y form patterns -->
-          <article class="project" data-tags="a11y ui forms">
-            <small class="tag">Acessibilidade</small>
-            <h3>Form Patterns A11y</h3>
-            <p>Campos com label, descrição, erro associado via aria-describedby, grupos, atalhos e foco gerenciado.</p>
-            <div class="actions">
-              <a class="btn ghost" href="#" aria-label="Abrir demo ao vivo do experimento Form Patterns A11y"><i class='bx bx-link-external'></i> Live</a>
-              <a class="btn ghost" href="#" aria-label="Abrir o código no GitHub do experimento Form Patterns A11y"><i class='bx bxl-github'></i> Código</a>
+    <!-- Conteúdo e cartões -->
+    <section>
+      <div class="container">
+        <div class="section-title"><h2>Cartões e mídia</h2><p>Apresentação de conteúdo</p></div>
+        <div class="gallery">
+          <div class="demo-card">
+            <header><h3>Card com mídia</h3><span class="badge"><i class='bx bx-image'></i> thumb + texto</span></header>
+            <div class="preview card-media">
+              <img src="https://picsum.photos/240/160?random=3" alt="Miniatura aleatória">
+              <div>
+                <strong>Landing Page focada em SEO</strong>
+                <p class="subtitle">Páginas estáticas rápidas com estratégias de indexação e conteúdo.</p>
+                <div class="demo-row"><button class="btn small primary">Ver</button><button class="btn small ghost">Salvar</button></div>
+              </div>
             </div>
-          </article>
+          </div>
 
-          <!-- Image lazy loader + LCP -->
-          <article class="project" data-tags="performance ui images">
-            <small class="tag">Performance</small>
-            <h3>Lazy Loader de Imagens</h3>
-            <p>Estratégias de <code>loading</code>, <code>decoding</code>, <code>fetchpriority</code> e placeholders blur para melhorar LCP.</p>
-            <div class="actions">
-              <a class="btn ghost" href="#"><i class='bx bx-link-external'></i> Live</a>
-              <a class="btn ghost" href="#"><i class='bx bxl-github'></i> Código</a>
+          <div class="demo-card">
+            <header><h3>Grid de mídia</h3><span class="badge"><i class='bx bx-grid'></i> responsivo</span></header>
+            <div class="preview">
+              <div class="media-grid" role="list">
+                <article class="media-card" role="listitem">
+                  <img src="https://picsum.photos/400/240?random=1" alt="Projeto 1">
+                  <div class="body"><strong>Projeto 1</strong><p class="subtitle">SPA com gráficos</p></div>
+                </article>
+                <article class="media-card" role="listitem">
+                  <img src="https://picsum.photos/400/240?random=2" alt="Projeto 2">
+                  <div class="body"><strong>Projeto 2</strong><p class="subtitle">Site institucional</p></div>
+                </article>
+                <article class="media-card" role="listitem">
+                  <img src="https://picsum.photos/400/240?random=4" alt="Projeto 3">
+                  <div class="body"><strong>Projeto 3</strong><p class="subtitle">Biblioteca UI</p></div>
+                </article>
+              </div>
             </div>
-          </article>
+          </div>
 
-          <!-- CSS motion (sem libs) -->
-          <article class="project" data-tags="ui css motion">
-            <small class="tag">UI</small>
-            <h3>Motion com CSS puro</h3>
-            <p>Animações suaves com <code>transform</code>, <code>will-change</code>, reduções para prefers-reduced-motion e spring fake.</p>
-            <div class="actions">
-              <a class="btn ghost" href="#"><i class='bx bx-link-external'></i> Live</a>
-              <a class="btn ghost" href="#"><i class='bx bxl-github'></i> Código</a>
+          <div class="demo-card">
+            <header><h3>Skeleton</h3><span class="badge"><i class='bx bx-loader-alt'></i> carregamento</span></header>
+            <div class="preview grid-2">
+              <div class="skeleton" style="height:98px"></div>
+              <div class="skeleton" style="height:98px"></div>
             </div>
-          </article>
+          </div>
 
-          <!-- Skeleton States -->
-          <article class="project" data-tags="ui react">
-            <small class="tag">React</small>
-            <h3>Skeleton States</h3>
-            <p>Fallbacks de carregamento e shimmer acessível, evitando layout shift e mantendo hierarquia semântica.</p>
-            <div class="actions">
-              <a class="btn ghost" href="#"><i class='bx bx-link-external'></i> Live</a>
-              <a class="btn ghost" href="#"><i class='bx bxl-github'></i> Código</a>
+          <div class="demo-card">
+            <header><h3>Tabela</h3><span class="badge"><i class='bx bx-table'></i> dados</span></header>
+            <div class="preview">
+              <table class="table" role="table">
+                <thead><tr><th>Projeto</th><th>Status</th><th>Score CWV</th></tr></thead>
+                <tbody>
+                  <tr><td>Dashboard</td><td>Em andamento</td><td>93</td></tr>
+                  <tr><td>Institucional</td><td>Concluído</td><td>98</td></tr>
+                  <tr><td>Lib UI</td><td>Em andamento</td><td>95</td></tr>
+                </tbody>
+              </table>
             </div>
-          </article>
-
-          <!-- Lighthouse CI -->
-          <article class="project" data-tags="performance ci typescript">
-            <small class="tag">Performance</small>
-            <h3>Pipeline Lighthouse CI</h3>
-            <p>Exemplo de verificação automatizada de CWV por PR com budgets e relatórios por comentário.</p>
-            <div class="actions">
-              <a class="btn ghost" href="#"><i class='bx bx-link-external'></i> Live</a>
-              <a class="btn ghost" href="#"><i class='bx bxl-github'></i> Código</a>
-            </div>
-          </article>
-
-          <!-- Dark mode sync -->
-          <article class="project" data-tags="ui typescript">
-            <small class="tag">TypeScript</small>
-            <h3>Dark Mode sincronizado</h3>
-            <p>Tema sincronizado com o sistema, persistência inteligente e atualização do <code>theme-color</code>.</p>
-            <div class="actions">
-              <a class="btn ghost" href="#"><i class='bx bx-link-external'></i> Live</a>
-              <a class="btn ghost" href="#"><i class='bx bxl-github'></i> Código</a>
-            </div>
-          </article>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <!-- CTA secundária -->
-        <div class="contact" style="margin-top:1.2rem" data-aos="zoom-in" data-aos-duration="900">
-          <h3>Quer um experimento sob medida?</h3>
-          <p class="subtitle">Posso prototipar rapidamente um padrão ou integração para o seu produto.</p>
+    <!-- Formulários e feedback -->
+    <section>
+      <div class="container">
+        <div class="section-title"><h2>Formulários</h2><p>Campos acessíveis e validação</p></div>
+        <div class="gallery">
+          <div class="demo-card">
+            <header><h3>Inputs</h3><span class="badge"><i class='bx bx-input-cursor'></i> label e ajuda</span></header>
+            <div class="preview">
+              <form class="list" onsubmit="event.preventDefault()">
+                <label>
+                  <span>Nome</span>
+                  <input required placeholder="Seu nome" aria-describedby="help-nome" style="width:100%;padding:.6rem .8rem;border:1px solid var(--border);border-radius:10px;background:transparent;color:var(--text)">
+                  <small id="help-nome" class="subtitle">Usado para contato</small>
+                </label>
+                <label>
+                  <span>E-mail</span>
+                  <input type="email" required placeholder="voce@dominio.com" style="width:100%;padding:.6rem .8rem;border:1px solid var(--border);border-radius:10px;background:transparent;color:var(--text)">
+                </label>
+                <label>
+                  <span>Serviço</span>
+                  <select style="width:100%;padding:.6rem .8rem;border:1px solid var(--border);border-radius:10px;background:transparent;color:var(--text)">
+                    <option>Desenvolvimento</option>
+                    <option>Performance</option>
+                    <option>SEO Técnico</option>
+                  </select>
+                </label>
+                <div>
+                  <label style="display:flex;align-items:center;gap:.5rem"><input type="checkbox"> Aceito a política de privacidade</label>
+                </div>
+                <div>
+                  <label style="display:flex;align-items:center;gap:.5rem"><input type="radio" name="plan" checked> Basic</label>
+                  <label style="display:flex;align-items:center;gap:.5rem"><input type="radio" name="plan"> Pro</label>
+                </div>
+                <div class="demo-row">
+                  <button class="btn primary" type="submit">Enviar</button>
+                  <button class="btn ghost" type="reset">Limpar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <header><h3>Alertas</h3><span class="badge"><i class='bx bx-info-circle'></i> info e erro</span></header>
+            <div class="preview list">
+              <div role="status" class="alert"><strong>Sucesso</strong> Dados salvos com sucesso.</div>
+              <div role="alert" class="alert" style="border-left-color:#f87171;background:rgba(248,113,113,.08)"><strong>Erro</strong> Verifique os campos obrigatórios.</div>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <header><h3>Progresso</h3><span class="badge"><i class='bx bx-line-chart'></i> tarefa</span></header>
+            <div class="preview">
+              <div class="progress" aria-label="Progresso de upload" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"><span style="width:40%"></span></div>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <header><h3>Dialog</h3><span class="badge"><i class='bx bx-window-open'></i> modal nativo</span></header>
+            <div class="preview demo-row">
+              <button class="btn primary" id="open-dialog">Abrir diálogo</button>
+              <dialog id="demo-dialog" aria-labelledby="dialog-title">
+                <h3 id="dialog-title">Confirma ação</h3>
+                <p class="subtitle">Esta mudança será aplicada agora.</p>
+                <div class="demo-row" style="justify-content:flex-end">
+                  <button class="btn ghost" id="close-dialog">Cancelar</button>
+                  <button class="btn primary" id="confirm-dialog">Confirmar</button>
+                </div>
+              </dialog>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tabs, Lista, Acordeão -->
+    <section>
+      <div class="container">
+        <div class="section-title"><h2>Organização</h2><p>Tabs, listas e acordeão</p></div>
+        <div class="gallery">
+          <div class="demo-card">
+            <header><h3>Tabs</h3><span class="badge"><i class='bx bx-tab'></i> seções</span></header>
+            <div class="preview">
+              <div role="tablist" aria-label="Exemplo de abas" class="tabs">
+                <button class="tab" role="tab" aria-selected="true" aria-controls="p1" id="t1">Resumo</button>
+                <button class="tab" role="tab" aria-selected="false" aria-controls="p2" id="t2">Detalhes</button>
+                <button class="tab" role="tab" aria-selected="false" aria-controls="p3" id="t3">Métricas</button>
+              </div>
+              <div id="p1" role="tabpanel" aria-labelledby="t1" class="tab-panel active"><p class="subtitle">Visão geral do projeto.</p></div>
+              <div id="p2" role="tabpanel" aria-labelledby="t2" class="tab-panel"><p class="subtitle">Tecnologias e integrações.</p></div>
+              <div id="p3" role="tabpanel" aria-labelledby="t3" class="tab-panel"><p class="subtitle">Core Web Vitals e KPIs.</p></div>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <header><h3>Lista com ações</h3><span class="badge"><i class='bx bx-list-ul'></i> itens</span></header>
+            <div class="preview">
+              <ul class="list">
+                <li><span>Integração com API</span><span class="demo-row"><button class="icon-btn" aria-label="Editar"><i class='bx bx-pencil'></i></button><button class="icon-btn" aria-label="Remover"><i class='bx bx-trash'></i></button></span></li>
+                <li><span>Checklist de SEO</span><span class="demo-row"><button class="icon-btn" aria-label="Editar"><i class='bx bx-pencil'></i></button><button class="icon-btn" aria-label="Remover"><i class='bx bx-trash'></i></button></span></li>
+                <li><span>Design System</span><span class="demo-row"><button class="icon-btn" aria-label="Editar"><i class='bx bx-pencil'></i></button><button class="icon-btn" aria-label="Remover"><i class='bx bx-trash'></i></button></span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <header><h3>Acordeão</h3><span class="badge"><i class='bx bx-collapse'></i> detalhes</span></header>
+            <div class="preview">
+              <details>
+                <summary><strong>O que está incluso</strong></summary>
+                <p class="subtitle">Setup de build, otimização de imagens, roteamento, SEO técnico e deploy.</p>
+              </details>
+              <details>
+                <summary><strong>Suporte</strong></summary>
+                <p class="subtitle">Atendimento por e-mail e WhatsApp em horário comercial.</p>
+              </details>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contato">
+      <div class="container">
+        <div class="contact" data-aos="zoom-in">
+          <h2>Quer esses componentes no seu projeto?</h2>
+          <p class="subtitle">Integro e personalizo conforme sua marca e necessidades.
+          </p>
           <div class="btn-row" style="justify-content:center">
             <a class="btn primary" href="https://calendly.com/adrianojose-dev/30min" target="_blank" rel="noopener"><i class='bx bx-calendar'></i> Agendar conversa</a>
-            <a class="btn ghost" href="/#contato"><i class='bx bx-paper-plane'></i> Falar comigo</a>
+            <a class="btn ghost" target="_blank" rel="noopener" href="https://wa.me/5513981242306?text=Olá%2C%20Adriano!%20Vim%20pelo%20seu%20Laboratório.%20Quero%20usar%20esses%20componentes."><i class='bx bxl-whatsapp'></i> WhatsApp</a>
           </div>
         </div>
       </div>
@@ -209,17 +433,38 @@
 
   <!-- Scripts -->
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <!-- Init AOS + tema + menu + filtros já são suportados pelo seu main.js -->
   <script>
     (function(){
-      try {
+      try{
         var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (window.AOS && typeof AOS.init === 'function') {
-          AOS.init({ offset: 0, once: true, disable: prefersReduced });
+          AOS.init({ offset:0, once:true, disable:prefersReduced });
           document.documentElement.classList.add('aos-enabled');
         }
-      } catch(e) { /* noop */ }
+      }catch(e){}
     })();
+  </script>
+  <script>
+    // Tabs
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(t => t.addEventListener('click', () => {
+      const group = t.parentElement; const panels = group.nextElementSibling.parentElement.querySelectorAll('.tab-panel');
+      group.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected', String(b===t)));
+      panels.forEach(p => p.classList.toggle('active', p.id === t.getAttribute('aria-controls')));
+    }));
+
+    // Dialog
+    const dialog = document.getElementById('demo-dialog');
+    document.getElementById('open-dialog')?.addEventListener('click', () => dialog.showModal());
+    document.getElementById('close-dialog')?.addEventListener('click', () => dialog.close());
+    document.getElementById('confirm-dialog')?.addEventListener('click', () => { dialog.close(); showToast('Ação confirmada'); });
+
+    // Toast
+    const toast = document.createElement('div');
+    toast.className = 'toast'; toast.setAttribute('role','status'); toast.innerHTML = '<i class="bx bx-check"></i> Ação realizada';
+    document.body.appendChild(toast);
+    function showToast(msg){ toast.innerHTML = '<i class="bx bx-check"></i> ' + msg; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'), 2200); }
+    document.getElementById('show-toast')?.addEventListener('click', () => showToast('Exemplo de notificação'));
   </script>
   <script src="/main.js" defer></script>
   <noscript>Habilite o JavaScript para melhor experiência.</noscript>

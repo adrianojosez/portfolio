@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title>Laboratório | Adriano José</title>
+  <meta name="description" content="Laboratório de experimentos de Front End do Adriano José: acessibilidade, performance, UI patterns e microprojetos."/>
+  <meta name="theme-color" content="#0b1116"/>
+  <link rel="canonical" href="https://adrianojosedev.netlify.app/lab"/>
+  <link rel="icon" type="image/svg+xml" href="https://api.iconify.design/tabler:bolt.svg?color=%238cc7d6&v=1">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Laboratório | Adriano José">
+  <meta property="og:description" content="Experimentos de Front End com foco em acessibilidade, performance e UX."/>
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://adrianojosedev.netlify.app/lab">
+  <meta property="og:image" content="https://adrianojosedev.netlify.app/og-image.jpg">
+  <meta property="og:site_name" content="Adriano José">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Fonts / Icons / Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
+  <link rel="stylesheet" href="/style.css">
+
+  <!-- Breadcrumbs JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[
+      {"@type":"ListItem","position":1,"name":"Início","item":"https://adrianojosedev.netlify.app/"},
+      {"@type":"ListItem","position":2,"name":"Laboratório","item":"https://adrianojosedev.netlify.app/lab"}
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="site-header" role="banner">
+    <div class="container">
+      <nav class="nav" aria-label="Primária">
+        <a href="/" class="brand" aria-label="Voltar ao início" data-aos="zoom-in" data-aos-duration="1000">
+          <span>Adriano</span> José
+        </a>
+        <div class="nav-actions">
+          <button id="theme-toggle" class="icon-btn" aria-label="Alternar tema"><i class='bx bx-moon'></i></button>
+          <button class="menu-toggle" aria-controls="menu" aria-expanded="false" aria-label="Abrir menu"><i class='bx bx-menu'></i></button>
+        </div>
+        <div id="menu" class="menu" role="navigation">
+          <a href="/#inicio">Início</a>
+          <a href="/#sobre">Sobre</a>
+          <a href="/#projetos">Projetos</a>
+          <a href="/#servicos">Serviços</a>
+          <a href="/#experiencia">Experiência</a>
+          <a href="/#depoimentos">Depoimentos</a>
+          <a href="/lab" aria-current="page">Laboratório</a>
+          <a href="/#contato" class="menu-cta btn ghost"><i class='bx bx-paper-plane'></i> Contato</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <!-- Hero / Intro -->
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow" data-aos="fade-right" data-aos-duration="900"><i class='bx bx-flask'></i> Experimentos</span>
+          <h1 class="gradient" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">Laboratório</h1>
+          <p class="subtitle" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+            Microprojetos e provas de conceito focados em acessibilidade, performance e UX. Código simples, componentes reutilizáveis e medições reais.
+          </p>
+          <div class="btn-row" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="300">
+            <a class="btn primary" href="https://github.com/adrianojosez" target="_blank" rel="noopener">
+              <i class='bx bxl-github'></i> Ver repositórios
+            </a>
+            <a class="btn ghost" href="/#contato"><i class='bx bx-rocket'></i> Precisa de algo assim?</a>
+          </div>
+        </div>
+        <aside>
+          <div class="hero-card" data-aos="zoom-in-left" data-aos-duration="1000" data-aos-delay="150">
+            <div class="avatar" aria-hidden="true">!</div>
+            <div>
+              <strong>Metas do Lab</strong><br>
+              <small>A11y, Core Web Vitals e DX</small>
+            </div>
+          </div>
+          <div class="spacer"></div>
+          <div class="hero-card" data-aos="zoom-in-left" data-aos-duration="1000" data-aos-delay="250">
+            <div class="avatar" aria-hidden="true">!</div>
+            <div>
+              <strong>Stack</strong><br>
+              <small>HTML, CSS, TS, React/Next</small>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Filtros -->
+    <section>
+      <div class="container">
+        <div class="section-title">
+          <h2 data-aos="fade-right">Experimentos</h2>
+          <p data-aos="fade-left">Provas de conceito e miniapps</p>
+        </div>
+
+        <div class="filters" role="toolbar" aria-label="Filtrar experimentos" data-aos="fade-up">
+          <button class="chip active" type="button" data-filter="all" aria-pressed="true">Todos</button>
+          <button class="chip" type="button" data-filter="a11y" aria-pressed="false">Acessibilidade</button>
+          <button class="chip" type="button" data-filter="performance" aria-pressed="false">Performance</button>
+          <button class="chip" type="button" data-filter="ui" aria-pressed="false">UI</button>
+          <button class="chip" type="button" data-filter="react" aria-pressed="false">React</button>
+          <button class="chip" type="button" data-filter="typescript" aria-pressed="false">TypeScript</button>
+        </div>
+
+        <!-- Grid: reusa estilos de .project para aproveitar o filtro do main.js -->
+        <div class="grid" data-aos="fade-up" data-aos-duration="900">
+          <!-- A11y form patterns -->
+          <article class="project" data-tags="a11y ui forms">
+            <small class="tag">Acessibilidade</small>
+            <h3>Form Patterns A11y</h3>
+            <p>Campos com label, descrição, erro associado via aria-describedby, grupos, atalhos e foco gerenciado.</p>
+            <div class="actions">
+              <a class="btn ghost" href="#" aria-label="Abrir demo ao vivo do experimento Form Patterns A11y"><i class='bx bx-link-external'></i> Live</a>
+              <a class="btn ghost" href="#" aria-label="Abrir o código no GitHub do experimento Form Patterns A11y"><i class='bx bxl-github'></i> Código</a>
+            </div>
+          </article>
+
+          <!-- Image lazy loader + LCP -->
+          <article class="project" data-tags="performance ui images">
+            <small class="tag">Performance</small>
+            <h3>Lazy Loader de Imagens</h3>
+            <p>Estratégias de <code>loading</code>, <code>decoding</code>, <code>fetchpriority</code> e placeholders blur para melhorar LCP.</p>
+            <div class="actions">
+              <a class="btn ghost" href="#"><i class='bx bx-link-external'></i> Live</a>
+              <a class="btn ghost" href="#"><i class='bx bxl-github'></i> Código</a>
+            </div>
+          </article>
+
+          <!-- CSS motion (sem libs) -->
+          <article class="project" data-tags="ui css motion">
+            <small class="tag">UI</small>
+            <h3>Motion com CSS puro</h3>
+            <p>Animações suaves com <code>transform</code>, <code>will-change</code>, reduções para prefers-reduced-motion e spring fake.</p>
+            <div class="actions">
+              <a class="btn ghost" href="#"><i class='bx bx-link-external'></i> Live</a>
+              <a class="btn ghost" href="#"><i class='bx bxl-github'></i> Código</a>
+            </div>
+          </article>
+
+          <!-- Skeleton States -->
+          <article class="project" data-tags="ui react">
+            <small class="tag">React</small>
+            <h3>Skeleton States</h3>
+            <p>Fallbacks de carregamento e shimmer acessível, evitando layout shift e mantendo hierarquia semântica.</p>
+            <div class="actions">
+              <a class="btn ghost" href="#"><i class='bx bx-link-external'></i> Live</a>
+              <a class="btn ghost" href="#"><i class='bx bxl-github'></i> Código</a>
+            </div>
+          </article>
+
+          <!-- Lighthouse CI -->
+          <article class="project" data-tags="performance ci typescript">
+            <small class="tag">Performance</small>
+            <h3>Pipeline Lighthouse CI</h3>
+            <p>Exemplo de verificação automatizada de CWV por PR com budgets e relatórios por comentário.</p>
+            <div class="actions">
+              <a class="btn ghost" href="#"><i class='bx bx-link-external'></i> Live</a>
+              <a class="btn ghost" href="#"><i class='bx bxl-github'></i> Código</a>
+            </div>
+          </article>
+
+          <!-- Dark mode sync -->
+          <article class="project" data-tags="ui typescript">
+            <small class="tag">TypeScript</small>
+            <h3>Dark Mode sincronizado</h3>
+            <p>Tema sincronizado com o sistema, persistência inteligente e atualização do <code>theme-color</code>.</p>
+            <div class="actions">
+              <a class="btn ghost" href="#"><i class='bx bx-link-external'></i> Live</a>
+              <a class="btn ghost" href="#"><i class='bx bxl-github'></i> Código</a>
+            </div>
+          </article>
+        </div>
+
+        <!-- CTA secundária -->
+        <div class="contact" style="margin-top:1.2rem" data-aos="zoom-in" data-aos-duration="900">
+          <h3>Quer um experimento sob medida?</h3>
+          <p class="subtitle">Posso prototipar rapidamente um padrão ou integração para o seu produto.</p>
+          <div class="btn-row" style="justify-content:center">
+            <a class="btn primary" href="https://calendly.com/adrianojose-dev/30min" target="_blank" rel="noopener"><i class='bx bx-calendar'></i> Agendar conversa</a>
+            <a class="btn ghost" href="/#contato"><i class='bx bx-paper-plane'></i> Falar comigo</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year">2025</span> Adriano José. Todos os direitos reservados.</div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <!-- Init AOS + tema + menu + filtros já são suportados pelo seu main.js -->
+  <script>
+    (function(){
+      try {
+        var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (window.AOS && typeof AOS.init === 'function') {
+          AOS.init({ offset: 0, once: true, disable: prefersReduced });
+          document.documentElement.classList.add('aos-enabled');
+        }
+      } catch(e) { /* noop */ }
+    })();
+  </script>
+  <script src="/main.js" defer></script>
+  <noscript>Habilite o JavaScript para melhor experiência.</noscript>
+</body>
+</html>

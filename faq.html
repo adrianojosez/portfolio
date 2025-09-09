@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title>FAQ | Adriano José</title>
+  <meta name="description" content="Perguntas frequentes sobre serviços, prazos e formas de trabalho com Adriano José."/>
+  <meta name="theme-color" content="#0b1116"/>
+  <link rel="canonical" href="https://adrianojosedev.netlify.app/faq"/>
+  <link rel="icon" type="image/svg+xml" href="https://api.iconify.design/tabler:help.svg?color=%238cc7d6&v=1">
+
+  <!-- Fonts / Icons / Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
+  <link rel="stylesheet" href="/style.css">
+
+  <style>
+    .faq { display:grid; gap:1rem }
+    .faq details { border:1px solid var(--border); border-radius:14px; padding:1rem; background:var(--card) }
+    .faq summary { font-weight:600; cursor:pointer; display:flex; align-items:center; gap:.5rem }
+    .faq summary i { color:var(--primary) }
+    .faq p { margin:.6rem 0 0; color:var(--muted) }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="site-header" role="banner">
+    <div class="container">
+      <nav class="nav" aria-label="Primária">
+        <a href="/" class="brand" aria-label="Voltar ao início"><span>Adriano</span> José</a>
+        <div class="nav-actions">
+          <button id="theme-toggle" class="icon-btn" aria-label="Alternar tema"><i class='bx bx-moon'></i></button>
+          <button class="menu-toggle" aria-controls="menu" aria-expanded="false" aria-label="Abrir menu"><i class='bx bx-menu'></i></button>
+        </div>
+        <div id="menu" class="menu" role="navigation">
+          <a href="/#inicio">Início</a>
+          <a href="/#projetos">Projetos</a>
+          <a href="/#servicos">Serviços</a>
+          <a href="/lab">Laboratório</a>
+          <a href="/faq" aria-current="page">FAQ</a>
+          <a href="/#contato" class="menu-cta btn ghost"><i class='bx bx-paper-plane'></i> Contato</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow"><i class='bx bx-question-mark'></i> Perguntas frequentes</span>
+          <h1 class="gradient">FAQ</h1>
+          <p class="subtitle">As respostas para dúvidas comuns sobre meus serviços e forma de trabalho.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-title"><h2>Perguntas e Respostas</h2><p>Principais dúvidas dos clientes</p></div>
+        <div class="faq" data-aos="fade-up">
+          <details>
+            <summary><i class='bx bx-time-five'></i> Qual o prazo médio de um projeto?</summary>
+            <p>Depende da complexidade. Landing pages simples levam cerca de 2 semanas. Projetos com integrações e SEO avançado podem levar de 1 a 2 meses.</p>
+          </details>
+
+          <details>
+            <summary><i class='bx bx-money'></i> Como funciona o orçamento?</summary>
+            <p>Faço um diagnóstico inicial gratuito, entendo necessidades, e envio proposta detalhada com etapas, prazos e valores fechados.</p>
+          </details>
+
+          <details>
+            <summary><i class='bx bx-world'></i> Você atende empresas fora do Brasil?</summary>
+            <p>Sim. Já trabalhei com clientes internacionais e utilizo reuniões online, contratos digitais e pagamentos via plataformas seguras.</p>
+          </details>
+
+          <details>
+            <summary><i class='bx bx-line-chart'></i> O que está incluso no serviço de SEO?</summary>
+            <p>Incluo auditoria técnica, implementação de melhorias, relatórios de Core Web Vitals, ajustes de semântica e suporte em estratégias de conteúdo.</p>
+          </details>
+
+          <details>
+            <summary><i class='bx bx-cog'></i> Você dá manutenção após a entrega?</summary>
+            <p>Sim. Ofereço planos de manutenção mensais que incluem monitoramento, ajustes de performance e suporte a pequenas evoluções.</p>
+          </details>
+
+          <details>
+            <summary><i class='bx bx-lock-alt'></i> O código entregue é do cliente?</summary>
+            <p>Sim, todo o código e assets entregues são de propriedade do cliente. Você pode usar, evoluir ou migrar para outros times.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato">
+      <div class="container">
+        <div class="contact" data-aos="zoom-in">
+          <h2>Ainda tem dúvidas?</h2>
+          <p class="subtitle">Entre em contato e conversamos sobre seu projeto.</p>
+          <div class="btn-row" style="justify-content:center">
+            <a class="btn primary" href="https://calendly.com/adrianojose-dev/30min" target="_blank" rel="noopener"><i class='bx bx-calendar'></i> Agendar conversa</a>
+            <a class="btn ghost" href="/#contato"><i class='bx bx-paper-plane'></i> Enviar mensagem</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year">2025</span> Adriano José. Todos os direitos reservados.</div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    (function(){
+      try{
+        var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (window.AOS && typeof AOS.init === 'function') {
+          AOS.init({ offset:0, once:true, disable:prefersReduced });
+          document.documentElement.classList.add('aos-enabled');
+        }
+      }catch(e){}
+    })();
+  </script>
+  <script src="/main.js" defer></script>
+</body>
+</html>

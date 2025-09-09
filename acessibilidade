@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Laboratório de Acessibilidade | Adriano José</title>
+  <meta name="description" content="Ferramentas práticas para testar e aprender acessibilidade web: checklist, contraste, teclado e textos alternativos." />
+  <meta name="theme-color" content="#0b1116" />
+
+  <!-- Fonte e ícones (sem dependências JS externas) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+  <style>
+    /* =============================
+       Variáveis / Tema
+    ============================== */
+    :root{
+      --primary:#8cc7d6;
+      --secondary:#bda368;
+      --tertiary:#68bdd1;
+
+      --bg:#00101f;
+      --surface:#0c141b;
+      --card:#0f1720;
+      --text:#e8eef2;
+      --muted:#a9b7bf;
+      --border:rgba(255,255,255,.08);
+
+      --shadow:0 10px 30px rgba(0,0,0,.3);
+      --radius:18px;
+      --container:1120px;
+    }
+    :root{ color-scheme: dark; }
+    [data-theme="light"]{
+      --bg:#f6f8fb; --surface:#ffffff; --card:#ffffff; --text:#0c1116; --muted:#44515a; --border:rgba(0,0,0,.08); --shadow:0 10px 30px rgba(0,0,0,.08);
+    }
+
+    /* =============================
+       Base
+    ============================== */
+    *,*::before,*::after{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 80% -10%, rgba(140,199,214,.18), transparent),
+        radial-gradient(1000px 600px at -10% 10%, rgba(104,189,209,.18), transparent),
+        var(--bg);
+      line-height:1.6; min-height:100dvh;
+    }
+    img{ max-width:100%; display:block; }
+    a{ color:inherit; text-decoration:none; }
+    .container{ width:min(100%,var(--container)); margin:0 auto; padding:0 1rem; }
+    .visually-hidden{ position:absolute !important; width:1px; height:1px; margin:-1px; padding:0; border:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+
+    /* Foco visível */
+    :where(a,button,input,select,textarea,[role="button"]):focus-visible{
+      outline:none;
+      box-shadow:0 0 0 3px rgba(140,199,214,.35), 0 0 0 6px rgba(140,199,214,.18);
+      border-radius:12px;
+    }
+
+    /* Header */
+    .site-header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter:saturate(140%) blur(10px);
+      background:linear-gradient(180deg, color-mix(in oklab, var(--bg) 80%, transparent), color-mix(in oklab, var(--bg) 55%, transparent));
+      border-bottom:1px solid var(--border);
+    }
+    .nav{ display:flex; align-items:center; justify-content:space-between; height:64px; gap:.8rem; }
+    .brand{ display:flex; align-items:center; gap:.6rem; font-weight:800; letter-spacing:.2px; }
+    .brand span{ color:var(--primary); }
+    .nav-actions{ display:flex; gap:.5rem; }
+    .icon-btn{ width:40px; height:40px; display:inline-grid; place-items:center; border-radius:10px; border:1px solid var(--border); background:transparent; color:var(--text); }
+    .menu{ display:flex; gap:.6rem; }
+    .menu a{ padding:.55rem .8rem; border-radius:.7rem; color:var(--muted); }
+    .menu a:hover{ color:var(--text); background:rgba(140,199,214,.12); }
+
+    /* Hero */
+    .hero{ padding:96px 0 32px; }
+    .hero-grid{ display:grid; grid-template-columns: 1.2fr .8fr; gap:2rem; align-items:center; }
+    .eyebrow{ display:inline-flex; align-items:center; gap:.5rem; padding:.35rem .6rem; border:1px solid var(--border); border-radius:999px; color:var(--muted); font-size:.9rem; }
+    .eyebrow i{ color:var(--primary); font-size:1.1rem; }
+    h1{ margin:.6rem 0 0; font-size: clamp(2.1rem, 6vw, 3.1rem); line-height:1.1; }
+    .gradient{ background:linear-gradient(90deg, var(--text) 10%, var(--primary) 50%, var(--tertiary) 90%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .subtitle{ margin:.8rem 0 1.2rem; color:var(--muted); max-width:65ch; }
+    .hero-card{ background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid var(--border); border-radius:18px; padding:1rem; display:grid; grid-template-columns:56px 1fr; gap:.9rem; align-items:center; }
+    .avatar{ width:56px; height:56px; border-radius:14px; background:linear-gradient(135deg, var(--primary), var(--tertiary)); display:grid; place-items:center; color:#062129; font-weight:800; }
+
+    .btn-row{ display:flex; gap:.8rem; flex-wrap:wrap; margin-top:1rem; }
+    .btn{ display:inline-flex; align-items:center; gap:.5rem; padding:.85rem 1rem; border-radius:.9rem; border:1px solid var(--border); font-weight:600; }
+    .btn.primary{ background:linear-gradient(180deg, var(--primary), var(--tertiary)); color:#062129; border-color:transparent; box-shadow:var(--shadow); }
+    .btn.ghost{ background:rgba(255,255,255,.04); }
+
+    section{ padding:64px 0; }
+    .section-title{ display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:1.2rem;}
+    .section-title h2{ margin:0; font-size: clamp(1.4rem, 3.5vw, 2rem); }
+    .section-title p{ margin:0; color:var(--muted); }
+
+    /* Cards / Grids */
+    .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+    .card{ background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1rem; }
+
+    /* Checklist */
+    .checklist .item{ display:grid; grid-template-columns:auto 1fr auto; gap:.6rem; align-items:start; padding:.6rem; border:1px dashed var(--border); border-radius:12px; margin-bottom:.6rem; }
+    .checklist .item.done{ background:rgba(140,199,214,.08); }
+    .progress{ width:100%; height:10px; border-radius:999px; background:rgba(255,255,255,.06); overflow:hidden; border:1px solid var(--border); }
+    .progress > span{ display:block; height:100%; width:0%; background:linear-gradient(90deg, var(--primary), var(--tertiary)); }
+
+    /* Contraste */
+    .swatch{ width:44px; height:44px; border-radius:10px; border:1px solid var(--border); }
+    .ratio{ font-weight:800; }
+    .badge{ display:inline-block; padding:.2rem .5rem; border-radius:999px; border:1px solid var(--border); font-size:.85rem; margin-left:.35rem; }
+    .pass{ background:rgba(60,200,120,.15); }
+    .fail{ background:rgba(255,90,90,.12); }
+
+    /* Playground de Teclado */
+    .kbd-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:.6rem; }
+    .kbd-card{ padding:1rem; border:1px solid var(--border); border-radius:14px; background:var(--surface); }
+    .kbd-card:focus-within,.kbd-card:focus{ outline:none; box-shadow:0 0 0 3px rgba(140,199,214,.35); }
+
+    /* Área Alt */
+    .alt-area textarea{ width:100%; min-height:120px; resize:vertical; border-radius:12px; border:1px solid var(--border); background:var(--surface); color:var(--text); padding:.8rem; }
+
+    /* Rodapé */
+    footer{ padding:36px 0 48px; color:var(--muted); text-align:center; }
+
+    /* Responsivo */
+    @media (max-width: 960px){
+      .hero-grid{ grid-template-columns:1fr; }
+      .grid{ grid-template-columns:1fr; }
+    }
+
+    /* Scrollbar */
+    :root{ --scroll-thumb: rgba(140,199,214,.65); --scroll-thumb-hover: rgba(140,199,214,.9); --scroll-track: rgba(255,255,255,.08); }
+    [data-theme="light"]{ --scroll-thumb:#8cc7d6cc; --scroll-thumb-hover:#8cc7d6; --scroll-track:rgba(0,0,0,.08); }
+    html{ scrollbar-width:thin; scrollbar-color:var(--scroll-thumb) var(--scroll-track); scrollbar-gutter:stable both-edges; }
+    *::-webkit-scrollbar{ width:10px; height:10px; }
+    *::-webkit-scrollbar-track{ background:var(--scroll-track); border-radius:999px; }
+    *::-webkit-scrollbar-thumb{ border-radius:999px; background:linear-gradient(180deg, var(--primary), var(--tertiary)); border:2px solid transparent; background-clip:padding-box; }
+    *::-webkit-scrollbar-thumb:hover{ box-shadow: inset 0 0 0 999px var(--scroll-thumb-hover); }
+
+    /* Botão voltar ao topo */
+    .back-to-top{ position:fixed; right:16px; bottom:16px; width:42px; height:42px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,.06); color:var(--text); opacity:0; pointer-events:none; transition:opacity .2s ease, transform .12s ease; z-index:60 }
+    .back-to-top.show{ opacity:1; pointer-events:auto }
+  </style>
+</head>
+<body>
+  <a class="visually-hidden" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="site-header" role="banner">
+    <div class="container">
+      <nav class="nav" aria-label="Primária">
+        <a href="#inicio" class="brand" aria-label="Voltar ao início">
+          <span>Adriano</span> José
+        </a>
+        <div class="nav-actions">
+          <button id="theme-toggle" class="icon-btn" aria-label="Alternar tema"><i class='bx bx-moon'></i></button>
+        </div>
+        <div class="menu" role="navigation">
+          <a href="#checklist">Checklist</a>
+          <a href="#contraste">Contraste</a>
+          <a href="#teclado">Teclado</a>
+          <a href="#alt">Alt Text</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <!-- Hero -->
+    <section id="inicio" class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow"><i class='bx bx-universal-access'></i> Laboratório de Acessibilidade</span>
+          <h1 class="gradient">A11y na prática, sem mistério</h1>
+          <p class="subtitle">
+            Um hub de ferramentas para elevar a qualidade e a inclusão das suas interfaces: checklist viva, checagem de contraste, treino de teclado e prática de textos alternativos. Ideal para revisões rápidas antes do deploy.
+          </p>
+          <div class="btn-row">
+            <a class="btn primary" href="#checklist"><i class='bx bx-list-check'></i> Começar agora</a>
+            <a class="btn ghost" href="#contraste"><i class='bx bx-color-fill'></i> Ver contraste</a>
+          </div>
+        </div>
+        <aside>
+          <div class="hero-card">
+            <div class="avatar" aria-hidden="true">A11y</div>
+            <div>
+              <strong>Foco em acessibilidade</strong><br />
+              <small>WCAG, teclado e conteúdo alternativo</small>
+            </div>
+          </div>
+          <div style="height:.8rem"></div>
+          <div class="hero-card">
+            <div class="avatar" aria-hidden="true">AA</div>
+            <div>
+              <strong>WCAG 2.2</strong><br />
+              <small>Relatórios rápidos para AA/AAA</small>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Checklist -->
+    <section id="checklist" aria-labelledby="tit-checklist">
+      <div class="container">
+        <div class="section-title">
+          <h2 id="tit-checklist">Checklist essencial</h2>
+          <p>Marque o que já foi cuidado e exporte o status</p>
+        </div>
+
+        <div class="card">
+          <div class="progress" aria-label="Progresso da checklist" aria-live="polite"><span id="progressBar"></span></div>
+          <p id="progressText" style="margin:.6rem 0 1rem; color:var(--muted)">0 de 10 itens concluídos</p>
+
+          <div class="checklist" id="checklistItems">
+            <!-- Itens são injetados via JS para facilitar manutenção -->
+          </div>
+
+          <div class="btn-row">
+            <button class="btn ghost" id="btnReset"><i class='bx bx-reset'></i> Limpar</button>
+            <button class="btn primary" id="btnExport"><i class='bx bx-export'></i> Exportar JSON</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contraste -->
+    <section id="contraste" aria-labelledby="tit-contraste">
+      <div class="container">
+        <div class="section-title">
+          <h2 id="tit-contraste">Checador de contraste</h2>
+          <p>Verifique se suas cores atendem WCAG (AA/AAA)</p>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3 style="margin-top:0">Configurar</h3>
+            <div style="display:grid; grid-template-columns: 1fr auto; gap:.8rem; align-items:center;">
+              <label for="fg">Cor do texto (FG)</label>
+              <input type="color" id="fg" value="#e8eef2" aria-label="Cor do texto">
+
+              <label for="bg">Cor de fundo (BG)</label>
+              <input type="color" id="bg" value="#0f1720" aria-label="Cor de fundo">
+
+              <label for="sampleText">Amostra</label>
+              <input id="sampleText" type="text" placeholder="Digite um texto de exemplo" value="Texto de exemplo acessível">
+            </div>
+
+            <div style="display:flex; align-items:center; gap:.8rem; margin-top:1rem;">
+              <div id="swFG" class="swatch" aria-hidden="true"></div>
+              <div id="swBG" class="swatch" aria-hidden="true"></div>
+              <button class="btn ghost" id="swap"><i class='bx bx-transfer-alt'></i> Inverter</button>
+            </div>
+          </div>
+
+          <div class="card" id="previewCard">
+            <h3 style="margin-top:0">Prévia</h3>
+            <div id="preview" style="padding:1rem; border:1px solid var(--border); border-radius:12px;">
+              <p id="previewText" style="margin:0; font-size:1.1rem;">Texto de exemplo acessível</p>
+            </div>
+            <p style="margin-top:1rem">Razão de contraste: <span class="ratio" id="ratio">–</span></p>
+            <p>
+              Resultado:
+              <span id="resNormal" class="badge">Normal</span>
+              <span id="resLarge" class="badge">Grande</span>
+            </p>
+            <small style="color:var(--muted)">AA (normal ≥ 4.5:1, grande ≥ 3:1). AAA (normal ≥ 7:1, grande ≥ 4.5:1).</small>
+          </div>
+
+          <div class="card">
+            <h3 style="margin-top:0">Dicas rápidas</h3>
+            <ul style="margin:0 0 1rem 1.1rem; color:var(--muted)">
+              <li>Evite usar apenas cor para transmitir informação</li>
+              <li>Teste estados de foco e hover com contraste suficiente</li>
+              <li>Verifique contraste também em light mode</li>
+            </ul>
+            <button class="btn ghost" id="toggleTheme"><i class='bx bx-sun'></i> Alternar tema</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Teclado -->
+    <section id="teclado" aria-labelledby="tit-teclado">
+      <div class="container">
+        <div class="section-title">
+          <h2 id="tit-teclado">Prática de navegação por teclado</h2>
+          <p>Use Tab/Shift+Tab e Espaço/Enter para ativar</p>
+        </div>
+
+        <div class="card">
+          <div class="kbd-grid" aria-label="Área de prática">
+            <button class="kbd-card" aria-pressed="false">Botão 1</button>
+            <button class="kbd-card" aria-pressed="false">Botão 2</button>
+            <button class="kbd-card" aria-pressed="false">Botão 3</button>
+            <a class="kbd-card" href="#alt" role="button">Ir para Alt Text</a>
+            <button class="kbd-card" aria-pressed="false">Toggle</button>
+            <button class="kbd-card" aria-pressed="false">Ação</button>
+          </div>
+          <p id="kbdLog" style="margin:.8rem 0 0; color:var(--muted)">Dica: pressione Espaço para alternar “aria-pressed”.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Alt Text -->
+    <section id="alt" aria-labelledby="tit-alt">
+      <div class="container">
+        <div class="section-title">
+          <h2 id="tit-alt">Praticando textos alternativos</h2>
+          <p>Descreva propósito e conteúdo da imagem</p>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3 style="margin-top:0">Imagem de exemplo</h3>
+            <div style="border:1px solid var(--border); border-radius:12px; overflow:hidden;">
+              <!-- Placeholder acessível usando SVG inline -->
+              <svg viewBox="0 0 600 300" role="img" aria-label="Paisagem com montanhas ao fundo e sol nascente">
+                <rect width="600" height="300" fill="#1a2530"></rect>
+                <circle cx="100" cy="80" r="40" fill="#ffd166"></circle>
+                <polygon points="0,300 120,160 240,300" fill="#264653"></polygon>
+                <polygon points="200,300 340,140 480,300" fill="#2a9d8f"></polygon>
+                <polygon points="360,300 480,180 600,300" fill="#1f6f75"></polygon>
+              </svg>
+            </div>
+          </div>
+
+          <div class="card alt-area">
+            <h3 style="margin-top:0">Escreva seu alt</h3>
+            <label class="visually-hidden" for="altText">Texto alternativo</label>
+            <textarea id="altText" placeholder="Ex.: “Ilustração de um sol nascendo por trás das montanhas, representando um cenário natural ao amanhecer.”"></textarea>
+            <div class="btn-row" style="margin-top:.8rem;">
+              <button class="btn primary" id="btnAvaliar"><i class='bx bx-check-shield'></i> Avaliar</button>
+              <button class="btn ghost" id="btnExemplos"><i class='bx bx-bulb'></i> Exemplos</button>
+            </div>
+            <p id="altFeedback" style="margin:.8rem 0 0; color:var(--muted)"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year">2025</span> Adriano José. Laboratório A11y.</div>
+  </footer>
+
+  <button class="back-to-top" id="backTop" aria-label="Voltar ao topo">↑</button>
+
+  <script>
+    (function(){
+      const $ = (s,r=document)=>r.querySelector(s);
+      const $$ = (s,r=document)=>Array.from(r.querySelectorAll(s));
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const themeMeta = document.querySelector('meta[name="theme-color"]');
+      const root = document.documentElement;
+      const yearEl = $('#year'); if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      /* Tema com persistência */
+      const themeKey='theme';
+      const saved = localStorage.getItem(themeKey);
+      applyTheme(saved || (prefersDark ? 'dark' : 'light'));
+      $('#theme-toggle')?.addEventListener('click', ()=>{
+        const next = root.getAttribute('data-theme')==='dark'?'light':'dark';
+        applyTheme(next);
+      });
+      function applyTheme(t){
+        root.setAttribute('data-theme', t);
+        const icon = $('#theme-toggle i');
+        if (icon){ icon.classList.toggle('bx-moon', t!=='dark'); icon.classList.toggle('bx-sun', t==='dark'); }
+        themeMeta?.setAttribute('content', t==='dark' ? '#0b1116' : '#f6f8fb');
+        localStorage.setItem(themeKey, t);
+        // Recalcular contraste quando o tema muda
+        updateContrast();
+      }
+
+      /* Botão voltar ao topo */
+      const backTop = $('#backTop');
+      function onScroll(){ if (window.scrollY > 400) backTop.classList.add('show'); else backTop.classList.remove('show'); }
+      window.addEventListener('scroll', onScroll, { passive:true });
+      backTop?.addEventListener('click', ()=> window.scrollTo({ top:0, behavior:'smooth' }));
+
+      /* =============================
+         Checklist dinâmica
+      ============================== */
+      const items = [
+        { id:'semantica', label:'Estrutura semântica (landmarks, headings em ordem)', ref:'1.3.1/2.4.1' },
+        { id:'foco', label:'Foco visível e lógico em todos os elementos interativos', ref:'2.4.7/2.4.3' },
+        { id:'contraste', label:'Contraste de texto atende AA (ou AAA se possível)', ref:'1.4.3/1.4.6' },
+        { id:'teclado', label:'Funciona só com teclado (sem armadilhas de foco)', ref:'2.1.1/2.1.2' },
+        { id:'alt', label:'Imagens com alt significativo (ou decorativas vazias)', ref:'1.1.1' },
+        { id:'animacao', label:'Respeita “prefers-reduced-motion” e evita flashes', ref:'2.3.x' },
+        { id:'formularios', label:'Inputs com label/aria-labelledby e mensagens claras', ref:'3.3.x' },
+        { id:'responsivo', label:'Layout responsivo sem perda de conteúdo/funcionalidade', ref:'1.4.10' },
+        { id:'lingua', label:'lang no HTML e mudanças de idioma marcadas', ref:'3.1.x' },
+        { id:'mensagens', label:'Alertas e mudanças anunciadas com aria-live', ref:'4.1.3' },
+      ];
+      const checklistEl = $('#checklistItems');
+      const progressBar = $('#progressBar');
+      const progressText = $('#progressText');
+      const storedKey='a11y-checklist';
+      const stored = JSON.parse(localStorage.getItem(storedKey) || '{}');
+
+      // Render
+      items.forEach(it=>{
+        const wrap = document.createElement('div');
+        wrap.className='item';
+        wrap.innerHTML = `
+          <input type="checkbox" id="${it.id}" ${stored[it.id] ? 'checked' : ''} aria-describedby="${it.id}-ref">
+          <label for="${it.id}">${it.label}</label>
+          <small id="${it.id}-ref" style="color:var(--muted)">WCAG: ${it.ref}</small>
+        `;
+        checklistEl.appendChild(wrap);
+      });
+
+      function updateProgress(){
+        const checks = $$('input[type="checkbox"]', checklistEl);
+        const done = checks.filter(c=>c.checked).length;
+        const total = checks.length;
+        const pct = Math.round((done/total)*100);
+        progressBar.style.width = pct + '%';
+        progressText.textContent = `${done} de ${total} itens concluídos (${pct}%)`;
+        // classes visuais
+        $$('.item', checklistEl).forEach(div=>{
+          div.classList.toggle('done', div.querySelector('input[type="checkbox"]').checked);
+        });
+      }
+      checklistEl.addEventListener('change', (e)=>{
+        if (e.target.matches('input[type="checkbox"]')){
+          stored[e.target.id] = e.target.checked;
+          localStorage.setItem(storedKey, JSON.stringify(stored));
+          updateProgress();
+        }
+      });
+      $('#btnReset')?.addEventListener('click', ()=>{
+        localStorage.removeItem(storedKey);
+        $$('input[type="checkbox"]', checklistEl).forEach(c=>c.checked=false);
+        updateProgress();
+      });
+      $('#btnExport')?.addEventListener('click', ()=>{
+        const data = items.map(it=>({ id:it.id, label:it.label, done: !!($('#'+it.id)?.checked), ref:it.ref }));
+        const blob = new Blob([JSON.stringify({ updatedAt:new Date().toISOString(), items:data }, null, 2)], { type:'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'a11y-checklist.json';
+        a.click(); URL.revokeObjectURL(url);
+      });
+      updateProgress();
+
+      /* =============================
+         Checador de contraste (WCAG)
+      ============================== */
+      const fg = $('#fg'), bg = $('#bg'), sample = $('#sampleText');
+      const swFG = $('#swFG'), swBG = $('#swBG'), preview = $('#preview'), previewText = $('#previewText');
+      const ratioEl = $('#ratio'), resNormal = $('#resNormal'), resLarge = $('#resLarge');
+
+      function hexToRgb(h){
+        const m = h.replace('#','').match(/.{1,2}/g);
+        return m ? m.map(x=>parseInt(x,16)) : [0,0,0];
+      }
+      function srgbToLin(c){ c = c/255; return c <= 0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055, 2.4); }
+      function luminance([r,g,b]){
+        const [R,G,B] = [r,g,b].map(srgbToLin);
+        return 0.2126*R + 0.7152*G + 0.0722*B;
+      }
+      function contrast(hex1, hex2){
+        const L1 = luminance(hexToRgb(hex1));
+        const L2 = luminance(hexToRgb(hex2));
+        const brighter = Math.max(L1, L2), darker = Math.min(L1, L2);
+        return (brighter + 0.05) / (darker + 0.05);
+      }
+      function fmt(n){ return (Math.round(n*100)/100).toFixed(2); }
+
+      function updateContrast(){
+        const fgVal = fg.value; const bgVal = bg.value;
+        swFG.style.background = fgVal; swBG.style.background = bgVal;
+        preview.style.background = bgVal; previewText.style.color = fgVal;
+        previewText.textContent = sample.value || 'Texto de exemplo acessível';
+        const r = contrast(fgVal, bgVal);
+        ratioEl.textContent = fmt(r) + ':1';
+        // Avaliação AA/AAA
+        const passAA_normal = r >= 4.5;
+        const passAA_large  = r >= 3;
+        const passAAA_normal = r >= 7;
+        const passAAA_large  = r >= 4.5;
+
+        resNormal.textContent = 'Normal ' + (passAAA_normal ? '(AAA)' : passAA_normal ? '(AA)' : '(falha)');
+        resLarge.textContent  = 'Grande ' + (passAAA_large ? '(AAA)' : passAA_large ? '(AA)' : '(falha)');
+        [resNormal, resLarge].forEach(el=>{
+          el.classList.remove('pass','fail');
+          const isPass = el.textContent.includes('(AA)') || el.textContent.includes('(AAA)');
+          el.classList.add(isPass ? 'pass' : 'fail');
+        });
+      }
+      [fg,bg,sample].forEach(el=> el.addEventListener('input', updateContrast));
+      $('#swap')?.addEventListener('click', ()=>{
+        const tmp = fg.value; fg.value = bg.value; bg.value = tmp; updateContrast();
+      });
+      $('#toggleTheme')?.addEventListener('click', ()=>{
+        const next = root.getAttribute('data-theme')==='dark'?'light':'dark';
+        applyTheme(next);
+      });
+      updateContrast();
+
+      /* =============================
+         Playground de teclado
+      ============================== */
+      const kbdLog = $('#kbdLog');
+      $$('.kbd-card').forEach(btn=>{
+        btn.addEventListener('keydown', (e)=>{
+          if (e.key === ' ' || e.key === 'Enter'){
+            e.preventDefault();
+            btn.click();
+          }
+        });
+        btn.addEventListener('click', ()=>{
+          if (btn.hasAttribute('aria-pressed')){
+            const v = btn.getAttribute('aria-pressed') === 'true';
+            btn.setAttribute('aria-pressed', String(!v));
+            kbdLog.textContent = `“${btn.textContent.trim()}” agora está ${!v ? 'ativado' : 'desativado'}.`;
+          } else {
+            kbdLog.textContent = `Link acionado: ${btn.textContent.trim()}`;
+          }
+        });
+      });
+
+      /* =============================
+         Alt text – avaliação simples
+      ============================== */
+      const altText = $('#altText'); const altFeedback = $('#altFeedback');
+      $('#btnAvaliar')?.addEventListener('click', ()=>{
+        const t = (altText.value || '').trim();
+        if (!t){
+          altFeedback.style.color = 'salmon';
+          return altFeedback.textContent = 'O campo está vazio. Descreva a imagem considerando propósito e contexto.';
+        }
+        const lengthOK = t.length >= 20 && t.length <= 200;
+        const temVerbo  = /\b(é|são|mostra|mostrando|apresenta|representa|exibe|contém)\b/i.test(t);
+        const evitaTextoGen = !/\b(imagem|foto|picture|imagem de)\b/i.test(t) || t.toLowerCase().startsWith('imagem de ');
+        const semJulgamento = !/\b(lindo|feio|horrível|perfeito)\b/i.test(t);
+        const score = [lengthOK, temVerbo, evitaTextoGen, semJulgamento].filter(Boolean).length;
+        altFeedback.style.color = 'var(--muted)';
+        altFeedback.innerHTML =
+          `Qualidade: <strong>${score}/4</strong> · ` +
+          (lengthOK ? '✔︎ tamanho' : '✖ tamanho') + ' · ' +
+          (temVerbo ? '✔︎ verbo' : '✖ verbo') + ' · ' +
+          (evitaTextoGen ? '✔︎ evita “imagem de…”' : '✖ genérico') + ' · ' +
+          (semJulgamento ? '✔︎ objetivo' : '✖ julgamentos');
+      });
+      $('#btnExemplos')?.addEventListener('click', ()=>{
+        altText.value = 'Ilustração minimalista de um sol nascendo atrás de cadeias de montanhas, sugerindo amanhecer sereno em tons frios.';
+        altFeedback.textContent = 'Exemplo inserido. Você pode ajustar para o seu contexto.';
+      });
+    })();
+  </script>
+</body>
+</html>

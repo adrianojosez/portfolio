@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Resultados (Case Studies) | Adriano José</title>
+  <meta name="description" content="Antes e depois reais: SEO, Core Web Vitals e conversão. Cases com stack, desafios, timeline e depoimentos."/>
+  <meta name="theme-color" content="#0b1116"/>
+  <link rel="canonical" href="/resultados.html"/>
+  <link rel="icon" type="image/svg+xml" href="https://api.iconify.design/tabler:bolt.svg?color=%238cc7d6&v=1">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Resultados (Case Studies) | Adriano José">
+  <meta property="og:description" content="Antes e depois: ganhos em performance, SEO e conversão com React/Next e SEO técnico.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/resultados.html">
+  <meta property="og:image" content="/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Fonts / Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary:#8cc7d6; --secondary:#bda368; --tertiary:#68bdd1;
+      --bg:#00101f; --card:#0f1720; --surface:#0c141b; --text:#e8eef2; --muted:#a9b7bf;
+      --border:rgba(255,255,255,.08); --shadow:0 10px 30px rgba(0,0,0,.3);
+      --radius:18px; --container:1120px; --header-h:64px;
+      --good:#34d399; --warn:#fbbf24; --bad:#f87171;
+    }
+    :root{ color-scheme:dark; }
+    [data-theme="light"]{
+      --bg:#f6f8fb; --card:#ffffff; --surface:#ffffff; --text:#0c1116; --muted:#44515a;
+      --border:rgba(0,0,0,.08); --shadow:0 10px 30px rgba(0,0,0,.08); color-scheme: light;
+    }
+    *,*::before,*::after{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 80% -10%, rgba(140,199,214,.18), transparent),
+        radial-gradient(1000px 600px at -10% 10%, rgba(104,189,209,.18), transparent),
+        var(--bg);
+      min-height:100dvh; line-height:1.6;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .container{ width:min(100%,var(--container)); margin:0 auto; padding:0 1rem; }
+    /* Header */
+    .site-header{ position:sticky; top:0; z-index:50; height:var(--header-h);
+      backdrop-filter:saturate(140%) blur(10px);
+      background: linear-gradient(180deg, color-mix(in oklab, var(--bg) 80%, transparent), color-mix(in oklab, var(--bg) 55%, transparent));
+      border-bottom:1px solid var(--border);
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between;height:var(--header-h);gap:.8rem;}
+    .brand{display:flex;align-items:center;gap:.6rem;font-weight:800;letter-spacing:.2px;}
+    .brand span{color:var(--primary);}
+    .nav-actions{display:flex;gap:.5rem;align-items:center;}
+    .icon-btn{width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text);}
+    .menu{display:flex;align-items:center;gap:.8rem;}
+    .menu a{padding:.55rem .8rem;border-radius:.7rem;font-weight:500;color:var(--muted);}
+    .menu a:hover,.menu a:focus{color:var(--text);background:rgba(140,199,214,.12);}
+    .menu-cta{display:none;}
+    .menu-toggle{display:none;}
+
+    /* Hero */
+    .hero{ padding:72px 0 24px; }
+    .hero-grid{ display:grid; grid-template-columns: 1.2fr .8fr; gap:2rem; align-items:center; }
+    .eyebrow{ display:inline-flex; gap:.5rem; align-items:center; padding:.35rem .6rem; border:1px solid var(--border); border-radius:999px; color:var(--muted); font-size:.9rem;}
+    .eyebrow i{ color:var(--primary); }
+    h1{ margin:.6rem 0 0; font-size:clamp(2.2rem,6vw,3.25rem); line-height:1.1; letter-spacing:.2px; }
+    .gradient{ background:linear-gradient(90deg,var(--text) 10%,var(--primary) 50%,var(--tertiary) 90%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .subtitle{ color:var(--muted); }
+
+    /* Sections */
+    section{ padding:64px 0; }
+    .section-title{ display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:1.2rem; }
+    .section-title h2{ margin:0; font-size:clamp(1.4rem,3.5vw,2rem); }
+
+    .filters{ display:flex; gap:.5rem; flex-wrap:wrap; }
+    .chip{ border:1px solid var(--border); background:rgba(255,255,255,.03); color:var(--text); padding:.45rem .75rem; border-radius:999px; cursor:pointer }
+    .chip[aria-pressed="true"]{ background:linear-gradient(180deg,var(--primary),var(--tertiary)); color:#062129; border-color:transparent }
+
+    .grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem; }
+    .grid-2{ display:grid; grid-template-columns: repeat(2, 1fr); gap:1rem; }
+
+    .card{ background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1rem; box-shadow:var(--shadow); }
+    .badge{ display:inline-flex; gap:.35rem; align-items:center; font-size:.85rem; padding:.25rem .55rem; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,.04) }
+
+    .btn{ display:inline-flex; align-items:center; gap:.5rem; padding:.85rem 1rem; border-radius:.9rem; border:1px solid var(--border); font-weight:600; }
+    .btn.primary{ background:linear-gradient(180deg,var(--primary),var(--tertiary)); color:#062129; border-color:transparent; box-shadow:var(--shadow); }
+    .btn.ghost{ color:var(--text); background:rgba(255,255,255,.04); }
+    .btn.small{ padding:.55rem .8rem; }
+
+    /* Case card */
+    .case{ display:grid; gap:.6rem; }
+    .case h3{ margin:.1rem 0; font-size:1.15rem; }
+    .meta{ color:var(--muted); font-size:.95rem; display:flex; gap:.6rem; flex-wrap:wrap; }
+    .thumb{ width:100%; height:160px; border-radius:12px; background:linear-gradient(135deg, var(--primary), var(--tertiary)); display:grid; place-items:center; color:#062129; font-weight:800; font-size:1.3rem; }
+
+    /* Before × After bars */
+    .bars{ display:grid; gap:.6rem; }
+    .bar{ display:grid; grid-template-columns: 120px 1fr; align-items:center; gap:.6rem; }
+    .bar-label{ font-size:.9rem; color:var(--muted); }
+    .bar-track{ height:12px; border-radius:999px; background:rgba(255,255,255,.08); position:relative; overflow:hidden; }
+    .bar-track > span{ position:absolute; inset:0 auto 0 0; width:var(--pct,50%); display:block; background:linear-gradient(90deg, var(--bad), var(--good)); border-radius:999px; }
+    .score-line{ display:flex; justify-content:space-between; font-size:.85rem; color:var(--muted); margin-top:.25rem; }
+
+    /* Timeline */
+    .timeline{ display:grid; gap:.6rem; }
+    .tl-item{ display:grid; grid-template-columns: 120px 1fr; gap:.6rem; align-items:start; }
+    .tl-item small{ color:var(--muted); }
+
+    /* Modal preview */
+    dialog{ border:1px solid var(--border); border-radius:16px; background:var(--card); color:var(--text); padding:1rem; box-shadow:var(--shadow); max-width:720px }
+    dialog::backdrop{ background:rgba(0,0,0,.55) }
+    .modal-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:.6rem }
+    .modal-head h3{ margin:0; }
+    .close{ border:1px solid var(--border); background:transparent; border-radius:8px; padding:.3rem .5rem; color:var(--text); }
+
+    /* Footer */
+    footer{ padding:28px 0 40px; color:var(--muted); text-align:center; border-top:1px solid var(--border); background:color-mix(in oklab, var(--card) 92%, transparent); }
+
+    /* Responsive */
+    @media (max-width: 1024px){
+      .hero-grid{ grid-template-columns:1fr; }
+      .grid{ grid-template-columns: repeat(2, 1fr); }
+      .grid-2{ grid-template-columns:1fr; }
+    }
+    @media (max-width: 720px){
+      .grid{ grid-template-columns:1fr; }
+      .menu{
+        position:fixed; inset:64px 1rem auto 1rem; flex-direction:column; padding:.8rem;
+        background:var(--surface); border:1px solid var(--border); border-radius:12px;
+        box-shadow:var(--shadow); transform-origin: top right; transform: scale(.96); opacity:0; pointer-events:none; transition:.18s ease;
+      }
+      .menu.open{ transform: scale(1); opacity:1; pointer-events:auto; }
+      .menu-toggle{ display:inline-flex; width:40px;height:40px;border-radius:10px;border:1px solid var(--border); background:transparent; color:var(--text); align-items:center; justify-content:center; }
+      .menu-cta{ display:inline-flex; }
+    }
+    html:not(.aos-enabled) [data-aos]{ opacity:1 !important; transform:none !important; }
+  </style>
+
+  <!-- JSON-LD (CollectionPage + ItemList) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"CollectionPage",
+    "name":"Resultados (Case Studies) - Adriano José",
+    "hasPart": {
+      "@type":"ItemList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Mega Imagem - SEO & CWV","url":"/cases/mega-imagem.html"},
+        {"@type":"ListItem","position":2,"name":"Site Institucional - Next.js","url":"/cases/site-institucional.html"},
+        {"@type":"ListItem","position":3,"name":"Dashboard SPA - React","url":"/cases/dashboard.html"}
+      ]
+    }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo" style="position:absolute;left:-9999px">Pular para o conteúdo</a>
+
+  <!-- HEADER -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <nav class="nav" aria-label="Primária">
+        <a href="/" class="brand" aria-label="Voltar ao início"><span>Adriano</span> José</a>
+        <div class="nav-actions">
+          <button id="theme-toggle" class="icon-btn" aria-label="Alternar tema"><i class='bx bx-moon'></i></button>
+          <button class="menu-toggle" aria-controls="menu" aria-expanded="false" aria-label="Abrir menu"><i class='bx bx-menu'></i></button>
+        </div>
+        <div id="menu" class="menu" role="navigation">
+          <a href="/#projetos">Projetos</a>
+          <a href="/blog/">Blog</a>
+          <a href="/lab">Laboratório</a>
+          <a href="/mapa.html">Localização</a>
+          <a href="/#contato" class="menu-cta btn ghost"><i class='bx bx-paper-plane'></i> Contato</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow"><i class="bx bx-line-chart"></i> Prova social</span>
+          <h1 class="gradient">Resultados</h1>
+          <p class="subtitle">Antes × Depois com métricas claras de SEO e Core Web Vitals. Veja como pequenas decisões técnicas geram impacto no negócio.</p>
+          <div class="filters" style="margin-top:1rem">
+            <button class="chip" data-filter="all" aria-pressed="true">Todos</button>
+            <button class="chip" data-filter="seo">SEO / CWV</button>
+            <button class="chip" data-filter="react">React</button>
+            <button class="chip" data-filter="next">Next.js</button>
+            <button class="chip" data-filter="spa">SPA</button>
+            <button class="chip" data-filter="b2b">B2B</button>
+          </div>
+        </div>
+        <aside>
+          <div class="card">
+            <strong>Como medir resultado?</strong>
+            <ul style="margin:.6rem 0 0; padding-left:1rem">
+              <li>Core Web Vitals (LCP, INP, CLS)</li>
+              <li>Tráfego orgânico / palavras-chave</li>
+              <li>Conversão (formulário/Whats/agenda)</li>
+              <li>Tempo de desenvolvimento e manutenção</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- LISTA DE CASES -->
+    <section>
+      <div class="container">
+        <div class="section-title">
+          <h2>Cases em destaque</h2>
+          <p class="subtitle">Resumos rápidos. Clique em “Ver detalhes” para a prévia.</p>
+        </div>
+
+        <div class="grid" id="cases">
+          <!-- Case 1 -->
+          <article class="card case" data-tags="seo next b2b">
+            <div class="thumb" aria-hidden="true">Mega Imagem</div>
+            <h3>Mega Imagem — SEO técnico & CWV</h3>
+            <p class="meta">
+              <span class="badge"><i class='bx bx-pulse'></i> LCP −58%</span>
+              <span class="badge"><i class='bx bx-trending-up'></i> +xx% orgânico</span>
+              <span class="badge"><i class='bx bxl-react'></i> Next.js</span>
+            </p>
+            <div class="bars">
+              <div class="bar">
+                <div class="bar-label">LCP (ms)</div>
+                <div class="bar-track" title="Antes 3800ms → Depois 1600ms"><span style="--pct:42%"></span></div>
+              </div>
+              <div class="score-line"><span>Antes: 3800</span><span>Depois: 1600</span></div>
+              <div class="bar">
+                <div class="bar-label">INP (ms)</div>
+                <div class="bar-track" title="Antes 320 → Depois 140"><span style="--pct:44%"></span></div>
+              </div>
+              <div class="score-line"><span>Antes: 320</span><span>Depois: 140</span></div>
+            </div>
+            <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+              <button class="btn small primary" data-open="mega">Ver detalhes</button>
+              <a class="btn small ghost" href="/cases/mega-imagem.html">Abrir case</a>
+            </div>
+          </article>
+
+          <!-- Case 2 -->
+          <article class="card case" data-tags="next seo b2b">
+            <div class="thumb" aria-hidden="true">Site Institucional</div>
+            <h3>Institucional — Next.js (SSG) + SEO</h3>
+            <p class="meta">
+              <span class="badge"><i class='bx bx-bolt'></i> 98 Lighthouse</span>
+              <span class="badge"><i class='bx bx-search-alt-2'></i> Schema + Sitemap</span>
+              <span class="badge"><i class='bx bxl-react'></i> Next.js</span>
+            </p>
+            <div class="bars">
+              <div class="bar">
+                <div class="bar-label">CLS</div>
+                <div class="bar-track" title="Antes 0.18 → Depois 0.03"><span style="--pct:17%"></span></div>
+              </div>
+              <div class="score-line"><span>Antes: 0.18</span><span>Depois: 0.03</span></div>
+            </div>
+            <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+              <button class="btn small primary" data-open="institucional">Ver detalhes</button>
+              <a class="btn small ghost" href="/cases/site-institucional.html">Abrir case</a>
+            </div>
+          </article>
+
+          <!-- Case 3 -->
+          <article class="card case" data-tags="spa react">
+            <div class="thumb" aria-hidden="true">Dashboard SPA</div>
+            <h3>Dashboard — SPA React + otimizações</h3>
+            <p class="meta">
+              <span class="badge"><i class='bx bx-rocket'></i> Bundle −35%</span>
+              <span class="badge"><i class='bx bx-time-five'></i> TTI −41%</span>
+              <span class="badge"><i class='bx bxl-react'></i> React</span>
+            </p>
+            <div class="bars">
+              <div class="bar">
+                <div class="bar-label">TTI (ms)</div>
+                <div class="bar-track" title="Antes 4200 → Depois 2480"><span style="--pct:59%"></span></div>
+              </div>
+              <div class="score-line"><span>Antes: 4200</span><span>Depois: 2480</span></div>
+            </div>
+            <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+              <button class="btn small primary" data-open="dashboard">Ver detalhes</button>
+              <a class="btn small ghost" href="/cases/dashboard.html">Abrir case</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO DE COMO EU ENTREGO RESULTADO -->
+    <section>
+      <div class="container">
+        <div class="section-title">
+          <h2>Como alcançamos esses resultados</h2>
+          <p class="subtitle">Processo enxuto com foco no que importa</p>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Passo a passo</h3>
+            <div class="timeline" role="list">
+              <div class="tl-item" role="listitem"><small>1. Diagnóstico</small><div>Auditoria técnica (SEO/CWV), backlog por impacto.</div></div>
+              <div class="tl-item" role="listitem"><small>2. Plano</small><div>Roteiro de entregas: quick wins → reestruturações.</div></div>
+              <div class="tl-item" role="listitem"><small>3. Execução</small><div>Implementação contínua + PRs curtos e testáveis.</div></div>
+              <div class="tl-item" role="listitem"><small>4. Medição</small><div>Relatórios comparativos (antes/depois) e próximos passos.</div></div>
+            </div>
+          </article>
+          <article class="card">
+            <h3>Checklist técnico</h3>
+            <ul style="margin:.2rem 0 0; padding-left:1rem">
+              <li>Imagens otimizadas (formato, dimensão, lazy, prioridade)</li>
+              <li>Critial CSS, preconnect/preload e split de rotas</li>
+              <li>Meta/OG/Twitter, canonical, sitemap e robots</li>
+              <li>Semântica e acessibilidade: headings, foco, aria</li>
+              <li>Monitoração CWV (Lab + Field) e SEO</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section id="contato">
+      <div class="container">
+        <div class="card" style="text-align:center">
+          <h2>Quer um “antes × depois” no seu site?</h2>
+          <p class="subtitle">Te mostro o potencial em 15 minutos (sem compromisso).</p>
+          <div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+            <a class="btn primary" href="https://calendly.com/adrianojose-dev/30min" target="_blank" rel="noopener"><i class='bx bx-calendar'></i> Agendar conversa</a>
+            <a class="btn ghost" target="_blank" rel="noopener" href="https://wa.me/5513981242306?text=Olá%2C%20Adriano!%20Vim%20pelos%20Resultados%20e%20quero%20otimizar%20meu%20site."><i class='bx bxl-whatsapp'></i> WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Adriano José — <span style="color:var(--primary);font-weight:700;">Resultados</span></div>
+  </footer>
+
+  <!-- PREVIEW MODALS -->
+  <dialog id="modal-mega" aria-labelledby="modal-title-mega">
+    <div class="modal-head">
+      <h3 id="modal-title-mega">Mega Imagem — SEO & CWV</h3>
+      <button class="close" data-close>&times;</button>
+    </div>
+    <p class="subtitle">Resumo rápido do case. Para a versão completa, abra o link do case.</p>
+    <div class="grid-2">
+      <div class="card">
+        <strong>Stack</strong>
+        <ul style="margin:.5rem 0 0; padding-left:1rem">
+          <li>Next.js (SSG/ISR)</li>
+          <li>Imagens otimizadas e cache</li>
+          <li>Schema + metas + sitemap</li>
+        </ul>
+      </div>
+      <div class="card">
+        <strong>Desafios</strong>
+        <ul style="margin:.5rem 0 0; padding-left:1rem">
+          <li>LCP alto nas páginas mais acessadas</li>
+          <li>Layout shift por fontes/imagens</li>
+          <li>Arquitetura semântica</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="margin-top:.8rem">
+      <strong>Depoimento</strong>
+      <blockquote style="margin:.6rem 0 0; border-left:3px solid var(--primary); padding:.4rem .8rem; background:rgba(255,255,255,.03)">
+        “Ganhamos velocidade e posição orgânica sem mudar o conteúdo. Entregas objetivas e mensuráveis.”
+      </blockquote>
+    </div>
+    <div style="display:flex;gap:.6rem;margin-top:.8rem;flex-wrap:wrap">
+      <a class="btn primary" href="/cases/mega-imagem.html">Ver case completo</a>
+      <a class="btn ghost" href="https://calendly.com/adrianojose-dev/30min" target="_blank" rel="noopener"><i class='bx bx-calendar'></i> Conversar</a>
+    </div>
+  </dialog>
+
+  <dialog id="modal-institucional" aria-labelledby="modal-title-institucional">
+    <div class="modal-head">
+      <h3 id="modal-title-institucional">Institucional — Next.js (SSG)</h3>
+      <button class="close" data-close>&times;</button>
+    </div>
+    <p class="subtitle">SEO técnico com estrutura limpa e CWV elevados.</p>
+    <div class="grid-2">
+      <div class="card">
+        <strong>Stack</strong>
+        <ul style="margin:.5rem 0 0; padding-left:1rem">
+          <li>Next.js (app dir)</li>
+          <li>Otimizador de imagens</li>
+          <li>Headless CMS</li>
+        </ul>
+      </div>
+      <div class="card">
+        <strong>Resultados</strong>
+        <ul style="margin:.5rem 0 0; padding-left:1rem">
+          <li>CLS 0.18 → 0.03</li>
+          <li>Indexação + Snippets</li>
+        </ul>
+      </div>
+    </div>
+    <div style="display:flex;gap:.6rem;margin-top:.8rem;flex-wrap:wrap">
+      <a class="btn primary" href="/cases/site-institucional.html">Ver case completo</a>
+      <a class="btn ghost" href="https://wa.me/5513981242306?text=Quero%20um%20site%20institucional%20otimizado" target="_blank" rel="noopener"><i class='bx bxl-whatsapp'></i> WhatsApp</a>
+    </div>
+  </dialog>
+
+  <dialog id="modal-dashboard" aria-labelledby="modal-title-dashboard">
+    <div class="modal-head">
+      <h3 id="modal-title-dashboard">Dashboard — SPA React</h3>
+      <button class="close" data-close>&times;</button>
+    </div>
+    <p class="subtitle">Redução de bundle e TTI com code-splitting e caching de dados.</p>
+    <div class="grid-2">
+      <div class="card">
+        <strong>Técnicas</strong>
+        <ul style="margin:.5rem 0 0; padding-left:1rem">
+          <li>Lazy routes + suspense</li>
+          <li>Split de vendor e prefetch</li>
+          <li>Métricas no CI</li>
+        </ul>
+      </div>
+      <div class="card">
+        <strong>Impacto</strong>
+        <ul style="margin:.5rem 0 0; padding-left:1rem">
+          <li>Bundle −35%</li>
+          <li>TTI 4.2s → 2.48s</li>
+        </ul>
+      </div>
+    </div>
+    <div style="display:flex;gap:.6rem;margin-top:.8rem;flex-wrap:wrap">
+      <a class="btn primary" href="/cases/dashboard.html">Ver case completo</a>
+      <a class="btn ghost" href="https://calendly.com/adrianojose-dev/30min" target="_blank" rel="noopener"><i class='bx bx-calendar'></i> Agendar</a>
+    </div>
+  </dialog>
+
+  <script>
+    // Ano
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Tema claro/escuro (persistente)
+    (function(){
+      const root = document.documentElement;
+      const btn  = document.getElementById('theme-toggle');
+      const meta = document.querySelector('meta[name="theme-color"]');
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initial = saved || (prefersDark ? 'dark' : 'light');
+      function setTheme(t){
+        root.setAttribute('data-theme', t);
+        localStorage.setItem('theme', t);
+        const icon = btn && btn.querySelector('i');
+        if (icon){ icon.classList.toggle('bx-sun', t === 'dark'); icon.classList.toggle('bx-moon', t !== 'dark'); }
+        if (meta) meta.setAttribute('content', t === 'dark' ? '#0b1116' : '#f6f8fb');
+      }
+      setTheme(initial);
+      btn && btn.addEventListener('click', ()=> setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'));
+    })();
+
+    // Menu mobile acessível
+    (function(){
+      const toggle = document.querySelector('.menu-toggle');
+      const menu = document.getElementById('menu');
+      const nav = document.querySelector('header .nav');
+      const focusableSelector = 'a[href], button, [tabindex]:not([tabindex="-1"])';
+      let lastFocus = null;
+      function openMenu(){
+        lastFocus = document.activeElement;
+        toggle.setAttribute('aria-expanded','true');
+        menu.classList.add('open');
+        const f = Array.from(menu.querySelectorAll(focusableSelector));
+        f[0]?.focus({preventScroll:true});
+        document.addEventListener('keydown', onKeydown);
+        document.addEventListener('click', onDocClick);
+      }
+      function closeMenu(){
+        toggle.setAttribute('aria-expanded','false');
+        menu.classList.remove('open');
+        document.removeEventListener('keydown', onKeydown);
+        document.removeEventListener('click', onDocClick);
+        lastFocus?.focus?.({preventScroll:true});
+      }
+      function onKeydown(e){
+        if(e.key==='Escape') return closeMenu();
+        if(e.key!=='Tab') return;
+        const f = Array.from(menu.querySelectorAll(focusableSelector)).filter(el=>!el.hasAttribute('disabled'));
+        if(!f.length) return;
+        const first=f[0], last=f[f.length-1];
+        if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+        else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+      }
+      function onDocClick(e){
+        if(menu.classList.contains('open') && !nav.contains(e.target) && e.target!==toggle){ closeMenu(); }
+      }
+      toggle && toggle.addEventListener('click', ()=> (toggle.getAttribute('aria-expanded')==='true'?closeMenu():openMenu()));
+      Array.from(document.querySelectorAll('#menu a')).forEach(a=> a.addEventListener('click', closeMenu));
+    })();
+
+    // Filtros por chip
+    (function(){
+      const chips = Array.from(document.querySelectorAll('.chip'));
+      const cards = Array.from(document.querySelectorAll('.case'));
+      function setFilter(tag){
+        chips.forEach(c=> c.setAttribute('aria-pressed', String(c.dataset.filter===tag)));
+        cards.forEach(card=>{
+          const tags = (card.getAttribute('data-tags')||'').split(/\s+/);
+          const show = tag==='all' || tags.includes(tag);
+          card.style.display = show ? '' : 'none';
+        });
+      }
+      chips.forEach(c=> c.addEventListener('click', ()=> setFilter(c.dataset.filter)));
+      setFilter('all');
+    })();
+
+    // Modais de prévia
+    (function(){
+      const map = {
+        mega: document.getElementById('modal-mega'),
+        institucional: document.getElementById('modal-institucional'),
+        dashboard: document.getElementById('modal-dashboard')
+      };
+      document.querySelectorAll('[data-open]').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const id = btn.getAttribute('data-open');
+          map[id]?.showModal();
+        });
+      });
+      document.querySelectorAll('[data-close]').forEach(btn=>{
+        btn.addEventListener('click', (e)=> btn.closest('dialog')?.close());
+      });
+    })();
+  </script>
+</body>
+</html>

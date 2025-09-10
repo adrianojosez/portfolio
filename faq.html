@@ -130,5 +130,31 @@
     })();
   </script>
   <script src="/main.js" defer></script>
+
+  <script>
+  (function(){
+    var root = document.documentElement;
+    var btn = document.getElementById('theme-toggle');
+    var saved = localStorage.getItem('theme');
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var initial = saved || (prefersDark ? 'dark' : 'light');
+
+    function setTheme(t){
+      root.setAttribute('data-theme', t);
+      localStorage.setItem('theme', t);
+      var icon = btn && btn.querySelector('i');
+      if (icon){
+        icon.classList.toggle('bx-sun', t === 'dark');
+        icon.classList.toggle('bx-moon', t !== 'dark');
+      }
+    }
+    setTheme(initial);
+    btn && btn.addEventListener('click', function(){
+      setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+</script>
+  
+
 </body>
 </html>

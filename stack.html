@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Tech Stack | Adriano José</title>
+  <meta name="description" content="Minhas escolhas técnicas para projetos: front end, SEO, performance, acessibilidade, build e deploy."/>
+  <meta name="theme-color" content="#0b1116"/>
+  <link rel="canonical" href="/stack.html"/>
+  <link rel="icon" type="image/svg+xml" href="https://api.iconify.design/tabler:bolt.svg?color=%238cc7d6&v=1">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Tech Stack | Adriano José">
+  <meta property="og:description" content="Tecnologias que uso e por quê: React, TypeScript, Next.js, SEO e performance.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/stack.html">
+  <meta property="og:image" content="/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Fonts / Icons (mesmo padrão) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+  <style>
+    /* =============================
+       Tokens (alinha com seu style.css)
+    ============================== */
+    :root{
+      --primary:#8cc7d6; --secondary:#bda368; --tertiary:#68bdd1;
+      --bg:#00101f; --card:#0f1720; --surface:#0c141b;
+      --text:#e8eef2; --muted:#a9b7bf; --border:rgba(255,255,255,.08);
+      --shadow:0 10px 30px rgba(0,0,0,.3);
+      --radius:18px; --container:1120px; --header-h:64px;
+    }
+    :root{ color-scheme: dark; }
+    [data-theme="light"]{
+      --bg:#f6f8fb; --card:#ffffff; --surface:#ffffff;
+      --text:#0c1116; --muted:#44515a; --border:rgba(0,0,0,.08);
+      --shadow:0 10px 30px rgba(0,0,0,.08); color-scheme: light;
+    }
+
+    /* Base */
+    *,*::before,*::after{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial;
+      color:var(--text);
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(140,199,214,.18), transparent),
+                  radial-gradient(1000px 600px at -10% 10%, rgba(104,189,209,.18), transparent),
+                  var(--bg);
+      line-height:1.6; min-height:100dvh;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .container{ width:min(100%,var(--container)); margin:0 auto; padding:0 1rem; }
+    .subtitle{ color:var(--muted); }
+
+    /* Header / Navbar */
+    .site-header{
+      position:sticky; top:0; z-index:50; height:var(--header-h);
+      backdrop-filter:saturate(140%) blur(10px);
+      background: linear-gradient(180deg, color-mix(in oklab, var(--bg) 80%, transparent), color-mix(in oklab, var(--bg) 55%, transparent));
+      border-bottom:1px solid var(--border);
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between;height:var(--header-h);gap:.8rem;}
+    .brand{display:flex;align-items:center;gap:.6rem;font-weight:800;letter-spacing:.2px;}
+    .brand span{color:var(--primary);}
+    .nav-actions{display:flex;align-items:center;gap:.5rem;}
+    .icon-btn{width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text);}
+    .menu{display:flex;align-items:center;gap:.8rem;}
+    .menu a{padding:.55rem .8rem;border-radius:.7rem;font-weight:500;color:var(--muted);}
+    .menu a:hover,.menu a:focus{color:var(--text);background:rgba(140,199,214,.12);}
+    .menu-cta{display:none;}
+    .menu-toggle{display:none;}
+
+    /* Hero */
+    .hero{ padding:72px 0 24px; }
+    .hero-grid{ display:grid; grid-template-columns:1.2fr .8fr; gap:2rem; align-items:center; }
+    h1{ margin:.6rem 0 0; font-size:clamp(2.2rem,6vw,3.25rem); line-height:1.1; letter-spacing:.2px; }
+    .gradient{ background: linear-gradient(90deg, var(--text) 10%, var(--primary) 50%, var(--tertiary) 90%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .eyebrow{ display:inline-flex; align-items:center; gap:.5rem; padding:.35rem .6rem; border:1px solid var(--border); border-radius:999px; color:var(--muted); font-size:.9rem; }
+    .eyebrow i{ color:var(--primary); font-size:1.1rem; }
+
+    /* Seções comuns */
+    section{ padding:64px 0; }
+    .section-title{ display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem; gap:1rem; flex-wrap:wrap;}
+    .section-title h2{ margin:0; font-size:clamp(1.4rem,3.5vw,2rem); }
+    .grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem; }
+    .grid-2{ display:grid; grid-template-columns: repeat(2, 1fr); gap:1rem; }
+    .grid-4{ display:grid; grid-template-columns: repeat(4, 1fr); gap:1rem; }
+    .card{ background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1rem; }
+    .badge{ display:inline-flex; align-items:center; gap:.35rem; font-size:.85rem; padding:.25rem .55rem; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,.04) }
+    .btn{ display:inline-flex; align-items:center; gap:.5rem; padding:.85rem 1rem; border-radius:.9rem; border:1px solid var(--border); font-weight:600; }
+    .btn.primary{ background: linear-gradient(180deg, var(--primary), var(--tertiary)); color:#062129; border-color:transparent; box-shadow:var(--shadow); }
+    .btn.ghost{ color:var(--text); background:rgba(255,255,255,.04); }
+    .btn.small{ padding:.55rem .8rem; }
+
+    /* Stack chips / filtros */
+    .filters{ display:flex; gap:.5rem; flex-wrap:wrap; }
+    .chip{ border:1px solid var(--border); background:rgba(255,255,255,.03); color:var(--text); padding:.45rem .75rem; border-radius:999px; cursor:pointer }
+    .chip[aria-pressed="true"]{ background:linear-gradient(180deg,var(--primary),var(--tertiary)); color:#062129; border-color:transparent }
+
+    /* Tabelas e listas */
+    table{ width:100%; border-collapse:collapse; }
+    th,td{ padding:.6rem .8rem; border-bottom:1px solid var(--border); text-align:left; }
+    th{ color:var(--muted); font-weight:600; }
+    .list{ display:grid; gap:.5rem; margin:0; padding:0; list-style:none; }
+    .list li{ display:flex; gap:.5rem; align-items:center; border:1px solid var(--border); background:rgba(255,255,255,.03); border-radius:10px; padding:.6rem .8rem; }
+    .ok{ color:#34d399; } .warn{ color:#fbbf24; } .no{ color:#f87171; }
+
+    /* Código + copiar */
+    pre{ background:#0a0f14; border:1px solid var(--border); padding:1rem; border-radius:12px; overflow:auto; position:relative; }
+    .copy{ position:absolute; top:8px; right:8px; border:1px solid var(--border); border-radius:8px; padding:.25rem .5rem; background:rgba(255,255,255,.06); cursor:pointer; font-size:.85rem; }
+
+    /* Accordion */
+    details{ border:1px solid var(--border); border-radius:12px; background:rgba(255,255,255,.03); padding:.6rem .8rem; }
+    details + details{ margin-top:.6rem; }
+    summary{ cursor:pointer; font-weight:600; }
+
+    /* Footer */
+    footer{ padding:28px 0 40px; color:var(--muted); text-align:center; border-top:1px solid var(--border); background:color-mix(in oklab, var(--card) 92%, transparent); }
+
+    /* Responsivo */
+    @media (max-width: 1024px){
+      .hero-grid{ grid-template-columns:1fr; }
+      .grid-4{ grid-template-columns: repeat(2, 1fr); }
+      .grid-2{ grid-template-columns:1fr; }
+    }
+    @media (max-width: 720px){
+      .grid{ grid-template-columns:1fr; }
+      .grid-4{ grid-template-columns:1fr; }
+      .menu{
+        position:fixed; inset:64px 1rem auto 1rem; flex-direction:column; padding:.8rem;
+        background:var(--surface); border:1px solid var(--border); border-radius:12px;
+        box-shadow:var(--shadow); transform-origin: top right; transform: scale(.96); opacity:0; pointer-events:none; transition:.18s ease;
+      }
+      .menu.open{ transform: scale(1); opacity:1; pointer-events:auto; }
+      .menu-toggle{ display:inline-flex; width:40px;height:40px;border-radius:10px;border:1px solid var(--border); background:transparent; color:var(--text); align-items:center; justify-content:center; }
+      .menu-cta{ display:inline-flex; }
+    }
+
+    /* AOS fallback */
+    html:not(.aos-enabled) [data-aos]{ opacity:1 !important; transform:none !important; }
+  </style>
+
+  <!-- JSON-LD (ItemList de tecnologias) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"ItemList",
+    "name":"Tech Stack de Adriano José",
+    "itemListElement":[
+      {"@type":"ListItem","position":1,"name":"React + TypeScript"},
+      {"@type":"ListItem","position":2,"name":"Next.js (SSG/SSR)"},
+      {"@type":"ListItem","position":3,"name":"Vite / Astro (estático)"},
+      {"@type":"ListItem","position":4,"name":"Tailwind / CSS moderno"},
+      {"@type":"ListItem","position":5,"name":"Node + APIs / Integrações"},
+      {"@type":"ListItem","position":6,"name":"SEO técnico / CWV"}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo" style="position:absolute;left:-9999px">Pular para o conteúdo</a>
+
+  <!-- HEADER -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <nav class="nav" aria-label="Primária">
+        <a href="/" class="brand" aria-label="Voltar ao início"><span>Adriano</span> José</a>
+        <div class="nav-actions">
+          <button id="theme-toggle" class="icon-btn" aria-label="Alternar tema"><i class='bx bx-moon'></i></button>
+          <button class="menu-toggle" aria-controls="menu" aria-expanded="false" aria-label="Abrir menu"><i class='bx bx-menu'></i></button>
+        </div>
+        <div id="menu" class="menu" role="navigation">
+          <a href="/#projetos">Projetos</a>
+          <a href="/blog/">Blog</a>
+          <a href="/lab">Laboratório</a>
+          <a href="/mapa.html">Localização</a>
+          <a href="/#contato" class="menu-cta btn ghost"><i class='bx bx-paper-plane'></i> Contato</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow"><i class='bx bx-chip'></i> Base técnica</span>
+          <h1 class="gradient">Tech Stack</h1>
+          <p class="subtitle">Tecnologias e decisões que uso em projetos para entregar interfaces rápidas, acessíveis e fáceis de evoluir.</p>
+          <div class="filters" style="margin-top:1rem">
+            <button class="chip" data-filter="all" aria-pressed="true">Tudo</button>
+            <button class="chip" data-filter="frontend">Front end</button>
+            <button class="chip" data-filter="build">Build & Conteúdo</button>
+            <button class="chip" data-filter="backend">APIs & Dados</button>
+            <button class="chip" data-filter="ops">Infra & Deploy</button>
+            <button class="chip" data-filter="qualidade">Qualidade</button>
+          </div>
+        </div>
+        <aside>
+          <div class="card">
+            <strong>Princípios</strong>
+            <ul class="list" style="margin-top:.6rem">
+              <li><i class='bx bx-bolt ok'></i> Performance-first (CWV)</li>
+              <li><i class='bx bx-universal-access ok'></i> Acessibilidade prática</li>
+              <li><i class='bx bx-git-branch ok'></i> Simplicidade e DX</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- BADGES -->
+    <section>
+      <div class="container">
+        <div class="section-title">
+          <h2>Pilhas principais</h2>
+          <p class="subtitle">O que entra na maioria dos projetos</p>
+        </div>
+        <div class="grid-4" id="stack-badges">
+          <div class="card badge-item" data-tags="frontend">
+            <span class="badge"><i class='bx bxl-react'></i> React + TypeScript</span>
+            <p class="subtitle">Componentização, tipagem, escalabilidade.</p>
+          </div>
+          <div class="card badge-item" data-tags="build frontend">
+            <span class="badge"><i class='bx bx-layer'></i> Next.js (SSG/SSR)</span>
+            <p class="subtitle">SEO, rotas, imagens, otimização.</p>
+          </div>
+          <div class="card badge-item" data-tags="build">
+            <span class="badge"><i class='bx bx-rocket'></i> Vite / Astro</span>
+            <p class="subtitle">Sites estáticos absurdamente rápidos.</p>
+          </div>
+          <div class="card badge-item" data-tags="frontend">
+            <span class="badge"><i class='bx bx-shape-square'></i> CSS Moderno + Tailwind</span>
+            <p class="subtitle">Design consistente e ágil.</p>
+          </div>
+          <div class="card badge-item" data-tags="backend">
+            <span class="badge"><i class='bx bx-data'></i> Node + APIs</span>
+            <p class="subtitle">Integrações REST/GraphQL quando necessário.</p>
+          </div>
+          <div class="card badge-item" data-tags="ops">
+            <span class="badge"><i class='bx bx-cloud-upload'></i> Deploy CI/CD</span>
+            <p class="subtitle">Hospedagem otimizada (Vercel/Netlify/Render).</p>
+          </div>
+          <div class="card badge-item" data-tags="qualidade">
+            <span class="badge"><i class='bx bx-shield-quarter'></i> Qualidade</span>
+            <p class="subtitle">ESLint, Prettier, Lighthouse, Playwright.</p>
+          </div>
+          <div class="card badge-item" data-tags="build">
+            <span class="badge"><i class='bx bx-search-alt-2'></i> SEO Técnico</span>
+            <p class="subtitle">Schema, metas, sitemaps, CWV.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MOTIVOS / TABELAS RÁPIDAS -->
+    <section>
+      <div class="container">
+        <div class="section-title">
+          <h2>Por que essas escolhas</h2>
+          <p class="subtitle">Foco em impacto: performance, SEO, acessibilidade e manutenção simples</p>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Front end</h3>
+            <table>
+              <thead><tr><th>Tecnologia</th><th>Motivo</th></tr></thead>
+              <tbody>
+                <tr><td>React + TS</td><td>Produtividade + tipagem → menos bugs</td></tr>
+                <tr><td>Next.js</td><td>SSG/SSR e otimização automática</td></tr>
+                <tr><td>Tailwind</td><td>Rapidez + consistência visual</td></tr>
+              </tbody>
+            </table>
+          </article>
+          <article class="card">
+            <h3>Conteúdo & Build</h3>
+            <table>
+              <thead><tr><th>Tecnologia</th><th>Motivo</th></tr></thead>
+              <tbody>
+                <tr><td>Astro/Vite</td><td>Sites estáticos velozes, baixa sobrecarga</td></tr>
+                <tr><td>Headless CMS</td><td>Marketing edita conteúdo sem dev</td></tr>
+                <tr><td>Imagem otimizada</td><td>LCP melhorado, SEO sobe</td></tr>
+              </tbody>
+            </table>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMANDOS (copiar) -->
+    <section>
+      <div class="container">
+        <div class="section-title"><h2>Boilerplates rápidos</h2><p class="subtitle">Começos comuns que uso</p></div>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3>Next + TS + Tailwind</h3>
+            <pre><button class="copy" data-target="#c1">copiar</button><code id="c1">npx create-next-app@latest meu-app --ts --eslint
+cd meu-app
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p</code></pre>
+          </article>
+          <article class="card">
+            <h3>Astro + Tailwind (estático)</h3>
+            <pre><button class="copy" data-target="#c2">copiar</button><code id="c2">npm create astro@latest meu-site
+cd meu-site
+npm install -D tailwindcss
+npx tailwindcss init -p</code></pre>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUALIDADE (SEO, Perf, A11y) -->
+    <section>
+      <div class="container">
+        <div class="section-title"><h2>Qualidade</h2><p class="subtitle">O que já deixo configurado por padrão</p></div>
+        <div class="grid-4">
+          <article class="card">
+            <h3>Performance</h3>
+            <ul class="list">
+              <li><i class='bx bx-check ok'></i> Imagens otimizadas e lazy</li>
+              <li><i class='bx bx-check ok'></i> Code splitting / RSC</li>
+              <li><i class='bx bx-check ok'></i> Preload/Prefetch estratégico</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>SEO técnico</h3>
+            <ul class="list">
+              <li><i class='bx bx-check ok'></i> Metas, canonical, sitemap, robots</li>
+              <li><i class='bx bx-check ok'></i> Schema.org (LD+JSON)</li>
+              <li><i class='bx bx-check ok'></i> Headings e semântica</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Acessibilidade</h3>
+            <ul class="list">
+              <li><i class='bx bx-check ok'></i> Foco visível/teclado</li>
+              <li><i class='bx bx-check ok'></i> Labels/aria e contraste</li>
+              <li><i class='bx bx-check ok'></i> Prefers-reduced-motion</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>DX & Padronização</h3>
+            <ul class="list">
+              <li><i class='bx bx-check ok'></i> ESLint + Prettier</li>
+              <li><i class='bx bx-check ok'></i> Husky + lint-staged</li>
+              <li><i class='bx bx-check ok'></i> CI com checks</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ALTERNATIVAS / FAQ TÉCNICO -->
+    <section>
+      <div class="container">
+        <div class="section-title"><h2>Alternativas & quando uso</h2><p class="subtitle">Não é tudo para todos os casos</p></div>
+        <details class="card">
+          <summary>Quando escolho Astro em vez de Next?</summary>
+          <p class="subtitle">Sites essencialmente estáticos, conteúdo pesado e necessidade de pontuar alto em CWV com mínimo JS no cliente.</p>
+        </details>
+        <details class="card">
+          <summary>Quando prefiro SSG/ISR vs SSR?</summary>
+          <p class="subtitle">Conteúdo estável → SSG/ISR (rápido e barato). Conteúdo altamente dinâmico/personalizado → SSR.</p>
+        </details>
+        <details class="card">
+          <summary>Headless CMS ou Markdown no repo?</summary>
+          <p class="subtitle">Time de marketing editando com frequência → Headless. Blog simples e dev-driven → Markdown no repo.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contato">
+      <div class="container">
+        <div class="card" style="text-align:center">
+          <h2>Quer esse stack no seu projeto?</h2>
+          <p class="subtitle">Implemento, configuro CI/CD e deixo o time pronto para evoluir com segurança.</p>
+          <div class="btn-row" style="display:flex;gap:.6rem;justify-content:center;margin-top:.6rem">
+            <a class="btn primary" href="https://calendly.com/adrianojose-dev/30min" target="_blank" rel="noopener"><i class='bx bx-calendar'></i> Agendar conversa</a>
+            <a class="btn ghost" target="_blank" rel="noopener" href="https://wa.me/5513981242306?text=Olá%2C%20Adriano!%20Quero%20implementar%20esse%20tech%20stack."><i class='bx bxl-whatsapp'></i> WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Adriano José — <span style="color:var(--primary);font-weight:700;">Tech Stack</span></div>
+  </footer>
+
+  <script>
+    // Ano
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Tema claro/escuro (robusto, mesmo padrão do seu site)
+    (function(){
+      const root = document.documentElement;
+      const btn  = document.getElementById('theme-toggle');
+      const meta = document.querySelector('meta[name="theme-color"]');
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initial = saved || (prefersDark ? 'dark' : 'light');
+      function setTheme(t){
+        root.setAttribute('data-theme', t);
+        localStorage.setItem('theme', t);
+        const icon = btn && btn.querySelector('i');
+        if (icon){ icon.classList.toggle('bx-sun', t === 'dark'); icon.classList.toggle('bx-moon', t !== 'dark'); }
+        if (meta) meta.setAttribute('content', t === 'dark' ? '#0b1116' : '#f6f8fb');
+      }
+      setTheme(initial);
+      btn && btn.addEventListener('click', ()=> setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'));
+    })();
+
+    // Menu mobile acessível
+    (function(){
+      const toggle = document.querySelector('.menu-toggle');
+      const menu = document.getElementById('menu');
+      const nav = document.querySelector('header .nav');
+      const focusableSelector = 'a[href], button, [tabindex]:not([tabindex="-1"])';
+      let lastFocus = null;
+      function openMenu(){
+        if(!toggle||!menu) return;
+        lastFocus = document.activeElement;
+        toggle.setAttribute('aria-expanded','true');
+        menu.classList.add('open');
+        const f = Array.from(menu.querySelectorAll(focusableSelector));
+        f[0]?.focus({preventScroll:true});
+        document.addEventListener('keydown', onKeydown);
+        document.addEventListener('click', onDocClick);
+      }
+      function closeMenu(){
+        if(!toggle||!menu) return;
+        toggle.setAttribute('aria-expanded','false');
+        menu.classList.remove('open');
+        document.removeEventListener('keydown', onKeydown);
+        document.removeEventListener('click', onDocClick);
+        lastFocus?.focus?.({preventScroll:true});
+      }
+      function onKeydown(e){
+        if(e.key==='Escape') return closeMenu();
+        if(e.key!=='Tab') return;
+        const f = Array.from(menu.querySelectorAll(focusableSelector)).filter(el=>!el.hasAttribute('disabled'));
+        if(!f.length) return;
+        const first = f[0], last = f[f.length-1];
+        if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+        else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+      }
+      function onDocClick(e){
+        if(menu.classList.contains('open') && !nav.contains(e.target) && e.target!==toggle){ closeMenu(); }
+      }
+      toggle && toggle.addEventListener('click', ()=> (toggle.getAttribute('aria-expanded')==='true'?closeMenu():openMenu()));
+      Array.from(document.querySelectorAll('#menu a')).forEach(a=>a.addEventListener('click', closeMenu));
+    })();
+
+    // Filtro de badges (chips)
+    (function(){
+      const chips = Array.from(document.querySelectorAll('.chip'));
+      const items = Array.from(document.querySelectorAll('.badge-item'));
+      function setActive(tag){
+        chips.forEach(c=> c.setAttribute('aria-pressed', String(c.dataset.filter===tag)));
+        items.forEach(it=>{
+          const tags = (it.getAttribute('data-tags')||'').split(/\s+/);
+          const show = tag==='all' || tags.includes(tag);
+          it.style.display = show ? '' : 'none';
+        });
+      }
+      chips.forEach(c=> c.addEventListener('click', ()=> setActive(c.dataset.filter)));
+      setActive('all');
+    })();
+
+    // Botões de copiar
+    (function(){
+      const btns = Array.from(document.querySelectorAll('.copy'));
+      btns.forEach(btn=>{
+        btn.addEventListener('click', async ()=>{
+          const target = document.querySelector(btn.getAttribute('data-target'));
+          if (!target) return;
+          const text = target.textContent;
+          try{
+            await navigator.clipboard.writeText(text);
+            const old = btn.textContent;
+            btn.textContent = 'copiado!';
+            setTimeout(()=> btn.textContent = old, 1200);
+          }catch(e){
+            console.error(e);
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

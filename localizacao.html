@@ -163,6 +163,18 @@
     </section>
   </main>
 
+  <footer style="padding: 24px 0; text-align: center; background: var(--card); border-top: 1px solid var(--border);">
+  <div class="container" style="color: var(--muted); font-size: 0.95rem;">
+    © <span id="year">2025</span> Adriano José — <span style="color: var(--primary); font-weight:600;">Portfólio</span>
+  </div>
+</footer>
+
+<script>
+  // Atualiza automaticamente o ano
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+
   <script>
     (function(){
       // ===== Tema claro/escuro com persistência =====

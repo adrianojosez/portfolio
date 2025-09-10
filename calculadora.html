@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Calculadora de Orçamento | Adriano José</title>
+  <meta name="description" content="Estime rapidamente o custo do seu projeto front end. Landing pages, sites institucionais, SPAs, SEO e performance."/>
+  <meta name="theme-color" content="#0b1116"/>
+  <link rel="canonical" href="/calculadora.html"/>
+  <link rel="icon" type="image/svg+xml" href="https://api.iconify.design/tabler:bolt.svg?color=%238cc7d6&v=1">
+
+  <!-- OG/Twitter -->
+  <meta property="og:title" content="Calculadora de Orçamento | Adriano José">
+  <meta property="og:description" content="Estime o custo do seu projeto em poucos cliques.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/calculadora.html">
+  <meta property="og:image" content="/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Fonts / Icons (mesmo padrão) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+  <style>
+    /* =============================
+       Variáveis (mesmo padrão)
+    ============================== */
+    :root{
+      --primary:#8cc7d6; --secondary:#bda368; --tertiary:#68bdd1;
+      --bg:#00101f; --card:#0f1720; --surface:#0c141b;
+      --text:#e8eef2; --muted:#a9b7bf; --border:rgba(255,255,255,.08);
+      --shadow:0 10px 30px rgba(0,0,0,.3);
+      --radius:18px; --container:1120px; --header-h:64px;
+    }
+    :root{ color-scheme: dark; }
+    [data-theme="light"]{
+      --bg:#f6f8fb; --card:#ffffff; --surface:#ffffff;
+      --text:#0c1116; --muted:#44515a; --border:rgba(0,0,0,.08);
+      --shadow:0 10px 30px rgba(0,0,0,.08); color-scheme: light;
+    }
+
+    /* Base */
+    *,*::before,*::after{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial;
+      color:var(--text);
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(140,199,214,.18), transparent),
+                  radial-gradient(1000px 600px at -10% 10%, rgba(104,189,209,.18), transparent),
+                  var(--bg);
+      line-height:1.6; min-height:100dvh;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .container{ width:min(100%,var(--container)); margin:0 auto; padding:0 1rem; }
+
+    /* Header / Navbar (igual) */
+    .site-header{
+      position:sticky; top:0; z-index:50; height:var(--header-h);
+      backdrop-filter:saturate(140%) blur(10px);
+      background: linear-gradient(180deg, color-mix(in oklab, var(--bg) 80%, transparent), color-mix(in oklab, var(--bg) 55%, transparent));
+      border-bottom:1px solid var(--border);
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between;height:var(--header-h);gap:.8rem;}
+    .brand{display:flex;align-items:center;gap:.6rem;font-weight:800;letter-spacing:.2px;}
+    .brand span{color:var(--primary);}
+    .nav-actions{display:flex;align-items:center;gap:.5rem;}
+    .icon-btn{width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text);}
+    .menu{display:flex;align-items:center;gap:.8rem;}
+    .menu a{padding:.55rem .8rem;border-radius:.7rem;font-weight:500;color:var(--muted);}
+    .menu a:hover,.menu a:focus{color:var(--text);background:rgba(140,199,214,.12);}
+    .menu-cta{display:none;}
+    .menu-toggle{display:none;}
+
+    /* Hero */
+    .hero{ padding:72px 0 24px; }
+    .hero-grid{ display:grid; grid-template-columns:1.2fr .8fr; gap:2rem; align-items:center; }
+    .eyebrow{ display:inline-flex; align-items:center; gap:.5rem; padding:.35rem .6rem; border:1px solid var(--border); border-radius:999px; color:var(--muted); font-size:.9rem; }
+    .eyebrow i{ color:var(--primary); font-size:1.1rem; }
+    h1{ margin:.6rem 0 0; font-size:clamp(2.2rem,6vw,3.25rem); line-height:1.1; letter-spacing:.2px; }
+    .gradient{ background: linear-gradient(90deg, var(--text) 10%, var(--primary) 50%, var(--tertiary) 90%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .subtitle{ margin:.75rem 0 1.25rem; color:var(--muted); font-size:1.05rem; max-width:60ch; }
+
+    /* Seções comuns */
+    section{ padding:64px 0; }
+    .section-title{ display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem; gap:1rem; flex-wrap:wrap;}
+    .section-title h2{ margin:0; font-size:clamp(1.4rem,3.5vw,2rem); }
+    .section-title p{ margin:0; color:var(--muted); }
+    .grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem; }
+    .grid-2{ display:grid; grid-template-columns: repeat(2, 1fr); gap:1rem; }
+    .card{ background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1rem; }
+
+    /* Form calc */
+    .calc{
+      display:grid; grid-template-columns:1fr 1fr; gap:1rem;
+      background:linear-gradient(180deg, rgba(140,199,214,.12), rgba(104,189,209,.08));
+      border:1px solid var(--border); border-radius: var(--radius); padding:1rem;
+    }
+    .field{ display:grid; gap:.4rem; }
+    .label{ font-weight:600; }
+    .hint{ color:var(--muted); font-size:.95rem; }
+    .row{ display:grid; gap:.6rem; grid-template-columns:1fr 1fr; }
+    .row-3{ grid-template-columns:1fr 1fr 1fr; }
+    input[type="number"], input[type="range"], select, textarea{
+      width:100%; padding:.7rem .9rem; border:1px solid var(--border); background:transparent; color:var(--text); border-radius:12px; font:inherit;
+    }
+    input[type="range"]{ padding:0.6rem 0.2rem; }
+    .checks{ display:grid; gap:.35rem; }
+    .checks label{ display:flex; gap:.5rem; align-items:center; }
+    .btn-row{ display:flex; gap:.6rem; flex-wrap:wrap; }
+    .btn{ display:inline-flex; align-items:center; gap:.5rem; padding:.85rem 1rem; border-radius:.9rem; border:1px solid var(--border); font-weight:600; }
+    .btn.primary{ background: linear-gradient(180deg, var(--primary), var(--tertiary)); color:#062129; border-color:transparent; box-shadow:var(--shadow); }
+    .btn.ghost{ color:var(--text); background:rgba(255,255,255,.04); }
+    .pill{ display:inline-block; border:1px solid var(--border); border-radius:999px; padding:.2rem .55rem; color:var(--muted); font-size:.85rem; }
+
+    /* Resultado */
+    .result{ background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1rem; }
+    .kpi{ display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin: .8rem 0; }
+    .kpi .box{ border:1px solid var(--border); border-radius:14px; padding:.8rem; text-align:center; background:rgba(255,255,255,.03); }
+    .kpi .box strong{ display:block; font-size:1.3rem; margin-top:.2rem; }
+    table.breakdown{ width:100%; border-collapse:collapse; margin-top:.8rem; }
+    table.breakdown th, table.breakdown td{ padding:.55rem .6rem; border-bottom:1px solid var(--border); text-align:left; }
+    table.breakdown th{ color:var(--muted); font-weight:600; }
+    .right{ text-align:right; }
+
+    /* Outras seções reaproveitando padrão */
+    .steps{ counter-reset:step; display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
+    .step{ background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1rem; position:relative; }
+    .step::before{ counter-increment:step; content:counter(step); position:absolute; top:10px; right:12px; font-weight:800; color:var(--primary); }
+
+    .plans .price{ font-size:1.6rem; font-weight:800; }
+    .features{ margin:0; padding-left:1.1rem; color:var(--muted); }
+
+    .testimonials{ display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+    .testimonial{ font-style:italic; }
+    .testimonial footer{ margin-top:.6rem; color:var(--muted); font-style:normal; }
+
+    footer{ padding:28px 0 40px; color:var(--muted); text-align:center; border-top:1px solid var(--border); background:color-mix(in oklab, var(--card) 92%, transparent); }
+
+    /* Responsivo */
+    @media (max-width: 1024px){ .calc{ grid-template-columns:1fr; } .row{ grid-template-columns:1fr 1fr; } }
+    @media (max-width: 720px){
+      .hero-grid{ grid-template-columns:1fr; }
+      .row{ grid-template-columns:1fr; }
+      .steps{ grid-template-columns:1fr 1fr; }
+      .testimonials{ grid-template-columns:1fr; }
+      .kpi{ grid-template-columns:1fr; }
+      .menu{
+        position:fixed; inset:64px 1rem auto 1rem; flex-direction:column; padding:.8rem;
+        background:var(--surface); border:1px solid var(--border); border-radius:12px;
+        box-shadow:var(--shadow); transform-origin: top right; transform: scale(.96); opacity:0; pointer-events:none; transition:.18s ease;
+      }
+      .menu.open{ transform: scale(1); opacity:1; pointer-events:auto; }
+      .menu-toggle{ display:inline-flex; width:40px;height:40px;border-radius:10px;border:1px solid var(--border); background:transparent; color:var(--text); align-items:center; justify-content:center; }
+      .menu-cta{ display:inline-flex; }
+    }
+
+    /* AOS fallback */
+    html:not(.aos-enabled) [data-aos]{ opacity:1 !important; transform:none !important; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo" style="position:absolute;left:-9999px">Pular para o conteúdo</a>
+
+  <!-- HEADER -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <nav class="nav" aria-label="Primária">
+        <a href="/" class="brand" aria-label="Voltar ao início"><span>Adriano</span> José</a>
+        <div class="nav-actions">
+          <button id="theme-toggle" class="icon-btn" aria-label="Alternar tema"><i class='bx bx-moon'></i></button>
+          <button class="menu-toggle" aria-controls="menu" aria-expanded="false" aria-label="Abrir menu"><i class='bx bx-menu'></i></button>
+        </div>
+        <div id="menu" class="menu" role="navigation">
+          <a href="/#projetos">Projetos</a>
+          <a href="/#servicos">Serviços</a>
+          <a href="/blog/">Blog</a>
+          <a href="/mapa.html">Localização</a>
+          <a href="/#contato" class="menu-cta btn ghost"><i class='bx bx-paper-plane'></i> Contato</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow"><i class='bx bx-calc'></i> Estimativa rápida</span>
+          <h1 class="gradient">Calculadora de Orçamento</h1>
+          <p class="subtitle">Descubra um valor estimado com base no escopo. O preço final é definido após um breve briefing.</p>
+        </div>
+        <aside>
+          <div class="card">
+            <strong>Dica</strong>
+            <p class="subtitle">Você pode gerar um resumo com o escopo e me enviar direto no WhatsApp com 1 clique.</p>
+            <span class="pill">BRL</span>
+            <span class="pill">Core Web Vitals</span>
+            <span class="pill">SEO técnico</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- CALCULADORA -->
+    <section>
+      <div class="container">
+        <div class="section-title">
+          <h2>Defina seu escopo</h2>
+          <p>Os valores abaixo são estimativas para balizar sua decisão.</p>
+        </div>
+
+        <div class="calc" id="calc">
+          <!-- Coluna A -->
+          <div class="col">
+            <div class="field">
+              <label class="label" for="tipo">Tipo de projeto</label>
+              <select id="tipo">
+                <option value="landing">Landing page</option>
+                <option value="site">Site institucional</option>
+                <option value="spa">SPA (app React)</option>
+                <option value="ecom">E-commerce (básico)</option>
+              </select>
+              <div class="hint">Define a base do cálculo.</div>
+            </div>
+
+            <div class="field">
+              <label class="label" for="paginas">Número de páginas/seções <span id="paginasOut" class="pill">1</span></label>
+              <input type="range" id="paginas" min="1" max="20" step="1" value="1" />
+              <div class="hint">Landing geralmente conta como 1 (seções dentro).</div>
+            </div>
+
+            <div class="field">
+              <label class="label" for="design">Design/UI</label>
+              <select id="design">
+                <option value="pronto">Design pronto (fornecido)</option>
+                <option value="adaptar">Adaptar um layout</option>
+                <option value="zero">UI do zero</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="label">Integrações</label>
+              <div class="checks">
+                <label><input type="checkbox" value="analytics" class="integ"> Google Analytics/Tags</label>
+                <label><input type="checkbox" value="form" class="integ"> Formulário (envio e validação)</label>
+                <label><input type="checkbox" value="api" class="integ"> Integração com API</label>
+                <label><input type="checkbox" value="auth" class="integ"> Autenticação</label>
+                <label><input type="checkbox" value="pay" class="integ"> Pagamento</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coluna B -->
+          <div class="col">
+            <div class="field">
+              <label class="label" for="cms">CMS/Conteúdo</label>
+              <select id="cms">
+                <option value="nenhum">Nenhum</option>
+                <option value="headless">Headless CMS</option>
+                <option value="wp">WordPress</option>
+              </select>
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <label class="label" for="seo">SEO</label>
+                <select id="seo">
+                  <option value="basico">Básico (meta, sitemap)</option>
+                  <option value="tecnico">Técnico (schema, CWV audit)</option>
+                </select>
+              </div>
+              <div class="field">
+                <label class="label" for="perf">Performance</label>
+                <select id="perf">
+                  <option value="padrão">Padrão</option>
+                  <option value="cwv">Otimização CWV</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <label class="label" for="a11y">Acessibilidade</label>
+                <select id="a11y">
+                  <option value="none">Padrão</option>
+                  <option value="aa">WCAG AA</option>
+                </select>
+              </div>
+              <div class="field">
+                <label class="label" for="prazo">Prazo</label>
+                <select id="prazo">
+                  <option value="normal">Normal</option>
+                  <option value="expresso">Expresso (+25%)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label" for="manut">Manutenção mensal</label>
+              <select id="manut">
+                <option value="0">Sem manutenção</option>
+                <option value="5">5h/mês</option>
+                <option value="10">10h/mês</option>
+                <option value="20">20h/mês</option>
+              </select>
+              <div class="hint">Para evoluções contínuas e suporte.</div>
+            </div>
+
+            <div class="field">
+              <label class="label" for="obs">Observações (opcional)</label>
+              <textarea id="obs" placeholder="Ex.: prazo desejado, referências, necessidades específicas…"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESULTADO -->
+        <div class="result" id="resultado" aria-live="polite">
+          <div class="section-title">
+            <h2>Estimativa</h2>
+            <p>Valores aproximados — vamos ajustar no briefing.</p>
+          </div>
+          <div class="kpi">
+            <div class="box">
+              <span class="hint">Subtotal (único)</span>
+              <strong id="kpi-subtotal">R$ 0</strong>
+            </div>
+            <div class="box">
+              <span class="hint">Total com prazo</span>
+              <strong id="kpi-total">R$ 0</strong>
+            </div>
+            <div class="box">
+              <span class="hint">Manutenção mensal</span>
+              <strong id="kpi-mensal">R$ 0</strong>
+            </div>
+          </div>
+
+          <table class="breakdown" id="tabela">
+            <thead>
+              <tr><th>Item</th><th class="right">Valor</th></tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+            <tfoot>
+              <tr><th>Total (único)</th><th class="right" id="tfoot-total">R$ 0</th></tr>
+            </tfoot>
+          </table>
+
+          <p class="subtitle" id="faixa">Faixa sugerida: —</p>
+
+          <div class="btn-row">
+            <a id="btn-wa" class="btn primary" target="_blank" rel="noopener"><i class='bx bxl-whatsapp'></i> Enviar no WhatsApp</a>
+            <a class="btn ghost" href="https://calendly.com/adrianojose-dev/30min" target="_blank" rel="noopener"><i class='bx bx-calendar'></i> Agendar no Calendly</a>
+            <button class="btn ghost" id="btn-print"><i class='bx bx-printer'></i> Salvar em PDF</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESSO (curto) -->
+    <section>
+      <div class="container">
+        <div class="section-title"><h2>Como trabalhamos</h2><p>Transparência de ponta a ponta</p></div>
+        <div class="steps">
+          <div class="step"><strong>1) Descoberta</strong><p class="subtitle">Briefing rápido para entender objetivos e restrições.</p></div>
+          <div class="step"><strong>2) Proposta</strong><p class="subtitle">Escopo fechado, prazos, marcos e investimento.</p></div>
+          <div class="step"><strong>3) Execução</strong><p class="subtitle">Sprints curtas + checkpoints semanais.</p></div>
+          <div class="step"><strong>4) Entrega</strong><p class="subtitle">Deploy, documentação e suporte inicial.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLANOS (sugestão) -->
+    <section>
+      <div class="container">
+        <div class="section-title"><h2>Pacotes populares</h2><p>Podemos ajustar conforme seu contexto</p></div>
+        <div class="grid plans">
+          <article class="card">
+            <h3>Sprint</h3>
+            <div class="price">R$ 1.490</div>
+            <ul class="features">
+              <li>Até 10h dedicadas</li>
+              <li>Entrega rápida</li>
+              <li>1 revisão</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Growth</h3>
+            <div class="price">R$ 3.490</div>
+            <ul class="features">
+              <li>30h p/ evolução contínua</li>
+              <li>2 checkpoints/semana</li>
+              <li>Roadmap por sprint</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Sob Demanda</h3>
+            <div class="price">a combinar</div>
+            <ul class="features">
+              <li>Escopo flexível</li>
+              <li>Proposta fechada</li>
+              <li>Resultados mensuráveis</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEPOIMENTOS (curto) -->
+    <section>
+      <div class="container">
+        <div class="section-title"><h2>Depoimentos</h2><p>O que dizem</p></div>
+        <div class="testimonials">
+          <blockquote class="card testimonial"><p>“Evolução gigante, excelente comunicação e escuta ativa. Recomendo!”</p><footer>— Ian, Líder Técnico</footer></blockquote>
+          <blockquote class="card testimonial"><p>“Entrega soluções eficazes e trabalha muito bem em equipe.”</p><footer>— Leonardo, Software Engineer</footer></blockquote>
+          <blockquote class="card testimonial"><p>“Comprometimento excepcional e qualidade técnica.”</p><footer>— Leon, Dev</footer></blockquote>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Adriano José — <span style="color:var(--primary);font-weight:700;">Calculadora</span></div>
+  </footer>
+
+  <script>
+    // Ano
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Tema claro/escuro (mesmo padrão)
+    (function(){
+      const root = document.documentElement;
+      const btn  = document.getElementById('theme-toggle');
+      const meta = document.querySelector('meta[name="theme-color"]');
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initial = saved || (prefersDark ? 'dark' : 'light');
+      function setTheme(t){
+        root.setAttribute('data-theme', t);
+        localStorage.setItem('theme', t);
+        const icon = btn && btn.querySelector('i');
+        if (icon){ icon.classList.toggle('bx-sun', t === 'dark'); icon.classList.toggle('bx-moon', t !== 'dark'); }
+        if (meta) meta.setAttribute('content', t === 'dark' ? '#0b1116' : '#f6f8fb');
+      }
+      setTheme(initial);
+      btn && btn.addEventListener('click', ()=> setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'));
+    })();
+
+    // Menu mobile acessível
+    (function(){
+      const toggle = document.querySelector('.menu-toggle');
+      const menu = document.getElementById('menu');
+      const nav = document.querySelector('header .nav');
+      const focusableSelector = 'a[href], button, [tabindex]:not([tabindex="-1"])';
+      let lastFocus = null;
+      function openMenu(){
+        if(!toggle||!menu) return;
+        lastFocus = document.activeElement;
+        toggle.setAttribute('aria-expanded','true');
+        menu.classList.add('open');
+        const f = Array.from(menu.querySelectorAll(focusableSelector));
+        f[0]?.focus({preventScroll:true});
+        document.addEventListener('keydown', onKeydown);
+        document.addEventListener('click', onDocClick);
+      }
+      function closeMenu(){
+        if(!toggle||!menu) return;
+        toggle.setAttribute('aria-expanded','false');
+        menu.classList.remove('open');
+        document.removeEventListener('keydown', onKeydown);
+        document.removeEventListener('click', onDocClick);
+        lastFocus?.focus?.({preventScroll:true});
+      }
+      function onKeydown(e){
+        if(e.key==='Escape') return closeMenu();
+        if(e.key!=='Tab') return;
+        const f = Array.from(menu.querySelectorAll(focusableSelector)).filter(el=>!el.hasAttribute('disabled'));
+        if(!f.length) return;
+        const first = f[0], last = f[f.length-1];
+        if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+        else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+      }
+      function onDocClick(e){
+        if(menu.classList.contains('open') && !nav.contains(e.target) && e.target!==toggle){ closeMenu(); }
+      }
+      toggle && toggle.addEventListener('click', ()=> (toggle.getAttribute('aria-expanded')==='true'?closeMenu():openMenu()));
+      Array.from(document.querySelectorAll('#menu a')).forEach(a=>a.addEventListener('click', closeMenu));
+    })();
+
+    // ===== Calculadora =====
+    const $ = s => document.querySelector(s);
+    const $$ = s => Array.from(document.querySelectorAll(s));
+    const fmt = v => new Intl.NumberFormat('pt-BR', { style:'currency', currency:'BRL' }).format(v);
+
+    const el = {
+      tipo: $('#tipo'),
+      paginas: $('#paginas'),
+      paginasOut: $('#paginasOut'),
+      design: $('#design'),
+      cms: $('#cms'),
+      seo: $('#seo'),
+      perf: $('#perf'),
+      a11y: $('#a11y'),
+      prazo: $('#prazo'),
+      manut: $('#manut'),
+      obs: $('#obs'),
+      tbody: $('#tbody'),
+      total: $('#tfoot-total'),
+      kSubtotal: $('#kpi-subtotal'),
+      kTotal: $('#kpi-total'),
+      kMensal: $('#kpi-mensal'),
+      faixa: $('#faixa'),
+      btnWA: $('#btn-wa'),
+      btnPrint: $('#btn-print')
+    };
+
+    const PRECO = {
+      base: { landing:1500, site:3000, spa:4500, ecom:6000 },
+      paginaExtra: { landing:200, site:300, spa:500, ecom:400 },
+      design: { pronto:0, adaptar:800, zero:1800 },
+      integ: { analytics:150, form:250, api:700, auth:900, pay:1200 },
+      cms: { nenhum:0, headless:1200, wp:900 },
+      seo: { basico:400, tecnico:1200 },
+      perf: { padrão:0, cwv:800 },
+      a11y: { none:0, aa:600 },
+      prazoMult: { normal:1, expresso:1.25 },
+      manut: { 0:0, 5:400, 10:750, 20:1400 }
+    };
+
+    function calc(){
+      const tipo = el.tipo.value;
+      const paginas = parseInt(el.paginas.value, 10);
+      el.paginasOut.te

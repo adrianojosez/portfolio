@@ -84,6 +84,43 @@
     applyTheme(next);
   });
 
+// novo codigo de theme
+
+// Tema claro/escuro (robusto, com fallback)
+(() => {
+  const root = document.documentElement;
+  const btn = document.getElementById('theme-toggle');
+  const meta = document.querySelector('meta[name="theme-color"]');
+
+  // pega tema salvo ou preferência do SO
+  const saved = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const initial = saved || (prefersDark ? 'dark' : 'light');
+
+  function setTheme(t) {
+    root.setAttribute('data-theme', t);
+    localStorage.setItem('theme', t);
+    // ícone (sol no escuro, lua no claro)
+    const icon = btn?.querySelector('i');
+    if (icon) {
+      icon.classList.toggle('bx-sun', t === 'dark');
+      icon.classList.toggle('bx-moon', t !== 'dark');
+    }
+    // barra do navegador
+    if (meta) meta.setAttribute('content', t === 'dark' ? '#0b1116' : '#f6f8fb');
+  }
+
+  setTheme(initial);
+
+  // clique do botão
+  btn?.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+  });
+})();
+
+// fim do novo codigo de theme
+
   /* =============================
      Menu mobile acessível
   ============================== */
@@ -334,6 +371,7 @@ document.addEventListener('keydown', event => {
     event.preventDefault();
   }
 });
+
 
 
 

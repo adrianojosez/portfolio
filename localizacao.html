@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Localização | Adriano José</title>
+  <meta name="description" content="Mapa interativo com a minha localização. Navbar fixa + mapa em tela cheia." />
+  <meta name="theme-color" content="#0b1116" />
+
+  <!-- Fontes e ícones (opcional manter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+  <style>
+    /* ========= Variáveis e base ========= */
+    :root{
+      --primary: #8cc7d6;
+      --secondary: #bda368;
+      --tertiary: #68bdd1;
+
+      --bg: #00101f;
+      --surface: #0c141b;
+      --card: #0f1720;
+      --text: #e8eef2;
+      --muted: #a9b7bf;
+      --border: rgba(255,255,255,.08);
+
+      --shadow: 0 10px 30px rgba(0,0,0,.3);
+      --radius: 18px;
+      --header-h: 64px;
+    }
+    :root { color-scheme: dark; }
+    [data-theme="light"]{
+      --bg: #f6f8fb;
+      --surface: #ffffff;
+      --card: #ffffff;
+      --text: #0c1116;
+      --muted: #44515a;
+      --border: rgba(0,0,0,.08);
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      color-scheme: light;
+    }
+
+    *{box-sizing: border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial;
+      color:var(--text);
+      background: var(--bg);
+      min-height:100dvh;
+    }
+    a{color:inherit;text-decoration:none}
+
+    .container{width:min(100%,1120px);margin:0 auto;padding:0 1rem}
+
+    /* ========= Header / Navbar ========= */
+    .site-header{
+      position:sticky; top:0; z-index:50; height:var(--header-h);
+      backdrop-filter: saturate(140%) blur(10px);
+      background: linear-gradient(180deg, color-mix(in oklab, var(--bg) 80%, transparent), color-mix(in oklab, var(--bg) 55%, transparent));
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between; height:var(--header-h); gap:.8rem;
+    }
+    .brand{display:flex; align-items:center; gap:.6rem; font-weight:800; letter-spacing:.2px}
+    .brand span{color:var(--primary)}
+
+    .nav-actions{display:flex; align-items:center; gap:.5rem}
+    .icon-btn{
+      width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;
+      border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text);
+    }
+
+    .menu{display:flex;align-items:center;gap:.8rem}
+    .menu a{padding:.55rem .8rem;border-radius:.7rem;font-weight:500;color:var(--muted)}
+    .menu a:hover,.menu a:focus{color:var(--text);background:rgba(140,199,214,.12)}
+    .menu-cta{display:none}
+    .menu-toggle{display:none}
+
+    /* ========= Mapa full-bleed ========= */
+    main > section{padding:0}
+    .map-full{
+      height:calc(100dvh - var(--header-h));
+      width:100%;
+      border-top:1px solid var(--border);
+      background:var(--surface);
+      position:relative; overflow:hidden;
+    }
+    .map-full iframe{
+      position:absolute; inset:0; width:100%; height:100%; border:0;
+    }
+
+    /* ========= Responsivo (menu mobile) ========= */
+    @media (max-width: 720px){
+      .menu{
+        position:fixed; inset:64px 1rem auto 1rem;
+        flex-direction:column; padding:.8rem;
+        background:var(--surface); border:1px solid var(--border); border-radius:12px;
+        box-shadow:var(--shadow); transform-origin: top right;
+        transform: scale(.96); opacity:0; pointer-events:none; transition:.18s ease;
+      }
+      .menu.open{ transform: scale(1); opacity:1; pointer-events:auto }
+      .menu-cta{display:inline-flex}
+      .menu-toggle{
+        display:inline-flex;background:transparent;color:var(--text);
+        border:1px solid var(--border);width:40px;height:40px;border-radius:10px;
+        align-items:center;justify-content:center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#map" style="position:absolute;left:-9999px">Pular para o mapa</a>
+
+  <!-- Navbar -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <nav class="nav" aria-label="Primária">
+        <a href="/index.html#inicio" class="brand" aria-label="Voltar ao início">
+          <span>Adriano</span> José
+        </a>
+
+        <div class="nav-actions">
+          <button id="theme-toggle" class="icon-btn" aria-label="Alternar tema">
+            <i class='bx bx-moon'></i>
+          </button>
+          <button class="menu-toggle" aria-controls="menu" aria-expanded="false" aria-label="Abrir menu">
+            <i class='bx bx-menu'></i>
+          </button>
+        </div>
+
+        <div id="menu" class="menu" role="navigation">
+          <a href="/index.html#sobre">Sobre</a>
+          <a href="/index.html#projetos">Projetos</a>
+          <a href="/index.html#servicos">Serviços</a>
+          <a href="/index.html#experiencia">Experiência</a>
+          <a href="/index.html#depoimentos">Depoimentos</a>
+          <a href="/faq">FAQ</a>
+          <a href="/index.html#contato" class="menu-cta btn ghost"><i class='bx bx-paper-plane'></i> Contato</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mapa ocupa 100% do restante da viewport -->
+  <main>
+    <section class="map-full">
+      <!-- TROQUE o src abaixo pelo seu embed do Google Maps (Compartilhar → Incorporar um mapa) -->
+      <!-- Exemplo: região de Santos/SP -->
+      <iframe
+        id="map"
+        title="Mapa — Localização"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+        src="https://www.google.com/maps?q=-23.9608,-46.3336&z=13&output=embed">
+      </iframe>
+    </section>
+  </main>
+
+  <script>
+    (function(){
+      // ===== Tema claro/escuro com persistência =====
+      const root = document.documentElement;
+      const btn = document.getElementById('theme-toggle');
+      const meta = document.querySelector('meta[name="theme-color"]');
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initial = saved || (prefersDark ? 'dark' : 'light');
+
+      function setTheme(t){
+        root.setAttribute('data-theme', t);
+        localStorage.setItem('theme', t);
+        const icon = btn && btn.querySelector('i');
+        if(icon){
+          icon.classList.toggle('bx-sun', t === 'dark'); // sol no dark
+          icon.classList.toggle('bx-moon', t !== 'dark');
+        }
+        if(meta) meta.setAttribute('content', t === 'dark' ? '#0b1116' : '#f6f8fb');
+      }
+      setTheme(initial);
+
+      btn && btn.addEventListener('click', () => {
+        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        setTheme(next);
+      });
+
+      // ===== Menu mobile acessível =====
+      const toggle = document.querySelector('.menu-toggle');
+      const menu = document.getElementById('menu');
+      const focusableSelector = 'a[href], button, [tabindex]:not([tabindex="-1"])';
+      let lastFocus = null;
+
+      function openMenu(){
+        if(!toggle || !menu) return;
+        lastFocus = document.activeElement;
+        toggle.setAttribute('aria-expanded','true');
+        menu.classList.add('open');
+        const focusables = Array.from(menu.querySelectorAll(focusableSelector));
+        focusables[0]?.focus({preventScroll:true});
+        document.addEventListener('keydown', onKeydown);
+        document.addEventListener('click', onDocClick);
+      }
+      function closeMenu(){
+        if(!toggle || !menu) return;
+        toggle.setAttribute('aria-expanded','false');
+        menu.classList.remove('open');
+        document.removeEventListener('keydown', onKeydown);
+        document.removeEventListener('click', onDocClick);
+        lastFocus?.focus?.({preventScroll:true});
+      }
+      function onKeydown(e){
+        if(e.key === 'Escape') return closeMenu();
+        if(e.key !== 'Tab') return;
+        const focusables = Array.from(menu.querySelectorAll(focusableSelector)).filter(el => !el.hasAttribute('disabled'));
+        if(!focusables.length) return;
+        const first = focusables[0], last = focusables[focusables.length-1];
+        if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+        else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+      }
+      function onDocClick(e){
+        const nav = document.querySelector('header .nav');
+        if(menu.classList.contains('open') && !nav.contains(e.target) && e.target !== toggle){
+          closeMenu();
+        }
+      }
+      toggle && toggle.addEventListener('click', () => {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        expanded ? closeMenu() : openMenu();
+      });
+      Array.from(document.querySelectorAll('#menu a')).forEach(a => a.addEventListener('click', closeMenu));
+    })();
+  </script>
+</body>
+</html>

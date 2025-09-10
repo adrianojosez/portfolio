@@ -478,8 +478,45 @@
   })();
 </script>
 
+<script>
+  
+  /* =============================
+   Filtro de projetos (data-tags)
+============================= */
+(() => {
+  const chips = Array.from(document.querySelectorAll('.filters .chip'));
+  const cards = Array.from(document.querySelectorAll('.project'));
+
+  function setFilter(tag) {
+    const needle = (tag || 'all').toLowerCase();
+    cards.forEach(card => {
+      const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+      const show = needle === 'all' || tags.split(/\s+/).includes(needle) || tags.includes(needle);
+      card.classList.toggle('hidden', !show);
+    });
+  }
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', (e) => {
+      // evita qualquer overlay capturar clique
+      e.stopPropagation();
+      chips.forEach(c => { c.classList.remove('active'); c.setAttribute('aria-pressed', 'false'); });
+      chip.classList.add('active');
+      chip.setAttribute('aria-pressed', 'true');
+      setFilter(chip.getAttribute('data-filter'));
+    });
+  });
+
+  // estado inicial
+  setFilter('all');
+})();
+
+
+</script>
+
 </body>
 </html>
+
 
 
 

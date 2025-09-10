@@ -171,6 +171,25 @@
   </div>
 </footer>
 
+<style>
+  /* =============================
+   Scrollbar estilizado (global)
+   Chrome/Edge/Safari + Firefox
+================================ */
+
+/* vars do scrollbar (podem ficar aqui mesmo) */
+:root{
+  --scroll-thumb: rgba(140,199,214,.65);  /* primary com leve transparência */
+  --scroll-thumb-hover: rgba(140,199,214,.9);
+  --scroll-track: rgba(255,255,255,.08);  /* combina com var(--border)/surface */
+}
+[data-theme="light"]{
+  --scroll-thumb: #8cc7d6cc;
+  --scroll-thumb-hover: #8cc7d6;
+  --scroll-track: rgba(0,0,0,.08);
+}
+</style>
+
 <script src="main.js" defer></script>
 
 <script>
